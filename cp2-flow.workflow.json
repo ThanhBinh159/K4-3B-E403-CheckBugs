@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "CP2 · VLearn Grounded Tutor · Lớp 3B",
+    "subtitle": "Luồng chuẩn từ câu hỏi đến câu trả lời có căn cứ và citation kiểm chứng được",
+    "output": "cp2-flow.html",
+    "animation": "trace",
+    "visual_preset": "classic",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    { "id": "main", "label": "Luồng chính" },
+    { "id": "clarification", "label": "Bổ sung & hỏi lại", "variant": "exception" },
+    { "id": "guardrail", "label": "Giới hạn & căn cứ", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "prepare", "label": "Chuẩn bị & kiểm tra", "fromCol": 0, "toCol": 1 },
+    { "id": "ground", "label": "Làm rõ & truy xuất", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "answer", "label": "Trả lời & đối chiếu", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["ask", "input_scope", "clarity_gate", "support_gate", "compose_validate", "answer_review"],
+  "nodes": [
+    { "id": "ask", "lane": "main", "col": 0, "width": 116, "type": "frontend", "label": "Học viên hỏi", "sublabel": "Chọn nguồn + đặt câu" },
+    { "id": "input_scope", "lane": "main", "col": 1, "width": 116, "type": "security", "label": "Đủ input?", "sublabel": "Đúng phạm vi?", "tag": "Cổng 1" },
+    { "id": "clarity_gate", "lane": "main", "col": 2, "width": 116, "type": "cloud", "label": "AI: Đủ rõ?", "sublabel": "Xét câu hỏi + ngữ cảnh", "tag": "AI" },
+    { "id": "support_gate", "lane": "main", "col": 3, "width": 116, "type": "cloud", "label": "AI: Có căn cứ?", "sublabel": "Truy xuất nguồn đã chọn", "tag": "AI" },
+    { "id": "compose_validate", "lane": "main", "col": 4, "width": 116, "type": "backend", "label": "Tạo đáp án", "sublabel": "Citation trong context", "tag": "Cổng 2" },
+    { "id": "answer_review", "lane": "main", "col": 5, "width": 116, "type": "frontend", "label": "Hiện đáp án", "sublabel": "Mở nguồn để đối chiếu" },
+
+    { "id": "missing_input", "lane": "clarification", "col": 1, "width": 116, "type": "external", "label": "Bổ sung input", "sublabel": "Giữ nội dung đã nhập", "tag": "Quay lại hỏi" },
+    { "id": "clarify", "lane": "clarification", "col": 2, "width": 116, "type": "frontend", "label": "Hỏi làm rõ", "sublabel": "Bổ sung hoặc chọn đoạn", "tag": "Quay lại AI" },
+    { "id": "revise", "lane": "clarification", "col": 5, "width": 116, "type": "frontend", "label": "Sửa và thử lại", "sublabel": "Đổi câu / đoạn / nguồn", "tag": "Hỏi tiếp" },
+
+    { "id": "out_of_scope", "lane": "guardrail", "col": 1, "width": 116, "type": "external", "label": "Nêu giới hạn", "sublabel": "Chuyển TA / nguồn chuẩn", "tag": "Ngoài phạm vi" },
+    { "id": "no_evidence", "lane": "guardrail", "col": 3, "width": 116, "type": "security", "label": "Thiếu căn cứ", "sublabel": "Chọn đoạn / đổi nguồn", "tag": "Không trả lời" },
+    { "id": "citation_fail", "lane": "guardrail", "col": 4, "width": 116, "type": "security", "label": "Citation lỗi", "sublabel": "Giữ input để thử lại", "tag": "Không hiển thị" }
+  ],
+  "edges": [
+    { "id": "m1", "from": "ask", "to": "input_scope", "variant": "emphasis", "role": "main" },
+    { "id": "m2", "from": "input_scope", "to": "clarity_gate", "label": "Đủ + đúng phạm vi", "variant": "emphasis", "role": "main" },
+    { "id": "m3", "from": "clarity_gate", "to": "support_gate", "label": "Đã rõ", "variant": "emphasis", "role": "main" },
+    { "id": "m4", "from": "support_gate", "to": "compose_validate", "label": "Có căn cứ", "variant": "emphasis", "role": "main" },
+    { "id": "m5", "from": "compose_validate", "to": "answer_review", "label": "Citation hợp lệ", "variant": "emphasis", "role": "main" },
+
+    { "id": "b1", "from": "input_scope", "to": "missing_input", "label": "Thiếu input", "variant": "dashed", "role": "branch" },
+    { "id": "b2", "from": "input_scope", "to": "out_of_scope", "label": "Ngoài phạm vi", "variant": "security", "role": "branch" },
+    { "id": "b3", "from": "clarity_gate", "to": "clarify", "label": "Chưa rõ", "variant": "dashed", "role": "branch" },
+    { "id": "b4", "from": "support_gate", "to": "no_evidence", "label": "Không", "variant": "security", "role": "error" },
+    { "id": "b5", "from": "compose_validate", "to": "citation_fail", "label": "Không xác minh được", "variant": "security", "role": "error" },
+    { "id": "b6", "from": "answer_review", "to": "revise", "label": "Cần sửa / hỏi tiếp", "variant": "dashed", "role": "return" }
+  ],
+  "semanticChecks": {
+    "allowedRoots": ["ask"],
+    "allowedTerminals": ["answer_review", "missing_input", "clarify", "revise", "out_of_scope", "no_evidence", "citation_fail"],
+    "requiredPaths": [
+      { "from": "ask", "to": "answer_review" },
+      { "from": "input_scope", "to": "missing_input" },
+      { "from": "input_scope", "to": "out_of_scope" },
+      { "from": "clarity_gate", "to": "clarify" },
+      { "from": "support_gate", "to": "no_evidence" },
+      { "from": "compose_validate", "to": "citation_fail" },
+      { "from": "answer_review", "to": "revise" }
+    ]
+  }
+}

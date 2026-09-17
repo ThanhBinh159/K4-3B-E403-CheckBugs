@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VLearn Tutor - Grounded answer demo</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #62707c;
+      --line: #dce3e8;
+      --paper: #ffffff;
+      --canvas: #f4f6f5;
+      --teal: #0f766e;
+      --teal-soft: #d9f2ee;
+      --amber: #ad6700;
+      --amber-soft: #fff0d4;
+      --blue: #1d4e89;
+      --blue-soft: #e5effa;
+      --shadow: 0 16px 36px rgba(23, 33, 43, .09);
+      --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html[data-font="sans"] { --font-ui: Arial, "Helvetica Neue", sans-serif; }
+    html[data-font="serif"] { --font-ui: Georgia, "Times New Roman", serif; }
+    html[data-font="mono"] { --font-ui: "Cascadia Code", Consolas, "Courier New", monospace; }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .app-shell { max-width: 1440px; margin: 0 auto; padding: 28px; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding-bottom: 22px; border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 760; letter-spacing: 0; }
+    .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; background: var(--teal); color: white; font-size: 18px; }
+    .course { color: var(--muted); font-size: 14px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .font-control { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 13px; }
+    .font-control select { border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 7px 28px 7px 9px; }
+    .mode-switch { display: inline-flex; padding: 3px; border: 1px solid var(--line); background: var(--paper); }
+    .mode-switch button { border: 0; background: transparent; color: var(--muted); padding: 8px 12px; }
+    .mode-switch button.active { background: var(--ink); color: white; }
+
+    .intro { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin: 30px 0 20px; }
+    .eyebrow { color: var(--teal); font-size: 12px; font-weight: 800; letter-spacing: 0; text-transform: uppercase; }
+    h1 { margin: 4px 0 0; font-size: 28px; line-height: 1.2; letter-spacing: 0; }
+    .intro p { margin: 0; max-width: 430px; color: var(--muted); }
+
+    .source-strip {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      border: 1px solid #c8d9ef; background: var(--blue-soft); padding: 12px 14px; margin-bottom: 20px;
+      color: #24456c; font-size: 13px;
+    }
+    .source-strip strong { color: var(--blue); }
+    .source-strip code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: white; padding: 2px 5px; }
+
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .state-card { min-width: 0; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .state-card.good { border-top: 4px solid var(--teal); }
+    .state-card.plain { border-top: 4px solid var(--amber); }
+    .card-head { padding: 18px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .state-name { margin: 0; font-size: 17px; letter-spacing: 0; }
+    .status { padding: 4px 8px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .status.missing { background: var(--amber-soft); color: #7a4700; }
+    .status.grounded { background: var(--teal-soft); color: #075e57; }
+    .chat { padding: 20px; min-height: 410px; }
+    .message-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0; color: var(--muted); font-weight: 800; margin-bottom: 6px; }
+    .bubble { padding: 14px; margin-bottom: 18px; max-width: 94%; }
+    .student-bubble { background: #edf1f3; border-left: 3px solid #94a3ad; }
+    .tutor-bubble { background: #fbfcfc; border: 1px solid var(--line); }
+    .plain .tutor-bubble { border-left: 3px solid #d28a18; }
+    .good .tutor-bubble { border-left: 3px solid var(--teal); }
+    .reply { white-space: pre-line; margin: 0; color: #263442; }
+    .reply.clamped { display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden; }
+    .reply strong { color: var(--ink); }
+    .plain-note { color: var(--amber); font-size: 13px; font-weight: 700; margin-top: 10px; }
+
+    .evidence { margin: 4px 0 18px; background: var(--teal-soft); border: 1px solid #a7ddd6; padding: 14px; }
+    .evidence-title { display: flex; justify-content: space-between; gap: 12px; align-items: center; color: #075e57; font-size: 13px; font-weight: 800; }
+    .evidence p { margin: 8px 0; color: #245852; font-size: 13px; }
+    .evidence button { border: 1px solid #62bcb2; background: white; color: #075e57; padding: 7px 10px; font-size: 13px; font-weight: 700; }
+    .feedback { display: flex; gap: 8px; }
+    .feedback button { flex: 1; background: white; border: 1px solid var(--line); padding: 8px; color: var(--muted); font-size: 13px; }
+    .feedback button.selected { border-color: var(--teal); color: var(--teal); background: var(--teal-soft); font-weight: 700; }
+
+    .askbar { display: flex; gap: 10px; margin-top: 20px; }
+    .askbar input { min-width: 0; flex: 1; border: 1px solid var(--line); background: white; padding: 13px 14px; color: var(--ink); }
+    .askbar button { border: 0; background: var(--teal); color: white; padding: 0 18px; font-weight: 750; }
+    .askbar button:focus-visible, button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+
+    .drawer-backdrop { position: fixed; inset: 0; display: none; background: rgba(23, 33, 43, .32); }
+    .drawer-backdrop.open { display: block; }
+    .drawer { position: absolute; right: 0; top: 0; height: 100%; width: min(440px, 100%); padding: 24px; background: white; box-shadow: -16px 0 36px rgba(23, 33, 43, .15); }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+    .drawer h2 { font-size: 20px; margin: 0; }
+    .close { border: 1px solid var(--line); background: white; width: 32px; height: 32px; color: var(--ink); }
+    .source-card { margin-top: 20px; border: 1px solid #a7ddd6; padding: 16px; background: #f1faf8; }
+    .source-card h3 { margin: 0 0 6px; font-size: 16px; }
+    .source-card p { margin: 5px 0; color: #36504c; font-size: 14px; }
+    .source-card .quote { margin-top: 14px; padding-left: 12px; border-left: 3px solid var(--teal); color: #244a45; }
+    .integrity-note { margin-top: 18px; padding: 12px; background: #f5f6f7; color: var(--muted); font-size: 12px; }
+
+    .hidden { display: none !important; }
+    @media (max-width: 840px) {
+      .app-shell { padding: 18px; }
+      .topbar, .intro { align-items: flex-start; flex-direction: column; gap: 14px; }
+      .top-actions { width: 100%; flex-wrap: wrap; }
+      .comparison { grid-template-columns: 1fr; }
+      .state-card { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">V</span><span>VLearn Tutor</span></div>
+      <div class="course">[Lab] Day 01 · LLM Foundation</div>
+      <div class="top-actions">
+        <label class="font-control" for="font-select">
+          <span>Phông chữ</span>
+          <select id="font-select" aria-label="Chọn phông chữ giao diện">
+            <option value="system">Hệ thống</option>
+            <option value="sans">Sans-serif</option>
+            <option value="serif">Serif</option>
+            <option value="mono">Monospace</option>
+          </select>
+        </label>
+        <nav class="mode-switch" aria-label="Chế độ xem">
+          <button class="active" data-mode="compare">So sánh</button>
+          <button data-mode="grounded">Chỉ VLearn</button>
+        </nav>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <div class="eyebrow">Grounded answer demo</div>
+        <h1>Một câu hỏi ngắn, hai trải nghiệm</h1>
+      </div>
+      <p>Điểm khác biệt không nằm ở câu trả lời dài hơn, mà ở khả năng kiểm chứng lại ngay trong tài liệu bài học.</p>
+    </section>
+
+    <section class="source-strip" aria-label="Nguồn dữ liệu demo">
+      <strong>Data demo thật:</strong> <code>tutor_turns.csv</code> · Turn <code id="turn-id"></code> · q_len <code id="q-len"></code> · has_citation <code id="citation-status"></code>
+    </section>
+
+    <section class="comparison" id="comparison">
+      <article class="state-card plain" id="plain-card">
+        <header class="card-head">
+          <h2 class="state-name">Tutor thường</h2>
+          <span class="status missing">Không có citation</span>
+        </header>
+        <div class="chat">
+          <div class="message-label">Học viên</div>
+          <div class="bubble student-bubble" id="plain-question"></div>
+          <div class="message-label">Tutor</div>
+          <div class="bubble tutor-bubble">
+            <p class="reply clamped" id="plain-reply"></p>
+            <div class="plain-note">Không có đường dẫn để đối chiếu với tài liệu.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="state-card good" id="grounded-card">
+        <header class="card-head">
+          <h2 class="state-name">VLearn Tutor</h2>
+          <span class="status grounded">Có thể kiểm chứng</span>
+        </header>
+        <div class="chat">
+          <div class="message-label">Học viên</div>
+          <div class="bubble student-bubble" id="grounded-question"></div>
+          <div class="message-label">VLearn Tutor</div>
+          <div class="bubble tutor-bubble">
+            <p class="reply"><strong>LLM</strong> là viết tắt của <strong>Large Language Model</strong> - mô hình ngôn ngữ lớn. Nó được huấn luyện trên lượng văn bản lớn để hiểu và tạo văn bản, sau đó dự đoán token tiếp theo để tạo câu trả lời.</p>
+          </div>
+          <section class="evidence">
+            <div class="evidence-title"><span>Bằng chứng · đã truy xuất</span><span>Trang 1</span></div>
+            <p><strong>[Lab] Day 01 · LLM Foundation</strong><br>Ngữ cảnh câu hỏi xác định slide/trang đang học; học viên có thể mở lại nguồn trước khi tin câu trả lời.</p>
+            <button id="open-evidence" type="button">Mở bằng chứng</button>
+          </section>
+          <div class="feedback" aria-label="Đánh giá phản hồi">
+            <button type="button" data-feedback="helpful">Hữu ích</button>
+            <button type="button" data-feedback="unclear">Cần rõ hơn</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <form class="askbar" id="ask-form">
+      <input id="ask-input" aria-label="Câu hỏi mới" placeholder="Hỏi về bài học..." autocomplete="off">
+      <button type="submit">Gửi câu hỏi</button>
+    </form>
+  </main>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-label="Bằng chứng từ tài liệu">
+      <div class="drawer-head"><h2>Bằng chứng đã truy xuất</h2><button class="close" id="close-evidence" type="button" aria-label="Đóng">×</button></div>
+      <div class="source-card">
+        <h3>[Lab] Day 01 · LLM Foundation</h3>
+        <p><strong>Vị trí:</strong> Trang 1</p>
+        <p><strong>Turn nguồn:</strong> <span id="drawer-turn"></span></p>
+        <p class="quote" id="selected-context"></p>
+      </div>
+      <p class="integrity-note">Lưu ý demo: chatlog chỉ cung cấp metadata bài học, trang và đoạn được chọn; không chứa file slide gốc. Citation trong mockup minh họa trải nghiệm retrieval cần có khi tích hợp kho tài liệu thật.</p>
+    </aside>
+  </div>
+
+  <script>
+    const fontSelect = document.querySelector("#font-select");
+    const supportedFonts = new Set(["system", "sans", "serif", "mono"]);
+    const queryFont = new URLSearchParams(window.location.search).get("font");
+    let savedFont = null;
+
+    try {
+      savedFont = localStorage.getItem("vlearn-font");
+    } catch {
+      // Some embedded/file contexts disable storage; the selector still works for this session.
+    }
+
+    const initialFont = supportedFonts.has(queryFont)
+      ? queryFont
+      : supportedFonts.has(savedFont) ? savedFont : "system";
+
+    const applyFont = (font) => {
+      const selectedFont = supportedFonts.has(font) ? font : "system";
+      document.documentElement.dataset.font = selectedFont;
+      fontSelect.value = selectedFont;
+      try {
+        localStorage.setItem("vlearn-font", selectedFont);
+      } catch {
+        // Keep the current selection even when persistence is unavailable.
+      }
+    };
+
+    applyFont(initialFont);
+    fontSelect.addEventListener("change", () => applyFont(fontSelect.value));
+
+    // Exact fields copied from data/vlearn-pack/chatlog/tutor_turns.csv, turn T00349.
+    const sourceTurn = {
+      turnId: "VDAwMzQ5",
+      lectureTitle: "W0xhYl0gRGF5IDAxXyBMTE0gRm91bmRhdGlvbg==",
+      studentQuestion: "KFRyYW5nIDEsIMSRb+G6oW4gxJHGsOG7o2MgY2jhu41uOiAibGxtIGxhIGdpIikKbGxtIGxhIGdp",
+      tutorReply: "TExNIChMYXJnZSBMYW5ndWFnZSBNb2RlbCAtIE3DtCBow6xuaCBuZ8O0biBuZ+G7ryBs4bubbikgbMOgIG3hu5l0IGThuqFuZyBtw7QgaMOsbmggdHLDrSB0deG7hyBuaMOibiB04bqhbyDEkcaw4bujYyBodeG6pW4gbHV54buHbiB0csOqbiB04bqtcCBk4buvIGxp4buHdSB2xINuIGLhuqNuIGto4buVbmcgbOG7kyDEkeG7gyBoaeG7g3UsIHThuqFvIHJhIHbDoCB0xrDGoW5nIHTDoWMgduG7m2kgbmfDtG4gbmfhu68gdOG7sSBuaGnDqm4uCgpW4buBIGPGoSBi4bqjbiwgTExNIHPhu60gZOG7pW5nIGPDoWMga2nhur9uIHRyw7pjIG3huqFuZyB0aOG6p24ga2luaCAodGjGsOG7nW5nIGzDoCBraeG6v24gdHLDumMgVHJhbnNmb3JtZXIpIMSR4buDIGThu7EgxJFvw6FuIHThu6sgaG/hurdjIMSRb+G6oW4gdsSDbiB0aeG6v3AgdGhlbyB0cm9nIG3hu5tpLCB04burIMSRw7MgZ2nDunAgbsOzIHRo4buxYyBoaeG7h24gxJHGsOG7o2Mgbmhp4buBdSB0w6FjIHbhu6UgbmjGsCB2aeG6v3QgdsSDbiBi4bqjbiwgdMOzbSB04bqvdCwgZOG7i2NoIHRodeG6rXQsIGdp4bqjaSB0b8OhbiBob+G6t2Mgdmnhur90IGNvZGUuICJM4bubbiIg4bufIMSRw6J5IMOhbSBjaOG7iSBj4bqjIHbhu4EgcXV5IG3DtCB04bqtcCBk4buvIGxp4buHdSBraOG7lW5nIGzhu5MgZMO5bmcgxJHhu4MgaHXhuqVuIGx1eeG7h24gbOG6q24gc+G7kSBsxrDhu6NuZyB0aGFtIHPhu5EgKHBhcmFtZXRlcnMpIGPhu6dhIGNow61uaCBtw7QgaMOsbmggxJHDsy4=",
+      questionLength: 48,
+      hasCitation: false
+    };
+
+    const decode = (value) => new TextDecoder().decode(Uint8Array.from(atob(value), (c) => c.charCodeAt(0)));
+    const turn = Object.fromEntries(Object.entries(sourceTurn).map(([key, value]) => [key, typeof value === "string" ? decode(value) : value]));
+    const question = turn.studentQuestion.split("\n").at(-1);
+    const selectedContext = turn.studentQuestion.split("\n").at(0);
+
+    document.querySelector("#turn-id").textContent = turn.turnId;
+    document.querySelector("#q-len").textContent = turn.questionLength;
+    document.querySelector("#citation-status").textContent = turn.hasCitation;
+    document.querySelector("#plain-question").textContent = question;
+    document.querySelector("#grounded-question").textContent = question;
+    document.querySelector("#plain-reply").textContent = turn.tutorReply;
+    document.querySelector("#drawer-turn").textContent = turn.turnId;
+    document.querySelector("#selected-context").textContent = selectedContext;
+
+    const drawer = document.querySelector("#drawer-backdrop");
+    const openDrawer = () => { drawer.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); };
+    const closeDrawer = () => { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); };
+    document.querySelector("#open-evidence").addEventListener("click", openDrawer);
+    document.querySelector("#close-evidence").addEventListener("click", closeDrawer);
+    drawer.addEventListener("click", (event) => { if (event.target === drawer) closeDrawer(); });
+
+    document.querySelectorAll("[data-feedback]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-feedback]").forEach((item) => item.classList.remove("selected"));
+        button.classList.add("selected");
+      });
+    });
+
+    document.querySelectorAll("[data-mode]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-mode]").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelector("#plain-card").classList.toggle("hidden", button.dataset.mode === "grounded");
+      });
+    });
+
+    document.querySelector("#ask-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = document.querySelector("#ask-input");
+      if (!input.value.trim()) return;
+      document.querySelector("#grounded-question").textContent = input.value.trim();
+      document.querySelector("#plain-question").textContent = input.value.trim();
+      input.value = "";
+    });
+  </script>
+</body>
+</html>

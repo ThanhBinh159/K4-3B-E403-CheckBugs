@@ -1,0 +1,232 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "VLearn Tutor: ba cấp độ vận hành AI",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" },
+    "output": "ai-flow-review.html"
+  },
+  "lanes": [
+    { "id": "current", "label": "1 · Hiện tại (suy luận từ chatlog)" },
+    { "id": "improved", "label": "2 · Cải thiện tối thiểu" },
+    { "id": "agent", "label": "3 · AI Agent sau cải thiện" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "Nhận yêu cầu", "fromCol": 0, "toCol": 1 },
+    { "id": "grounding", "label": "Tìm và đánh giá căn cứ", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "delivery", "label": "Kiểm chứng và phản hồi", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["improve_check", "improve_retrieve", "improve_gate", "improve_answer"],
+  "semanticChecks": {
+    "allowedRoots": ["current_input", "improve_check", "agent_context"],
+    "allowedTerminals": ["current_output", "improve_clarify", "improve_answer", "agent_response"],
+    "requiredPaths": [
+      { "from": "current_input", "to": "current_output" },
+      { "from": "improve_check", "to": "improve_answer" },
+      { "from": "agent_context", "to": "agent_response" }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "current_input",
+      "lane": "current",
+      "col": 0,
+      "type": "frontend",
+      "label": "Câu hỏi + ngữ cảnh",
+      "sublabel": "course · lecture · page",
+      "width": 150
+    },
+    {
+      "id": "current_generate",
+      "lane": "current",
+      "col": 2,
+      "type": "backend",
+      "label": "Sinh câu trả lời",
+      "sublabel": "thường là review_concept",
+      "tag": "89,9% lượt",
+      "width": 150
+    },
+    {
+      "id": "current_output",
+      "lane": "current",
+      "col": 5,
+      "type": "external",
+      "label": "Trả lời cho học viên",
+      "sublabel": "citation có hoặc không",
+      "tag": "28% thiếu citation",
+      "width": 160
+    },
+    {
+      "id": "improve_check",
+      "lane": "improved",
+      "col": 0,
+      "type": "security",
+      "label": "Kiểm tra độ rõ",
+      "sublabel": "intent + selection + scope",
+      "width": 150
+    },
+    {
+      "id": "improve_retrieve",
+      "lane": "improved",
+      "col": 2,
+      "type": "database",
+      "label": "Retrieval đúng bài",
+      "sublabel": "lọc course và lecture",
+      "width": 150
+    },
+    {
+      "id": "improve_gate",
+      "lane": "improved",
+      "col": 3,
+      "type": "security",
+      "label": "Cổng bằng chứng",
+      "sublabel": "đủ · yếu · không có",
+      "tag": "quyết định",
+      "width": 150
+    },
+    {
+      "id": "improve_clarify",
+      "lane": "improved",
+      "col": 4,
+      "type": "messagebus",
+      "label": "Hỏi lại / fallback",
+      "sublabel": "không đoán khi thiếu nguồn",
+      "width": 150,
+      "yOffset": 34
+    },
+    {
+      "id": "improve_answer",
+      "lane": "improved",
+      "col": 5,
+      "type": "frontend",
+      "label": "Trả lời đã kiểm chứng",
+      "sublabel": "citation mở được",
+      "width": 160,
+      "yOffset": -28
+    },
+    {
+      "id": "agent_context",
+      "lane": "agent",
+      "col": 0,
+      "type": "backend",
+      "label": "Context Resolver",
+      "sublabel": "chuẩn hóa ngữ cảnh học",
+      "width": 150
+    },
+    {
+      "id": "agent_plan",
+      "lane": "agent",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Planner + Tools",
+      "sublabel": "lập query · search · read",
+      "width": 150
+    },
+    {
+      "id": "agent_judge",
+      "lane": "agent",
+      "col": 3,
+      "type": "security",
+      "label": "Evidence Judge",
+      "sublabel": "retry tối đa 2 lần",
+      "tag": "bounded loop",
+      "width": 150
+    },
+    {
+      "id": "agent_response",
+      "lane": "agent",
+      "col": 5,
+      "type": "database",
+      "label": "Answer + Verify + Trace",
+      "sublabel": "citation · feedback · eval",
+      "width": 170
+    }
+  ],
+  "edges": [
+    {
+      "id": "current_to_generate",
+      "from": "current_input",
+      "to": "current_generate",
+      "label": "đi thẳng tới generation",
+      "variant": "default",
+      "role": "main"
+    },
+    {
+      "id": "current_to_output",
+      "from": "current_generate",
+      "to": "current_output",
+      "label": "citation chưa bắt buộc",
+      "variant": "dashed",
+      "role": "main"
+    },
+    {
+      "id": "check_to_retrieve",
+      "from": "improve_check",
+      "to": "improve_retrieve",
+      "label": "đủ ngữ cảnh",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "retrieve_to_gate",
+      "from": "improve_retrieve",
+      "to": "improve_gate",
+      "label": "top evidence",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "gate_to_answer",
+      "from": "improve_gate",
+      "to": "improve_answer",
+      "label": "đủ căn cứ",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "gate_to_clarify",
+      "from": "improve_gate",
+      "to": "improve_clarify",
+      "label": "yếu / không có",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "context_to_plan",
+      "from": "agent_context",
+      "to": "agent_plan",
+      "label": "intent có cấu trúc",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "plan_to_judge",
+      "from": "agent_plan",
+      "to": "agent_judge",
+      "label": "evidence + metadata",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "judge_retry",
+      "from": "agent_judge",
+      "to": "agent_plan",
+      "label": "retry nếu nguồn yếu",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "route": "bottom-channel"
+    },
+    {
+      "id": "judge_to_response",
+      "from": "agent_judge",
+      "to": "agent_response",
+      "label": "claim được hỗ trợ",
+      "variant": "emphasis",
+      "role": "main"
+    }
+  ]
+}
