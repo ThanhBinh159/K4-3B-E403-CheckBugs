@@ -35,6 +35,14 @@ class SlideTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_response(dict(action='answer', answer='Token [S01-999].', citations=['S01-013'], clarifying_question='', reason=''), ['S01-013'])
 
+    def test_definition_and_comparison_retrieve_scope_and_generation_pages(self):
+        store = SourceStore(self.root, kind='slides')
+        for question in ['LLM là gì và sinh văn bản bằng cơ chế nào?',
+                         'LLM khác Machine Learning về phạm vi và cách sinh văn bản thế nào?']:
+            with self.subTest(question=question):
+                ids = {s['id'] for s in retrieve(store.sources['slides-d1']['segments'], question, [])}
+                self.assertTrue({'S01-003', 'S01-012'}.issubset(ids), ids)
+
     def test_image_only_pdf_has_no_fake_text_grounding(self):
         from pypdf import PdfWriter
         with tempfile.TemporaryDirectory() as directory:

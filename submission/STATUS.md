@@ -1,28 +1,7 @@
-# Trạng thái bàn giao - API đã kết nối lại
+# Trạng thái — CP3 dùng slide/PDF
 
-## Đã chuẩn bị và kiểm tra local
+Đã chuyển slide là nguồn chính, citation theo trang PDF; transcript chỉ giữ lịch sử trong eval/archive. UI/API giữ workflow CP2, thêm mở PDF đúng physical page. Không đọc ảnh/OCR hoặc tự lấy bài LMS.
 
-- Prototype backend/UI, adapter API custom Base URL, loader 260 đoạn, retrieval và validator.
-- Bộ 24 golden case; 12 case phát triển từ mã lượt thật; runner/phương pháp chấm/quality bar.
-- Evidence tái đếm, impact ba ứng viên, độ nhạy ngưỡng, năm ví dụ kiến thức; spec §1-§9.
-- Slide PDF 6 trang và nguồn nội dung chỉnh sửa; đã render/xem từng trang.
-- Hướng dẫn/form text CP1-CP5, kịch bản hai video, protocol R6 và mẫu reflection.
-- ZIP sạch không .env/data/raw logs, có manifest SHA-256.
+Golden SG01–SG24: 10 thường/10 khó/4 edge, 12 case phát triển từ turn log. Expected/claims theo nguồn slide, không sao chép số của bộ transcript. Quality bar giữ nguyên. Kết quả hiện hành xem eval/run_results.md/live_summary.md; full quality pending khi nhóm chưa chấm. Public dữ liệu chấm không có key/PDF nguồn/raw provider.
 
-## API live đã xác minh sau khi người dùng hoàn thiện .env
-
-- Đã xác thực danh sách model của CLIProxyAPI và gọi AI thật qua Gemini native /v1beta, alias gemini-3.6-flash-high; key chỉ giữ .env local.
-- Đã xử lý JSON bọc Markdown bằng parser chỉ nhận một JSON block hoàn chỉnh, giữ kiểm schema/citation.
-- Backend CP3 cải thiện, run 20260918T044511Z: 24/24 output hợp lệ và action đúng; G20/G22/G24 đã đúng trong lượt này. 36 test offline đạt. Số kỹ thuật: eval/run_results.md; đối chiếu sơ bộ Codex: eval/cp3-content-audit.md. Full pass rate còn chờ nhóm chấm.
-- Baseline/chấm độc lập chưa thực hiện. PDF và nguồn slide là snapshot run trước 20260918T035621Z; cần cập nhật số đo cuối trước nộp CP5. Lượt này chỉ cải thiện backend/tài liệu CP3 theo yêu cầu.
-- Quay video CP3 thao tác AI thật và video demo CP5 dự phòng.
-
-Không điền số giả hoặc dùng test fixture làm evidence AI.
-
-## Nhóm bổ sung sau
-
-- Tên/mã/phòng/đội trưởng theo yêu cầu người dùng tự điền.
-- Willing users đã khai CP1 thực; trial hai sản phẩm; 5 user test thật nếu làm R6.
-- Reflection cá nhân, repo GitHub public, link video và receipts nộp form.
-
-Các mẫu trống không là evidence đã hoàn thành. “Đã chuẩn bị hồ sơ đến CP5” không đồng nghĩa “đã đạt/nộp CP1-CP5”.
+Đã có spec §1–§9, mining evidence, worksheet/cách chấm, protocol và kịch bản video. Repo/branch GitHub đã có, chưa có receipts nộp form. Nhóm tiếp tục chấm, UI browser QA/quay video, nhân sự, trial hai sản phẩm/user validation nếu làm R6 và cập nhật PDF trước CP5. Không tạo evidence người thật hoặc biên nhận giả; hồ sơ chuẩn bị không đồng nghĩa đạt/nộp checkpoint.

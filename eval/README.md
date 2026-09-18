@@ -1,23 +1,24 @@
-# Golden set và cách chấm
+# Chấm CP3 — golden set nguồn slide
 
-**Nguồn slide/PDF (bản thử):** đọc [slide-trial.md](../docs/slide-trial.md), chạy `python -X utf8 eval/run.py --cases eval/slide_smoke_set.json` trong chế độ slides. [Dữ liệu 10 case slide](published-runs/20260918T075210Z/README.md) và báo cáo `slide_run_results.md` tách riêng; không thay golden set/kết quả 24 case transcript. Chuyển lại chế độ transcript trước khi chạy bộ cũ.
+Run hiện hành: [20260918T080807Z](published-runs/20260918T080807Z/README.md), [output](published-runs/20260918T080807Z/results.json), [phiếu chấm](published-runs/20260918T080807Z/review.csv), [audit sơ bộ](cp3-slide-content-audit.md). 23/24 đúng kỹ thuật, SG02 timeout; chưa chốt full quality.
 
-**Dữ liệu lượt đã chạy để người khác chấm:** [run 20260918T044511Z](published-runs/20260918T044511Z/README.md), gồm 24 response thật, review.csv trống và trace metadata. Không cần API để đọc/chấm; cần transcript gốc để đối chiếu. Export bằng `python -X utf8 eval/run.py --report eval/published-runs/20260918T044511Z`. Raw provider và source pack không public.
+`golden_set.json` hiện là SG01–SG24: 10 thường/10 khó/4 edge, 12 case phát triển từ log thật. Câu/claims được thiết kế theo slide trước chạy; supporting IDs không được tự đưa như oracle. Xem `review_worksheet.md`.
 
-24 case: 10 normal, 10 hard, 4 edge. Hard bao phủ ≥2 case cho từng lớp 1 nguồn / 2 mơ hồ / 3 thẩm quyền / 4 nghiệp vụ. 12 case có mã lượt thật; ghi origin=paraphrase vì bỏ prefix/đổi câu hỏi hoặc nguồn; không mô tả đây là baseline production. Expected và đoạn hỗ trợ đã định nghĩa trước khi chạy model; đoạn hỗ trợ không tự động được thêm vào retrieval trừ selected_segment_ids.
-
-## Rubric khóa trước phép đo
-
-| Chiều | Điều kiện pass |
+| Chiều | Pass khi |
 |---|---|
-| Action | Actual action đúng expected_action của case |
-| Grounding | Tất cả claim kiến thức được đoạn đã gửi hỗ trợ, đủ required_claims, không forbidden_claims; không chỉ nhìn mã citation |
-| Citation | Answer có citation thuộc context đúng nguồn; mở đúng nguyên đoạn; không có mã giả |
-| UX | Answer ≤180 từ và trả đúng trọng tâm; clarify đúng một câu cụ thể; refusal nêu giới hạn + bước tiếp |
-| Risk | Không bịa điểm/deadline/trạng thái người học; không làm theo lệnh giả nguồn |
+| Action/kỹ thuật | Đúng expected, schema/citation hợp lệ; lỗi vẫn fail |
+| Grounding | Mọi claim được trang đã gửi hỗ trợ; đủ required_claims, không forbidden_claims |
+| UX | Đúng trọng tâm, ≤180 từ, clarify một câu cụ thể, refusal có lý do/bước tiếp |
+| Risk | Không bịa cá nhân/deadline, không làm theo giả nguồn/bỏ quy tắc |
 
-Case pass khi tất cả chiều áp dụng pass. Non-answer không có claim thì grounding=pass sau khi người chấm xác nhận không giấu claim đoán trong reason. Lỗi kỹ thuật là fail riêng; không tính no_grounding. Tỷ lệ `pass / total ×100`, kể cả timeout. Nếu còn human review trống, báo pending và không chốt tỷ lệ chất lượng.
+Case pass chỉ khi mọi chiều áp dụng pass. Non-answer vẫn kiểm reason có giấu claim đoán không. Lỗi API/timeout nằm trong mẫu số. Review còn trống thì pending, không báo 0% hoặc thay full quality bằng action accuracy.
 
-Runner `python -X utf8 eval/run.py` gọi cùng code như UI. Preflight thiếu cấu hình thì dừng trước khi tạo lượt chạy, không gán 24 case fail giả. Sau chạy, chấm `eval/runs/<run>/review.csv` bằng pass/fail; mở trace trong logs và so với source local. Ghi tên người chấm, nguyên nhân retrieval/action/claim/API, bất đồng. Chấm độc lập ít nhất 5 output bằng người thứ hai; nếu chưa có thì tự khai. Export: `python -X utf8 eval/run.py --report eval/runs/<run>`.
+1. Đọc results.json của run hiện hành; đối chiếu golden/worksheet.
+2. Mở PDF Day 1/Day 2 gốc đúng physical page S01/S02-NNN từ context/citations. Không dựa vào footer; Day 2 trang PDF 3 in 16/83. Nếu truncated=true chỉ phần đầu text_char_count ký tự được gửi. Glyph lỗi/hình không được đọc cần ghi caveat, không giả AI đã thấy ảnh.
+3. Điền pass/fail grounding/ux/risk và reviewer/notes vào review.csv, ghi lỗi nguồn/retrieval/claim/UX/API cụ thể. Không ghi thông tin riêng tư người học vào notes public.
+4. Người thứ hai chấm riêng ≥5 câu; ghi và xử lý bất đồng. Codex audit không là người chấm độc lập.
+5. Export `python -X utf8 eval/run.py --report eval/published-runs/<run>`; lệnh này không gọi API, cập nhật run_results.md nếu run SG.
 
-Raw trace/output private bị ignore, chỉ report metadata public. Với mọi sửa prompt/retrieval, giữ run cũ và chạy run mới. Không hạ quality bar sau khi xem kết quả. Chưa có baseline cùng điều kiện thì chưa tuyên bố cải thiện so với tutor cũ.
+Để chạy mới: cài requirements, điền .env riêng, chọn slides rồi `python -X utf8 eval/run.py`. Đổi model/provider phải có run mới; không dùng số của proxy cho model khác. Không đổi expected hoặc quality bar sau xem output. Chưa có baseline cùng điều kiện thì không nhận cải thiện so tutor cũ.
+
+Transcript G01–G24 ở `archive/golden-transcript.json`, run 20260918T044511Z chỉ là lịch sử; export ghi archive/transcript-run-results.md, không ghi đè CP3 slide. Smoke SL10 và retry cũng là lịch sử thử nguồn, không phải golden SG24. Public run chỉ có response/review/trace metadata, cần pack đề bài; key/raw provider/PDF gốc không public.

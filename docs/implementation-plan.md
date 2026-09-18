@@ -1,5 +1,7 @@
 # VLearn Grounded Tutor - CP3 đến CP5
 
+**Kế hoạch lịch sử bản transcript.** Nguồn và golden set hiện hành đã chuyển sang slide, theo [slide-primary.md](slide-primary.md). Các mô tả transcript bên dưới chỉ giữ lịch sử.
+
 **Goal:** Prototype hỏi bài có nguồn, bộ eval và hồ sơ nộp từng checkpoint.
 **Architecture:** Python standard library phục vụ web local; nguồn transcript đặt ngoài repo. Retrieval lexical theo mã đoạn; model quyết định action và sinh JSON; validator chặn citation không thuộc context. Gemini và API Chat Completions tương thích OpenAI được cấu hình qua biến môi trường.
 **Spec:** ../../K4-3B-Day05-06-AI-Product-Hackathon/cp3-spec.md

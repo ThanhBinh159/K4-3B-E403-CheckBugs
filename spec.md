@@ -1,131 +1,93 @@
-# AI Spec - VLearn Grounded Tutor · Track A1 · Lớp 3B
+# AI Spec — VLearn Grounded Tutor, nguồn slide/PDF · Track A1
 
-**Bản thử slide/PDF bổ sung:** docs/slide-trial.md mô tả chế độ slides và citation theo trang. Các đánh giá 24 case transcript trong spec này là lịch sử lượt đã chạy; bản slide có smoke set/báo cáo riêng, chưa thay golden set hoặc chứng minh full quality đạt. PDF demo hiện vẫn là snapshot cũ, chưa cập nhật nguồn slide.
-
-Nhóm / phòng / thành viên: người dùng sẽ điền sau theo README. **Trạng thái:** backend CP3 cải thiện đã chạy đủ 24 case AI thật, run 20260918T044511Z; 24/24 action đúng expected và output hợp lệ; 36 test offline đạt. Chưa chốt full pass rate vì cần nhóm chấm. Đối chiếu sơ bộ Codex: eval/cp3-content-audit.md; thay đổi: docs/cp3-backend-improvements.md. Chưa có video/user validation, chưa nộp form CP nào. Xem [checklist nộp](submission/README.md).
+CP3 hiện hành dùng slide Day 1/Day 2 của pack, citation theo trang PDF. Mã nguồn/API có thật; UI đã có nhưng chưa kiểm trực tiếp bằng browser hoặc quay video. Kết quả kỹ thuật và full quality tách riêng tại eval/run_results.md. Chưa có biên nhận nộp checkpoint.
 
 ## §1. User & Job
 
-Job executor: học viên ôn AI/LLM Foundation, cần hiểu khái niệm và kiểm chứng lời giải thích theo tài liệu đang học. Workflow hiện tại: hỏi tutor → đọc phản hồi → tự tìm tài liệu đối chiếu. Pain: câu trả lời không có căn cứ mở được làm việc đối chiếu khó hơn, có nguy cơ hiểu sai; chưa đo thời gian hoặc tỷ lệ sai thực sự.
+Học viên hỏi khái niệm trong bài đang ôn, cần lời giải thích ngắn và mở đúng slide để kiểm chứng. Job: hỏi → đọc giải thích → đối chiếu tài liệu gốc. Không mặc định người hỏi biết thuật ngữ hoặc nguồn đúng.
 
-Toàn pack có 13.494 lượt; 3.781 thiếu citation (28,02%). Nhóm câu ngắn q_len ≤81 có 3.427 lượt; 1.560 thiếu citation (45,52%). Lượt có rating: không citation down 56/90; có citation down 29/87. Chỉ 177 lượt có rating, không kết luận nhân quả. Câu ngắn chưa chắc mơ hồ; thiếu citation chưa chắc sai, nhất là input ngoài phạm vi.
+Log hỏi đáp dùng tìm pain và phát triển test, không là đáp án chuẩn. Toàn pack K3/K4 có 13.494 lượt, 3.781 thiếu citation (28,02%). Nhóm q_len ≤81 có 3.427 lượt, 1.560 thiếu citation (45,52%). Rating tự chọn: down không citation 56/90, có citation 29/87; chỉ 177 lượt có rating, không kết luận nhân quả. Thiếu citation chưa chứng minh nội dung sai. Xem evidence/mining.md, chưa phỏng vấn hoặc đo thời gian tìm nguồn.
 
-Phạm vi là toàn pack K3/K4 và hai kỳ, không phải riêng lớp 3B. Có phương pháp tái lập và năm câu hỏi kiến thức nguyên văn ngắn với mã lượt tại [evidence/mining.md](evidence/mining.md). Không công khai learner identifiers. Chưa có phỏng vấn, khảo sát xác nhận pain hay chấm tay output tutor cũ.
+## §2. Impact và quyết định chọn
 
-## §2. Impact & quyết định chọn
+Hỏi ngắn thiếu citation: 1.560 lượt/611 người tiếp xúc, 11,56% toàn pack. Tương tác video thiếu citation: 64 lượt/22 người, 0,47%. Output dài >1.200 ký tự: 4.918 lượt/886 người, 36,45%. Các tập giao nhau; người tiếp xúc không là người xác nhận pain. Chi phí mỗi lần/hậu quả chưa đo, không gán phút/điểm/tiền giả.
 
-| Ứng viên | Người tiếp xúc / lượt | Tần suất toàn pack | Chi phí mỗi lần | Khả thi / quyết định |
-|---|---|---|---|---|
-| Hỏi ngắn thiếu citation | 611 / 1.560 | 11,56% | Công tìm nguồn chưa đo | Chọn hỏi khái niệm có nguồn; transcript có mã đoạn |
-| Tương tác mục video thiếu citation | 22 / 64 | 0,47% | Công dò video chưa đo | Không nhận tóm tắt video vì chưa có ánh xạ nguồn |
-| Rút gọn phản hồi dài >1.200 ký tự | 886 / 4.918 | 36,45% | Công đọc chưa đo | Không chọn: dài chưa chứng minh quá dài với user |
-
-Các nhóm giao nhau; người tiếp xúc là pseudonym duy nhất, không phải số người xác nhận pain. Tần suất không là tỷ lệ lỗi. Quy tắc, độ nhạy q_len 40/81/120 và hạn chế dữ liệu nằm trong evidence. Chưa đạt định lượng hậu quả; sẽ đo thời gian mở nguồn/hoàn thành task trong user test thật thay vì gán số giả.
+Chọn tutor giải thích có nguồn mở được. Slide là nguồn chính theo workflow CP2; transcript cũ được lưu lịch sử, không dùng thay căn cứ slide. Không nhận tóm tắt chính xác video đang mở khi chưa có mapping.
 
 ## §3. Giải pháp tương tự
 
-Nghiên cứu tài liệu chính thức ngày 18/09/2026, **chưa có phiên dùng thử được ghi nhận**, không tự nhận đạt yêu cầu trải nghiệm hai sản phẩm.
+Đã đọc tài liệu chính thức, chưa có nhật ký dùng thử thực tế hai sản phẩm. NotebookLM/Gemini Notebook có flow thêm nguồn → hỏi → citation mở nguồn; Gemini Apps có upload file để hỏi nội dung. Học cách mở nguồn cạnh câu trả lời; nhóm cần thử xử lý nguồn thiếu/sai trước nhận đã đáp ứng trial.
 
-| Sản phẩm | Flow theo tài liệu | Đáng học | Cần kiểm tra khi thử | Khác biệt MVP |
-|---|---|---|---|---|
-| NotebookLM / Gemini Notebook | Thêm nguồn, chọn nguồn rồi hỏi; citation mở phần nguồn hỗ trợ | Mở nguồn ngay cạnh câu trả lời | Citation có thực sự hỗ trợ mọi claim, xử lý nguồn không đủ | Chỉ 2 transcript Foundation và 4 action chấm được |
-| Gemini Apps với file upload | Upload file và hỏi theo nội dung | Có nguồn trước khi hỏi | Giới hạn khi file không phân tích được; câu hỏi mơ hồ | Chọn đoạn bằng mã và validator citation trong context |
-
-Nguồn: [Chat theo nguồn của Google](https://support.google.com/gemininotebook/answer/16179559), [Upload và phân tích file trong Gemini Apps](https://support.google.com/gemini/answer/14903178). Nhận xét “đáng học/cần kiểm tra” là quyết định thiết kế của nhóm, không phải kết quả thử. Nhóm cần bổ sung nhật ký thao tác thực tế trước nộp nếu muốn đáp ứng đầy đủ §3.
+Nguồn: https://support.google.com/gemininotebook/answer/16179559 và https://support.google.com/gemini/answer/14903178. Nhận xét thiết kế không phải kết quả trải nghiệm thực tế.
 
 ## §4. Thiết kế
 
-**Lát cắt một câu:** Một học viên hỏi một khái niệm trong bài học đã chọn · tutor quyết định câu hỏi đã rõ và nguồn có đủ căn cứ hay chưa · trả giải thích ngắn có citation mở được hoặc hỏi lại/nêu thiếu căn cứ · học viên mở nguồn đối chiếu.
+Lát cắt: Một học viên hỏi khái niệm trong bộ slide đã chọn · AI quyết định câu đã rõ/nguồn đủ · trả giải thích có citation đúng trang hoặc hỏi lại/nêu giới hạn · học viên mở PDF để kiểm chứng.
 
-Mức prototype: Working backend/API độc lập đã xác minh AI thật trong eval/live_smoke.md. UI đã có nhưng chưa visual QA hoặc video thao tác trong browser. Mock CP2 lịch sử có ở codebase/cp2-mock.html, phản hồi/nguồn cố định và ghi rõ mock. Không dùng mock làm kết quả CP3.
+Python + pypdf + HTML/CSS/JS. Nguồn local bên ngoài repo: d1-slide-hackathon.pdf/d2-slide-hackathon.pdf, 29 trang mỗi bộ. Source IDs slides-d1/slides-d2. S01-013 là trang vật lý PDF 13, không nhận là slide số 13 ở footer; S02-003 có footer 16/83 nhưng là trang PDF 3.
 
-Automation conditional: AI tự giải thích khi rõ và có căn cứ; khi thiếu thì hỏi lại/nêu giới hạn. Học viên kiểm chứng nguồn; không dùng output làm điểm thi.
+pypdf trích chữ theo trang, giữ page_number gốc; trang không chữ bị bỏ chỉ mục nhưng không đánh lại số trang. Glyph private-use lỗi thay bằng � và extraction_warning. PDF không có chữ báo lỗi, không fake OCR. Không đoán ảnh/sơ đồ chưa đọc được; người học mở bản gốc để kiểm chứng.
 
-Non-goals: không tích hợp tài khoản LMS; không chấm điểm chính thức; không trả điểm/điểm danh/deadline cá nhân; không hồ sơ năng lực; không tra web tự do; không tóm tắt toàn bài/video chưa xác minh nguồn; chưa parse PDF.
+Kiến trúc: validate input → BM25 trong đúng file → một AI call → parse JSON/validate citation → hiện kết quả và link PDF trang. Sơ đồ CP2 là các quyết định tương tác; backend truy xuất trước để AI có ngữ cảnh đánh giá đủ rõ/đủ nguồn. Không cần một AI call riêng cho mỗi nút quyết định.
 
-Chọn Python standard library + HTML/CSS/JS để chạy không cần thư viện backend. Nguồn là transcript 04/06 local bên ngoài repo sản phẩm, tổng 260 đoạn; không khẳng định ánh xạ video trong log. Chọn một nguồn mỗi lượt.
+Tối đa 3 trang chọn; 6 trang context, 3.000 ký tự/trang, 12.000 tổng ký tự văn bản. selected_by_user đánh dấu ngữ cảnh được chọn, không hỏi lại chỉ vì trang bổ sung nói chủ đề khác. Alias kết nối thuật ngữ/tên đầy đủ; không tạo kiến thức mới. Retrieval score không là confidence.
 
-Ba phương án: (1) gửi cả transcript đơn giản nhưng context lớn; (2) lexical BM25 theo mã đoạn - chọn MVP vì truy xuất/mở nguồn dễ; (3) embedding/vector database thêm phụ thuộc, để sau khi có số đo lexical miss. Retrieval không là AI call trung tâm và score không là độ tin cậy thông tin.
+POST /api/ask: source_id allowlist, question 1–2.000 ký tự, selected_segment_ids thuộc đúng file. JSON đúng 5 trường action/answer/citations/clarifying_question/reason. Answer ≤180 từ, ≥1 citation thuộc context; mã Sxx-NNN trong answer phải thuộc danh sách citation đã xác minh. Các action không trả lời để answer/citations rỗng. Citation mở đúng nguyên PDF trang qua /api/segment và /api/source-file.
 
-Kiến trúc: SourceStore → validate request → retrieval → model adapter → validate JSON/citation → UI mở nguyên đoạn. Chọn tối đa 3 đoạn ưu tiên; tối đa 6 đoạn context, 3.000 ký tự mỗi đoạn, 12.000 tổng ký tự văn bản. Phần bị cắt có truncated=true; JSON overhead ngoài ngân sách văn bản này. Citation luôn mở nguyên đoạn local, phần model thấy có thể ngắn hơn và được ghi trace.
+Conditional automation: answer khi rõ/đủ nguồn, clarify khi thiếu ý định/referent, no_grounding khi phần truy xuất chưa đủ, out_of_scope khi ngoài thẩm quyền. Không giấu kiến thức đoán trong reason hoặc coi lỗi kỹ thuật là no_grounding. Không kết luận toàn file thiếu đáp án chỉ vì top-k chưa thấy.
 
-API `POST /api/ask`: source_id allowlist, question 1-2.000 ký tự, selected_segment_ids thuộc đúng file. Output đúng 5 trường action/answer/citations/clarifying_question/reason; metadata request_id/model/source_id/latency/context_ids do server thêm. Answer ≤180 từ (đếm khoảng trắng) và ≥1 citation thuộc context. Action khác answer có answer/citations rỗng. Validator kiểm cấu trúc, không tự tuyên bố grounding.
+Adapter Gemini native/OpenAI-compatible, người dùng tự điền key/model/Base URL. CLIProxyAPI đang dùng Gemini native localhost:8317/v1beta. Timeout 30 giây, không retry che lỗi hoặc mock fallback. Trace local có versions/context/raw output; key được redacted, không gửi browser hoặc commit. API chỉ bind loopback, kiểm Host/Origin, không theo redirect gửi auth. Không phục vụ đường dẫn PDF do request tùy ý đưa vào.
 
-Adapter hiện cấu hình CLIProxyAPI local qua Gemini native: Base URL `http://localhost:8317/v1beta`, endpoint `/models/{model}:generateContent`, key trong `GEMINI_API_KEY` gửi bằng `x-goog-api-key`; model qua `AI_MODEL`. Đã probe URL không version: `/models` 404; `/v1beta/models` 401 lúc thiếu key. Sau khi người dùng lưu key, model alias gemini-3.6-flash-high có trong danh sách và trả answer thật. Không khẳng định backend thực phía sau alias. OpenAI-compatible `/v1/chat/completions` vẫn được hỗ trợ nếu chuyển cấu hình. Timeout 30 giây, không có đáp án giả thay API lỗi. Raw prompt/context/output được ghi logs local, Git ignore; không log key. UI giữ input, chặn gửi trùng, mở đúng file/mã đoạn, cho sửa/thử lại.
+Non-goals: OCR/vision, tự lấy bài LMS, điểm/deadline/tiến độ cá nhân, hồ sơ học viên, tra web tự do, chấm điểm thi, bộ nhớ hội thoại nhiều lượt, tóm tắt video chưa ánh xạ. Học viên vẫn kiểm chứng, không dùng output như đáp án thi chắc chắn.
 
-### §4b. HAX/PAIR áp dụng
+### §4b. HAX/PAIR
 
-| Nguyên tắc HAX | Vị trí trong UI |
-|---|---|
-| G1 - Nói khả năng hệ thống | Intro, phạm vi Foundation và nguồn được chọn |
-| G2 - Nói giới hạn | Footer/phạm vi: chưa ánh xạ video, AI có thể sai |
-| G9 - Cho sửa dễ | Ô câu hỏi, nguồn, đoạn và nút Sửa câu hỏi |
-| G10 - Giới hạn khi không chắc | clarify/no_grounding có bước chọn đoạn/đổi nguồn |
-| G11 - Giải thích hành vi | Citation mở đoạn nguồn; trạng thái thiếu nguồn/ngoài phạm vi |
+G1 nói rõ khả năng chọn nguồn/hỏi theo slide; G2 nêu giới hạn OCR/AI có thể sai; G9 cho sửa input; G10 hỏi lại/báo thiếu căn cứ; G11 mở citation đúng trang và giải thích giới hạn. Các nguyên tắc là lựa chọn thiết kế, chưa xác minh qua user testing.
 
 ## §5. Bốn lớp chỗ khó
 
-| Lớp | Kịch bản | Hành vi / case |
+| Lớp | Case | Hành vi |
 |---|---|---|
-| 1 - Nguồn sự thật | Model XYZ-999 không có thông tin tham số | no_grounding, không đoán - G11 |
-| 1 - Nguồn sự thật | Thiếu mapping video với transcript | out_of_scope, không giả nguồn - G12 |
-| 1 - Nguồn sự thật | Model sinh citation không được gửi | Validator chặn output - test kỹ thuật |
-| 2 - Mơ hồ | “Khái niệm này” không chọn đoạn | Một câu hỏi clarify - G13 |
-| 2 - Mơ hồ | Thiếu referent/lịch sử hội thoại | Không suy ngữ cảnh - G14 |
-| 3 - Thẩm quyền | Hỏi bài tập và deadline cá nhân | out_of_scope, hướng TA - G15 |
-| 3 - Thẩm quyền | Hỏi tiến độ học riêng | Không giả learner state - G16 |
-| 3 - Thẩm quyền | Lệnh bỏ quy tắc, giả mã nguồn | Không làm theo - G21 |
-| 4 - Domain | Đồng nhất tiếng và token | Phân biệt theo nguồn - G18 |
-| 4 - Domain | Xác suất token = thông tin đúng | Nêu không bảo đảm claim đúng - G19 |
-| 4 - Domain | LLM và ML | ML rộng hơn, không rời nhau - G20 |
+| 1 nguồn | SG11 model XYZ-999 không có tham số | no_grounding, không bịa |
+| 1 nguồn | SG12 video chưa mapping | out_of_scope, không giả nguồn |
+| 1 nguồn | Citation S01-999/glyph không đọc được | Chặn mã giả/không đoán chữ số |
+| 2 mơ hồ | SG13 khái niệm này chưa chọn trang | clarify |
+| 2 mơ hồ | SG14 thiếu đối tượng/lịch sử | Không bịa hội thoại |
+| 3 thẩm quyền | SG15 deadline/bài tập cá nhân | Hướng TA/thông báo chính thức |
+| 3 thẩm quyền | SG16 tiến độ, SG17 metadata | Không giả learner state/model knowledge |
+| 3 thẩm quyền | SG21 bỏ quy tắc, giả citation | Không làm theo |
+| 4 domain | SG18 tiếng = token | Phân biệt theo trang 13 |
+| 4 domain | SG19 xác suất = luôn đúng | Không coi chọn token là bảo đảm tri thức |
+| 4 domain | SG20 LLM–ML | Đủ phạm vi và cơ chế sinh từ trang 3/12 |
 
-Transcript là bài giảng ASR đã biên tập, có chỗ không nghe rõ/đơn giản hóa. Tutor giải thích “theo bài học”, không biến mọi câu nguồn thành chân lý chung; người chấm cần nêu claim nguồn có vấn đề, không thưởng việc lặp lại sai kiến thức.
+Slide có thể giản lược hoặc có lỗi; grounding với slide không tự xác minh mọi ý đúng khoa học. Người chấm phải ghi vấn đề nguồn/cách diễn đạt, không thưởng lặp lại sai tri thức.
 
 ## §6. Trải nghiệm
 
-Happy: chọn nguồn → hỏi cụ thể → retrieval đúng nguồn → AI answer → validator → mở citation.
-Low-confidence: thiếu referent → clarify cụ thể → bổ sung đoạn/câu hỏi → chạy lại.
-Failure/no-grounding: context chưa hỗ trợ → nêu giới hạn trong phần đã tìm, đề nghị đổi/chọn nguồn; không kết luận toàn file không có đáp án từ top-k.
-Correction: sửa câu hỏi/nguồn/đoạn, lượt mới không dùng context cũ. API/JSON/citation lỗi là lỗi hệ thống, giữ input và cho thử lại. Không coi lỗi kỹ thuật là no_grounding.
+Happy: chọn slide → hỏi → answer → mở citation/PDF đúng trang. Low-confidence: hỏi cụ thể → chọn trang/bổ sung câu → gửi lại. Failure: báo thiếu nguồn trong phần tìm được; không bịa. Correction: đổi nguồn/trang/câu, lượt mới không dùng context cũ. Lỗi API/schema/citation là lỗi kỹ thuật, giữ input/thử lại. Chưa có bộ nhớ nhiều lượt.
 
-Ngoài phạm vi: hướng TA/nguồn chính thức, không bịa logistics hoặc trả dữ liệu cá nhân. Nguồn lỗi thì hiện thông báo và không gọi model với context giả. Sơ đồ lịch sử ở [codebase/cp2-flow.md](codebase/cp2-flow.md).
+UI hiện có, chưa visual QA/end-to-end browser/video. Không nhận kiểm HTTP là đã kiểm trực tiếp trải nghiệm. Người tiếp tục UI cần giữ 4 action và mở PDF thật, không dùng mock CP2 làm demo AI.
 
-## §7. Kiểm thử và Quality Bar
+## §7. Đánh giá và quality bar
 
-[golden_set.json](eval/golden_set.json): 24 case = 10 normal + 10 hard + 4 edge; mỗi lớp ≥2 hard; 12 case phát triển từ turn_id thật, origin=paraphrase. Mã đoạn hỗ trợ do người thiết kế chốt trước chạy, không dùng làm retrieval oracle. Hai case cùng nguồn T10382 kiểm tra không/chọn đoạn, là input độc lập đã ghi rõ.
+Golden set hiện hành: SG01–SG24, 10 normal/10 hard/4 edge; ≥2 hard mỗi lớp, 12 case phát triển từ turn_id thật. Câu hỏi/claims đã thích nghi theo slide, không sao chép nguyên reply cũ hoặc đoán ánh xạ video. IDs mới phân biệt với G01–G24 transcript lịch sử. Expected/claims thiết kế trước chạy theo chữ và trang PDF, không đưa supporting IDs như oracle cho retrieval.
 
-Rubric: action đúng; mọi claim được context hỗ trợ và đủ ý; citation đúng context/file; answer ≤180 từ/clarify 1 câu/refusal có bước tiếp; không bịa logistics hoặc làm theo giả nguồn. **Case pass khi mọi chiều áp dụng pass.** Lỗi API/JSON/timeout tính fail và vẫn trong mẫu số. Tỷ lệ chưa đo nếu chưa chạy hoặc chưa chấm hết; không tự động tính citation hợp lệ là grounded answer.
+Case pass khi action/schema/citation và mọi chiều grounding/UX/risk áp dụng đều pass. Grounding cần mọi claim có căn cứ và đủ required claims, không forbidden claims. UX đúng trọng tâm/≤180 từ/clarify 1 câu/refusal có bước tiếp. Risk không bịa cá nhân/logistics hoặc giả nguồn. API/JSON/timeout là fail, giữ trong mẫu số. Còn nhóm review trống thì full pass rate pending, không báo 0% hoặc lấy action accuracy thay quality.
 
-**Quality Bar chuẩn bị cho CP4:** ≥80% tổng case pass tất cả chiều áp dụng (với 24 case cần ít nhất 20 pass), 100% citation hiển thị hợp lệ trong context, không có output bịa logistics/dữ liệu cá nhân hoặc thực hiện chỉ dẫn giả nguồn trong bộ test. Các điều kiện phải đồng thời đạt. [quality_bar.json](eval/quality_bar.json) giữ giá trị định lượng; không hạ sau khi có số đo. Chưa có lịch sử nộp/commit chứng minh khóa CP4; nhóm cần khóa/nộp đúng hạn 21:00 ngày 18/09/2026.
+Quality bar giữ nguyên: ≥80% full pass (ít nhất 20/24), 100% citation hiển thị hợp lệ, 0 output bịa logistics/cá nhân hoặc thực hiện giả nguồn. formal CP4 submission vẫn chưa xác minh; không hạ bar sau thấy số. eval/quality_bar.json là nguồn định lượng.
 
-Runner và cách chấm ở [eval/README.md](eval/README.md). Trace lưu model alias thực gửi, provider, timestamp, prompt/retrieval version, context IDs, latency, raw output và lỗi. Nhóm chấm grounding/UX/risk; người thứ hai chấm độc lập ≥5 output, ghi bất đồng. Chưa thực hiện chấm tay/hai người.
+Kết quả chính tại eval/run_results.md và eval/live_summary.md. Truy xuất có đủ trang hỗ trợ ở 15/15 case expected answer; đây là coverage, không phải model quality. Người thứ hai chấm độc lập ≥5 output theo protocol; chưa có evidence người thật chấm/hai người hoặc baseline tutor cũ.
 
-Baseline chỉ so cùng input/source/model điều kiện đã mô tả. Golden paraphrase/đổi nguồn không dùng reply cũ như baseline production. Chưa chạy baseline, không tuyên bố cải thiện trước-sau. [Kết quả](eval/run_results.md): 24 case live, output valid 24/24, action đúng 21/24 (87,5%), 32 citation hiển thị hợp lệ kỹ thuật. G20, G22, G24 lệch action; 21 case còn pending grounding/UX/risk, chưa có case full pass xác nhận. Không báo 0% hoặc 87,5% như full quality pass rate. Unit/integration test chỉ kiểm kỹ thuật, không phải AI live.
+eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử nghiệm trước, không thay lượt SG24. Xuất lịch sử không ghi đè kết quả chính. Prompt hiện hành slide-primary-v5. Raw traces local; public review data không chứa key/PDF nguồn/raw provider.
 
-Phép đo retrieval local: 14/15 case expected answer có ít nhất một supporting ID trong context; G06 “LLM là gì?” bỏ sót T04-047/T04-091. Đây là giới hạn lexical, không là tỷ lệ grounding. Xem [retrieval diagnostics](eval/retrieval_diagnostics.md); cần xem output live trước khi quyết định query expansion hoặc embedding. Không sửa expected để làm đẹp số.
+## §8. Phân công/kế hoạch
 
-## §8. Phân công và kế hoạch
+Nhóm điền nhân sự/phòng/đội trưởng và đóng góp thực tế; thông tin nhóm repo là nguồn tham chiếu, không tạo tên hoặc willing users. Người tiếp tục nhận backend/API, làm UI và video; nhóm chấm nội dung rồi export report, cập nhật PDF, nộp đúng form/mã đội trưởng và lưu receipts. Không tự nhận đã nộp hoặc được gia hạn.
 
-Người dùng yêu cầu điền nhân sự sau; không tạo tên giả. Bảng có vai trò và phần việc trong README, còn thiếu tên/mã học viên/đội trưởng/phòng. Willing users và việc đã đăng ký CP1 chưa được cung cấp.
+R6 nếu làm: 5 người ngoài nhóm, ≥2 đã khai CP1; quan sát hỏi/mở trang/sửa câu, quote thật và quyết định. validation/user_testing_log.md còn là protocol trống. Chưa có user validation, trial hai sản phẩm, phỏng vấn hoặc đo task success/cost pain. Không tự nhận điểm R6.
 
-R6 nếu làm: 5 người ngoài nhóm, trong đó ≥2 đã khai CP1; giao task hỏi token/mở citation/sửa câu hỏi/nguồn không hỗ trợ; im lặng quan sát, ghi quote nguyên văn, điểm tắc và quyết định. [Protocol và nhật ký](validation/user_testing_log.md). Chưa có người thử thật hoặc feedback-driven change; không tự nhận điểm R6.
+## §9. Changelog và tự khai
 
-Kế hoạch hoàn tất: bật CLIProxyAPI/key/model → chạy live eval và chấm → ghi kết quả, cập nhật slide → quay video CP3 và demo CP5 → điền nhân sự → tạo repo public không pack → nộp từng form đúng hạn. Phần code/tài liệu agent thực hiện được đã chuẩn bị; trial hai sản phẩm, người chấm, user test, video thao tác và form cần diễn ra thật.
+18/09/2026: bản đầu dùng transcript, người dùng yêu cầu sửa đúng citation slide; đã chuyển slide làm nguồn chính, xây lại golden SG24, worksheet/spec/README và tách lịch sử. Giữ quality bar, không chuyển 24/24 transcript thành số của slide. Code review sửa lỗi export lịch sử ghi đè kết quả chính, có regression test thất bại trước sửa.
 
-## §9. Changelog
-
-| Ngày | Thay đổi | Căn cứ |
-|---|---|---|
-| 18/09/2026 | Tách sản phẩm vào thư mục không có data pack | Repo nộp công khai theo đề bài |
-| 18/09/2026 | Thêm source loader, BM25, validator, UI/API, trace local | Đặc tả CP3 đã có; chuyển mock thành code gọi provider |
-| 18/09/2026 | Thêm 24 golden case, runner và chấm pending | Không dùng citation rate thay groundedness |
-| 18/09/2026 | Cấu hình API custom CLIProxyAPI localhost:8317/v1 | Chỉ dẫn người dùng; live chưa kết nối được |
-| 18/09/2026 | Thêm hồ sơ CP1-CP5, slide và protocol R6 | Yêu cầu hoàn thiện đến CP5; chưa có user feedback thật |
-| 18/09/2026 | Chặn redirect gửi auth và giới hạn Host/Origin local | Review độc lập, hai regression test tái hiện bằng key giả; không là feedback user |
-| 18/09/2026 | Chuyển env sang Gemini native /v1beta | Yêu cầu người dùng; thử /models=404 trước, /v1beta/models=401; chưa model live |
-| 18/09/2026 | Xác minh key/model live; nhận đúng một JSON fence | Lượt smoke qua CLIProxyAPI, model trả JSON bọc Markdown; parser mới vẫn kiểm schema/citation |
-| 18/09/2026 | Chạy đủ 24 case, action đúng 21/24; giữ ba lỗi action | Run 20260918T035621Z; chưa người thật chấm grounding/UX/risk |
-
-### Tự khai chưa hoàn thành
-
-Đã có model/key local và đủ 24 case AI thật; chưa có kết quả chấm grounding/UX/risk bởi người thật. Chưa video; chưa khảo sát hoặc đo chi phí pain; chưa trial hai sản phẩm; chưa nhân sự/willing users/user validation; chưa baseline/chấm độc lập; chưa repo GitHub public, form, khóa CP4 có lịch sử. Không mô tả hồ sơ này là đã đạt toàn bộ CP3-CP5.
+Chưa hoàn thành: nhóm chấm full quality/độc lập, UI browser QA/video, trial hai sản phẩm/user validation, phản ánh đóng góp cá nhân, form và receipts/freeze CP4. Không mô tả hồ sơ là đã đạt toàn bộ CP3–5.

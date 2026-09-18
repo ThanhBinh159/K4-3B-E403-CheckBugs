@@ -26,7 +26,7 @@ def load_env():
 
 
 def configured_store():
-    kind = os.getenv('VLEARN_SOURCE_KIND', 'transcript')
+    kind = os.getenv('VLEARN_SOURCE_KIND', 'slides')
     variable = 'VLEARN_SLIDES_DIR' if kind == 'slides' else 'VLEARN_DATA_DIR'
     suffix = 'slides' if kind == 'slides' else 'transcript'
     path = Path(os.getenv(variable, '../K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/' + suffix))

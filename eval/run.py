@@ -65,9 +65,14 @@ def export_report(run_dir):
     lines += ['', '## Phân tích của người chấm', '', 'Ghi nguyên nhân retrieval/action/claim/UX/API, người chấm, bất đồng và quyết định vào review.csv local; bổ sung trích ngắn đã rà trước khi nộp.', '']
     slides = any(r.get('source_id', r.get('response', {}).get('source_id', '')).startswith('slides-') for r in results)
     if slides:
-        lines.insert(2, 'Bản thử nguồn slide: không thay kết quả golden set transcript 24 case. Các ô human review trống vẫn pending; không dùng smoke set để nhận full quality đạt.')
-    report_name = 'slide_run_results.md' if slides else 'run_results.md'
-    (ROOT / 'eval' / report_name).write_text('\n'.join(lines), encoding='utf-8')
+        primary = all(r['case_id'].startswith('SG') for r in results)
+        lines.insert(2, 'Nguồn slide/PDF; full quality vẫn chờ nhóm chấm. Số kỹ thuật không thay groundedness. Kết quả transcript cũ là lịch sử, không phải kết quả bản slide.' if primary else 'Smoke set slide riêng, không thay bộ golden set slide chính. Human review còn pending.')
+    else:
+        primary = False
+    report_name = 'run_results.md' if primary else 'slide_run_results.md' if slides else 'archive/transcript-run-results.md'
+    report = ROOT / 'eval' / report_name
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text('\n'.join(lines), encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False))
 
 

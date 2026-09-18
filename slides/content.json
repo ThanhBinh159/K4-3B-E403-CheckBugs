@@ -31,23 +31,23 @@
         "Vai trò"
       ],
       [
-        "1. Chọn transcript 04 hoặc 06",
-        "Nguồn local, mã đoạn mở được"
+        "1. Chọn slide Day 1 / Day 2",
+        "2 PDF · 58 trang · số trang vật lý"
       ],
       [
-        "2. Tìm đoạn liên quan",
-        "BM25, tối đa 6 đoạn / 12.000 ký tự"
+        "2. Tìm trang liên quan",
+        "BM25 · tối đa 6 trang / 12.000 ký tự"
       ],
       [
-        "3. Gọi model qua CLIProxyAPI",
-        "AI quyết định action và sinh JSON"
+        "3. Gọi API AI thật",
+        "AI chọn action và sinh JSON"
       ],
       [
-        "4. Kiểm tra citation → mở nguồn",
-        "Chặn mã giả; học viên đối chiếu claim"
+        "4. Kiểm tra mã → mở PDF",
+        "Mã S01/S02 mở đúng trang nguồn"
       ]
     ],
-    "note": "Gemini native /v1beta đã trả answer thật qua CLIProxyAPI. Không tích hợp LMS, không chấm điểm hoặc tra web."
+    "note": "Gemini native qua CLIProxyAPI; hỗ trợ OpenAI-compatible. Chỉ dùng chữ trích xuất PDF, chưa OCR hình/sơ đồ."
   },
   {
     "title": "Bốn lớp chỗ khó",
@@ -83,7 +83,7 @@
   },
   {
     "title": "Kiểm thử và ngưỡng chất lượng",
-    "body": "24 case đã gọi AI thật · gemini-3.6-flash-high. Golden set: 10 thường + 10 khó + 4 hiếm; 12 case phát triển từ lượt chat thật.",
+    "body": "24 case slide đã gọi AI thật · gemini-3.6-flash-high. Golden set: 10 thường + 10 khó + 4 hiếm; 12 case có provenance từ chat thật.",
     "table": [
       [
         "Tiêu chí",
@@ -97,31 +97,31 @@
       ],
       [
         "Action đúng expected",
-        "Số kỹ thuật, không là case pass",
-        "21/24 (87.5%)"
+        "Kỹ thuật, không là case pass",
+        "23/24 (95.83%)"
       ],
       [
         "Citation hiển thị hợp lệ",
         "100% thuộc context",
-        "32 citation, 100.0% kỹ thuật"
+        "21 mã, 100.0% kỹ thuật"
       ]
     ],
-    "note": "Nguồn: eval/run_results.md. Bar còn yêu cầu 0 output bịa logistics/giả nguồn; risk chưa chấm. Chưa có biên nhận khóa CP4. Action/citation đúng chưa chứng minh groundedness."
+    "note": "Nguồn: eval/run_results.md. API lỗi giữ trong mẫu số. Chưa có biên nhận khóa CP4; action/mã đúng chưa chứng minh claim đúng."
   },
   {
     "title": "Giới hạn và kiểm chứng thực tế",
-    "body": "Proxy đã gọi model thật. Lượt smoke đầu gặp JSON bọc Markdown; đã sửa parser và giữ validator. Retrieval local có supporting ID ở 14/15 câu answer.",
+    "body": "Nguồn chính đã đổi sang PDF slide. 23/24 output qua schema. Retrieval offline lấy đủ supporting pages ở 15/15 câu kỳ vọng answer.",
     "table": [
       [
         "Đã kiểm tra / chuẩn bị",
         "Phần còn thiếu"
       ],
       [
-        "Parser nhận đúng một JSON block",
+        "PDF mở đúng trang, chặn mã giả",
         "Chấm grounding / UX / risk"
       ],
       [
-        "24/24 output qua schema; trace local",
+        "Trace có prompt/context/action",
         "Chấm độc lập ≥5 output; baseline"
       ],
       [
@@ -129,7 +129,7 @@
         "5 người ngoài nhóm, ≥2 đã khai CP1"
       ]
     ],
-    "note": "Nguồn: eval/live_smoke.md, run_results.md, retrieval_diagnostics.md. Chưa có quote/thay đổi từ user feedback hoặc video thao tác thật."
+    "note": "Chưa OCR; chữ lỗi font được đánh dấu. Chưa có user feedback/video thật. Transcript cũ chỉ là lịch sử."
   },
   {
     "title": "Hoàn tất demo và hướng mở rộng",
@@ -152,6 +152,6 @@
         "Chấm case, user test, PDF và video"
       ]
     ],
-    "note": "Mở rộng sau số đo: sửa retrieval miss trước, rồi cân nhắc embedding/PDF. Chưa tuyên bố bản mới tốt hơn tutor cũ khi chưa có baseline."
+    "note": "Tiếp theo: kiểm UI và font/công thức, quay demo, chấm nội dung. Chưa tuyên bố tốt hơn tutor cũ khi chưa có baseline."
   }
 ]

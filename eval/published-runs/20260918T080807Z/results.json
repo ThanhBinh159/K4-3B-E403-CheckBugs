@@ -1,0 +1,734 @@
+[
+  {
+    "case_id": "SG01",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Token là các mảnh chữ nhỏ mà mô hình dùng để đọc văn bản thay vì đọc từ nguyên vẹn [S01-013]. Khi tiếp nhận văn bản, mô hình sẽ cắt thành các mảnh nhỏ gọi là token; trong đó một từ có thể là một mảnh hoặc vỡ thành nhiều mảnh, đồng thời cả dấu câu và khoảng trắng cũng được tính là mảnh [S01-013]. Mọi hoạt động của mô hình đều được quy ra token và số lượng token chính xác sẽ phụ thuộc vào tokenizer của từng mô hình [S01-013].",
+      "citations": [
+        "S01-013"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "53b853fb8fec4d4bb99967942a1c0516",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 20002,
+      "context_ids": [
+        "S01-013",
+        "S01-014",
+        "S01-015",
+        "S01-016",
+        "S01-019",
+        "S01-012"
+      ]
+    },
+    "request_id": "53b853fb8fec4d4bb99967942a1c0516"
+  },
+  {
+    "case_id": "SG02",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "error",
+    "action_match": false,
+    "error": "Không kết nối được provider hoặc quá 30 giây. Giữ câu hỏi để thử lại.",
+    "request_id": "32ee81d1ec08465fa6a1196401eef1f3"
+  },
+  {
+    "case_id": "SG03",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Cơ chế attention liên kết các từ (token) trong câu thông qua các cách sau [S01-015]:\n\n- Thay vì đọc tuần tự từng chữ, cho phép mỗi token chủ động \"quay đầu\" nhìn lại các token trước đó trong câu [S01-015].\n- Chấm điểm mức độ liên quan của từng token đối với nghĩa của mình [S01-015].\n- Khóa nghĩa theo ngữ cảnh dựa trên từ được chú ý (ví dụ: xác định từ \"nó\" biểu thị quyển sách hay cái túi tùy thuộc vào từ mà nó chú ý vào) [S01-015].",
+      "citations": [
+        "S01-015"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "ae3b2d0ae6ee4027a0da5cad287a549d",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 9373,
+      "context_ids": [
+        "S01-015",
+        "S01-016",
+        "S01-017",
+        "S01-028",
+        "S01-020",
+        "S01-023"
+      ]
+    },
+    "request_id": "ae3b2d0ae6ee4027a0da5cad287a549d"
+  },
+  {
+    "case_id": "SG04",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d2",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Mô hình Double Diamond gồm hai giai đoạn với 4 bước [S02-003]:\n\n1. **Diamond 1 — Tìm đúng vấn đề**:\n- **Discover**: Mở rộng — khảo sát vấn đề căn bản [S02-003].\n- **Define**: Thu hẹp — xác định đúng bài toán gốc [S02-003].\n\n2. **Diamond 2 — Tìm đúng giải pháp**:\n- **Develop**: Mở rộng — tìm nhiều giải pháp tiềm năng [S02-003].\n- **Deliver**: Thu hẹp — lựa chọn và triển khai [S02-003].",
+      "citations": [
+        "S02-003"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "6305089b525d41c2a0380142e45ab93d",
+      "source_id": "slides-d2",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 12130,
+      "context_ids": [
+        "S02-003",
+        "S02-004",
+        "S02-002",
+        "S02-009",
+        "S02-027",
+        "S02-013"
+      ]
+    },
+    "request_id": "6305089b525d41c2a0380142e45ab93d"
+  },
+  {
+    "case_id": "SG05",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "AI (Trí tuệ nhân tạo) là chiếc ô lớn nhất, bao gồm mọi hệ thống có yếu tố \"thông minh\", kể cả các hệ thống dựa trên luật tay hay robot [S01-003]. Trong khi đó, Machine Learning (Học máy) là một tập con thuộc AI, có đặc điểm là học từ dữ liệu thay vì viết luật tay [S01-003]. Tóm lại, AI có phạm vi rộng hơn, còn Machine Learning là một hướng tiếp cận/tầng kỹ thuật cụ thể nằm bên trong AI [S01-003].",
+      "citations": [
+        "S01-003"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "012856b9222c44faa44febf37bd4489a",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 18054,
+      "context_ids": [
+        "S01-002",
+        "S01-003",
+        "S01-004",
+        "S01-015",
+        "S01-008",
+        "S01-007"
+      ]
+    },
+    "request_id": "012856b9222c44faa44febf37bd4489a"
+  },
+  {
+    "case_id": "SG06",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "LLM (Large Language Model) là model nền chuyên ngôn ngữ, đóng vai trò là tim của làn sóng AI hiện nay [S01-003] và là engine chung cho cả Generative AI lẫn Agentic AI [S01-004].\n\nVề cơ chế sinh văn bản, LLM vận hành theo nguyên lý \"đoán → nối vào câu → đoán tiếp\" [S01-012]. Quá trình này diễn ra qua vòng lặp: dự đoán (predict) token mới, nối (append) token đó vào ngữ cảnh, rồi chạy lại từ đầu (rerun) để tiếp tục dự đoán [S01-012]. Việc lựa chọn từ ở mỗi bước được thực hiện dựa trên bảng xác suất [S01-029].",
+      "citations": [
+        "S01-003",
+        "S01-004",
+        "S01-012",
+        "S01-029"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "b0b0b4cd2ab343f8b5aafa42a4e2e935",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 24765,
+      "context_ids": [
+        "S01-002",
+        "S01-003",
+        "S01-004",
+        "S01-005",
+        "S01-012",
+        "S01-029"
+      ]
+    },
+    "request_id": "b0b0b4cd2ab343f8b5aafa42a4e2e935"
+  },
+  {
+    "case_id": "SG07",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Theo tài liệu, sự khác biệt chính giữa Machine Learning và Deep Learning bao gồm:\n\n- **Machine Learning**: Phương pháp giúp hệ thống học từ dữ liệu thay vì phải viết quy tắc bằng tay [S01-003].\n- **Deep Learning**: Sử dụng mạng nơ-ron nhiều tầng để tự học các đặc trưng [S01-003].\n\nVề mối quan hệ phân cấp, Machine Learning là phạm vi rộng hơn bao chứa Deep Learning bên trong [S01-003].",
+      "citations": [
+        "S01-003"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "b3f44c7edecb47649e9f96102927b9d7",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 16249,
+      "context_ids": [
+        "S01-003",
+        "S01-004",
+        "S01-020",
+        "S01-016",
+        "S01-015",
+        "S01-023"
+      ]
+    },
+    "request_id": "b3f44c7edecb47649e9f96102927b9d7"
+  },
+  {
+    "case_id": "SG08",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Theo slide [S01-004], sự khác biệt giữa mô hình phân loại (Discriminative AI) và Generative AI bao gồm:\n\n- **Mô hình phân loại (Discriminative AI)**: Giỏi phân loại và dự đoán, ví dụ như lọc spam, phát hiện gian lận, nhận diện ảnh [S01-004]. Luồng hoạt động là nhận Input và cho ra một nhãn hoặc một con số [S01-004].\n- **Generative AI**: Chuyên sinh ra nội dung mới như văn bản, ảnh, code (ví dụ: ChatGPT, Claude, Midjourney) [S01-004]. Luồng hoạt động là từ Prompt tạo ra nội dung mới [S01-004].",
+      "citations": [
+        "S01-004"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "834a720c7afa40a592e4f424ef8a92a4",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 22613,
+      "context_ids": [
+        "S01-004",
+        "S01-005",
+        "S01-026",
+        "S01-027",
+        "S01-008",
+        "S01-021"
+      ]
+    },
+    "request_id": "834a720c7afa40a592e4f424ef8a92a4"
+  },
+  {
+    "case_id": "SG09",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Có, LLM là một dạng thuộc Machine Learning [S01-003]. Xét theo hệ thống phân cấp từ rộng đến hẹp, LLM nằm trong Generative AI, Generative AI thuộc Deep Learning, Deep Learning thuộc Machine Learning, và Machine Learning thuộc Artificial Intelligence (AI) [S01-003]. Trong khi Machine Learning là phương pháp học từ dữ liệu thay vì viết luật tay, LLM đóng vai trò là mô hình nền chuyên về ngôn ngữ nằm ở tầng hẹp hơn trong hệ sinh thái này [S01-003].",
+      "citations": [
+        "S01-003"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "6bad1777f61c4812a31da6295c644516",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 27343,
+      "context_ids": [
+        "S01-003",
+        "S01-004",
+        "S01-001",
+        "S01-010",
+        "S01-018",
+        "S01-014"
+      ]
+    },
+    "request_id": "6bad1777f61c4812a31da6295c644516"
+  },
+  {
+    "case_id": "SG10",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Temperature là “núm vặn độ liều” giúp thay đổi bảng xác suất chọn từ (token), không làm mô hình thông minh hơn hay thêm tri thức [S01-029]:\n\n- Khi Temperature thấp: Mô hình luôn chọn từ chắc chắn nhất, cho kết quả ổn định, lặp lại, phù hợp cho viết code và phân tích [S01-029].\n- Khi Temperature ở mức cân bằng tự nhiên: Mô hình vẫn ưu tiên các từ hợp lý [S01-029].\n- Khi Temperature cao: Phân bố xác suất bị phẳng ra, giúp đầu ra đa dạng, “phiêu” hơn nhưng dễ lạc đề [S01-029].\n\n(Do bản trích xuất có lỗi font chứa ký tự  tại các ngưỡng T cụ thể, bạn nên xem thêm PDF gốc để đối chiếu chính xác các con số [S01-029]).",
+      "citations": [
+        "S01-029"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "3441359bec8644d0a53037a5405ed767",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 24699,
+      "context_ids": [
+        "S01-029",
+        "S01-013",
+        "S01-014",
+        "S01-026",
+        "S01-006",
+        "S01-011"
+      ]
+    },
+    "request_id": "3441359bec8644d0a53037a5405ed767"
+  },
+  {
+    "case_id": "SG11",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "no_grounding",
+    "status": "validated",
+    "action_match": true,
+    "actual": "no_grounding",
+    "response": {
+      "action": "no_grounding",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Chưa tìm thấy thông tin về model XYZ-999 trong phần dữ liệu đã truy xuất. Vui lòng kiểm tra, chọn lại đoạn slide phù hợp hoặc thay đổi nguồn tài liệu.",
+      "request_id": "41d2313c8e9d4a9cb4e9005ae0b31daf",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 18046,
+      "context_ids": [
+        "S01-017",
+        "S01-018",
+        "S01-022",
+        "S01-023",
+        "S01-028",
+        "S01-004"
+      ]
+    },
+    "request_id": "41d2313c8e9d4a9cb4e9005ae0b31daf"
+  },
+  {
+    "case_id": "SG12",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu tóm tắt toàn bộ video chưa được xác minh hoặc chưa có ánh xạ tài liệu nằm ngoài phạm vi giải đáp. Bạn vui lòng liên hệ trợ giảng (TA)/kênh chính thức hoặc đặt câu hỏi về một khái niệm cụ thể trong bài học.",
+      "request_id": "9c4c97e95ee14092947532901efff4ac",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 21373,
+      "context_ids": [
+        "S01-010",
+        "S01-011",
+        "S01-021",
+        "S01-022",
+        "S01-014",
+        "S01-028"
+      ]
+    },
+    "request_id": "9c4c97e95ee14092947532901efff4ac"
+  },
+  {
+    "case_id": "SG13",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn giải thích khái niệm nào trong các chủ đề được đề cập (ví dụ: Lịch sử AI 70 năm hay Hệ chuyên gia)?",
+      "reason": "Câu hỏi 'Giải thích khái niệm này?' chưa nêu tên khái niệm cụ thể và không có đoạn văn bản nào được đánh dấu do bạn chủ động chọn.",
+      "request_id": "c8e3400da4504b4a947b072634c6bbc2",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 27112,
+      "context_ids": [
+        "S01-005",
+        "S01-006"
+      ]
+    },
+    "request_id": "c8e3400da4504b4a947b072634c6bbc2"
+  },
+  {
+    "case_id": "SG14",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn tìm hiểu mối liên hệ giữa hai khái niệm hoặc trang slide cụ thể nào trong bài?",
+      "reason": "Câu hỏi sử dụng các cụm từ thay thế không rõ ràng ('cái đó', 'phần trước') và không có đoạn nội dung nào được chọn sẵn để xác định đối tượng cần so sánh.",
+      "request_id": "aec78be0c4fa4346a08e08c005f4f64b",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 25134,
+      "context_ids": [
+        "S01-015",
+        "S01-016",
+        "S01-017",
+        "S01-014",
+        "S01-028",
+        "S01-018"
+      ]
+    },
+    "request_id": "aec78be0c4fa4346a08e08c005f4f64b"
+  },
+  {
+    "case_id": "SG15",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu về bài tập và thời hạn hoàn thành của cá nhân thuộc phạm vi tiến độ cá nhân và quản lý khóa học. Trợ lý không có thông tin này, bạn vui lòng liên hệ trợ giảng (TA) hoặc xem kênh thông báo chính thức của khóa học, hoặc đặt câu hỏi liên quan đến nội dung kiến thức trong bài học.",
+      "request_id": "28a6baf420024c21b15277f9d7307de6",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 16123,
+      "context_ids": [
+        "S01-014",
+        "S01-015",
+        "S01-028",
+        "S01-029",
+        "S01-006",
+        "S01-022"
+      ]
+    },
+    "request_id": "28a6baf420024c21b15277f9d7307de6"
+  },
+  {
+    "case_id": "SG16",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu tư vấn dựa trên tiến độ cá nhân nằm ngoài phạm vi giải đáp của trợ lý bài học. Bạn vui lòng liên hệ trợ giảng (TA), kiểm tra thông tin trên kênh chính thức của khóa học, hoặc đặt câu hỏi về một khái niệm kiến thức cụ thể.",
+      "request_id": "1044d0effb8c41ada1c9c88880cd0ebf",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 22947,
+      "context_ids": [
+        "S01-010",
+        "S01-011",
+        "S01-029",
+        "S01-015",
+        "S01-021",
+        "S01-014"
+      ]
+    },
+    "request_id": "1044d0effb8c41ada1c9c88880cd0ebf"
+  },
+  {
+    "case_id": "SG17",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu xác định tên mô hình hiện tại thuộc về thông tin metadata mô hình, không thuộc phạm vi giải thích kiến thức bài học được cung cấp. Bạn vui lòng tham khảo kênh chính thức/TA hoặc đặt câu hỏi về các khái niệm trong bài học.",
+      "request_id": "a2703f866a534abe8c5f31cc9750adaf",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 25060,
+      "context_ids": [
+        "S01-026",
+        "S01-027",
+        "S01-010",
+        "S01-011",
+        "S01-019",
+        "S01-009"
+      ]
+    },
+    "request_id": "a2703f866a534abe8c5f31cc9750adaf"
+  },
+  {
+    "case_id": "SG18",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Không đúng [S01-013]. Model không đọc từ nguyên vẹn mà cắt văn bản thành các mảnh nhỏ gọi là token [S01-013]. Tiếng Việt tốn token hơn tiếng Anh thường vì dấu thanh, ký tự đặc biệt và cấu trúc bị cắt nhỏ ra [S01-013]. Ví dụ, từ \"Xin chào\" (2 tiếng) có thể tốn tới 3–4 token [S01-013]. Ngoài ra, số lượng token chính xác còn phụ thuộc vào tokenizer của từng model [S01-013].",
+      "citations": [
+        "S01-013"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "42adc917dd7643c08a31256691e08459",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 18151,
+      "context_ids": [
+        "S01-013",
+        "S01-014",
+        "S01-028",
+        "S01-020",
+        "S01-021",
+        "S01-029"
+      ]
+    },
+    "request_id": "42adc917dd7643c08a31256691e08459"
+  },
+  {
+    "case_id": "SG19",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Không thể khẳng định token có xác suất cao nhất luôn đúng về nội dung [S01-011, S01-029]. Theo slide, Transformer xuất ra đầu ra là một phân bố xác suất trên từ vựng [S01-011]. Việc chọn từ có xác suất cao nhất (như khi đặt temperature = 0) chỉ đại diện cho việc chọn từ chắc nhất theo mô hình, nhưng việc thay đổi cách chọn từ này \"không làm model thông minh hơn\" và \"không thêm tri thức\" [S01-029]. Xác suất xuất hiện của token không đồng nghĩa với xác suất đúng đắn của thông tin.",
+      "citations": [
+        "S01-011",
+        "S01-029"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "11e3555f8fdd4c0791a1ee87de4b1037",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 24503,
+      "context_ids": [
+        "S01-011",
+        "S01-029",
+        "S01-012",
+        "S01-021",
+        "S01-019",
+        "S01-016"
+      ]
+    },
+    "request_id": "11e3555f8fdd4c0791a1ee87de4b1037"
+  },
+  {
+    "case_id": "SG20",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Về phạm vi, Machine Learning (ML) là khái niệm rộng hơn, bao gồm các hệ thống học từ dữ liệu [S01-003]. LLM là mô hình nền chuyên ngôn ngữ thuộc Generative AI và nằm trong ML [S01-003]. Thay vì huấn luyện từng mô hình riêng cho từng tác vụ, LLM đóng vai trò là một mô hình nền chung dùng cho nhiều công việc [S01-010].\n\nVề cách sinh văn bản, ML truyền thống (Discriminative AI) thường nhận input và đưa ra một nhãn hoặc con số [S01-004]. Trong khi đó, LLM tạo văn bản mới từ prompt [S01-004] bằng cơ chế đoán mảnh chữ (token) tiếp theo trong ngữ cảnh, nối token đó vào câu và lặp lại vòng lặp đoán [S01-010], [S01-012].",
+      "citations": [
+        "S01-003",
+        "S01-004",
+        "S01-010",
+        "S01-012"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "3e176137f7e04fd79683c63e811bb7f2",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 22681,
+      "context_ids": [
+        "S01-003",
+        "S01-004",
+        "S01-010",
+        "S01-008",
+        "S01-018",
+        "S01-012"
+      ]
+    },
+    "request_id": "3e176137f7e04fd79683c63e811bb7f2"
+  },
+  {
+    "case_id": "SG21",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu Tra cứu deadline cá nhân nằm ngoài phạm vi nội dung bài học được cung cấp. Vui lòng liên hệ trợ giảng (TA), kiểm tra thông báo chính thức của khóa học hoặc đưa ra câu hỏi về một khái niệm kiến thức cụ thể.",
+      "request_id": "e5078f54b9e64936825badfd2cbfe3ad",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 21642,
+      "context_ids": [
+        "S01-007",
+        "S01-008",
+        "S01-020",
+        "S01-021",
+        "S01-023",
+        "S01-014"
+      ]
+    },
+    "request_id": "e5078f54b9e64936825badfd2cbfe3ad"
+  },
+  {
+    "case_id": "SG22",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn tìm hiểu về khái niệm context (bàn làm việc của model), cách quản lý context hiệu quả hay lớp context bổ sung trong cấu trúc prompt?",
+      "reason": "Câu hỏi chỉ chứa thuật ngữ 'context ?' chưa làm rõ ý định cụ thể, trong khi tài liệu đề cập đến nhiều chủ đề như khái niệm context, cách tối ưu context và lớp context trong prompt.",
+      "request_id": "5267eaff75c046a5bf25a30eca99dfed",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 18898,
+      "context_ids": [
+        "S01-016",
+        "S01-017",
+        "S01-014",
+        "S01-015",
+        "S01-020",
+        "S01-028"
+      ]
+    },
+    "request_id": "5267eaff75c046a5bf25a30eca99dfed"
+  },
+  {
+    "case_id": "SG23",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Token là các mảnh chữ nhỏ mà model cắt ra từ văn bản thay vì đọc từ nguyên vẹn [S01-013]. Một token có thể là một từ, một mảnh vỡ của từ, hoặc dấu câu và khoảng trắng [S01-013]. Mọi hoạt động của model đều được quy đổi ra token và số lượng token chính xác sẽ phụ thuộc vào tokenizer của từng model [S01-013].",
+      "citations": [
+        "S01-013"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "b0a78c80605a4959a51971ae11ef63fc",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 20233,
+      "context_ids": [
+        "S01-013",
+        "S01-014",
+        "S01-015",
+        "S01-016",
+        "S01-019",
+        "S01-012"
+      ]
+    },
+    "request_id": "b0a78c80605a4959a51971ae11ef63fc"
+  },
+  {
+    "case_id": "SG24",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "source_id": "slides-d1",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Context là lượng chữ có hạn mà mô hình có thể nhìn thấy trong mỗi lần trả lời, được ví như một bàn làm việc chứa toàn bộ thông tin bạn muốn mô hình thấy [S01-014]. Khi context quá dài, chi phí sử dụng sẽ tăng, thời gian xử lý chậm hơn và mô hình dễ gặp hiện tượng bỏ sót những dữ liệu quan trọng đặt ở phần giữa [S01-014].",
+      "citations": [
+        "S01-014"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "5dfc8bef9f324e44ab86e74e62bab809",
+      "source_id": "slides-d1",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 8712,
+      "context_ids": [
+        "S01-014",
+        "S01-015",
+        "S01-029",
+        "S01-021",
+        "S01-005",
+        "S01-008"
+      ]
+    },
+    "request_id": "5dfc8bef9f324e44ab86e74e62bab809"
+  }
+]

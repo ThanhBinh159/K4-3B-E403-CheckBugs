@@ -8,6 +8,20 @@ from run import summarize, technical_metrics
 
 
 class EvalTests(unittest.TestCase):
+    def test_historical_transcript_export_preserves_primary_slide_report(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); (root / 'eval').mkdir()
+            primary = root / 'eval/run_results.md'; primary.write_text('primary slide report')
+            run_dir = root / 'historical'; run_dir.mkdir()
+            (run_dir / 'results.json').write_text(json.dumps([dict(case_id='G01', model='test', provider='test',
+                source_id='transcript-04', expected='answer', actual='answer', status='validated', action_match=True,
+                response={'citations':['T04-001']})]))
+            (run_dir / 'review.csv').write_text('case_id,grounding,ux,risk,reviewer,notes\nG01,,,,,\n')
+            with patch('run.ROOT', root):
+                export_report(run_dir)
+            self.assertEqual(primary.read_text(), 'primary slide report')
+            self.assertTrue((root / 'eval/archive/transcript-run-results.md').is_file())
+
     def test_slide_export_does_not_overwrite_existing_transcript_results(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); (root / 'eval').mkdir()

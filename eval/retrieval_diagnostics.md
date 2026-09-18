@@ -2,31 +2,33 @@
 
 Chỉ kiểm tra có truy xuất ít nhất một mã đoạn hỗ trợ được thiết kế hay không. Không chấm claim/model output. Missing supporting ID là tín hiệu retrieval cần xem lại, không kết luận toàn file thiếu đáp án.
 
-| Case | Expected | Context IDs | Có ít nhất một supporting ID? |
-|---|---|---|---|
-| G01 | answer | T04-049, T04-050, T04-051, T04-006, T04-096, T04-094 | True |
-| G02 | answer | T04-051, T04-052, T04-053, T04-057, T04-074, T04-088 | True |
-| G03 | answer | T04-040, T04-041, T04-054, T04-055, T04-056, T04-096 | True |
-| G04 | answer | T06-086, T06-087, T06-160, T06-162, T06-130, T06-161 | True |
-| G05 | answer | T04-016, T04-017, T04-032, T04-033, T04-015, T04-031 | True |
-| G06 | answer | T04-046, T04-047, T04-090, T04-091, T04-087, T04-003 | True |
-| G07 | answer | T04-032, T04-033, T04-015, T04-030, T04-031, T04-026 | True |
-| G08 | answer | T06-051, T06-052, T06-079, T06-148, T06-040, T06-044 | True |
-| G09 | answer | T04-046, T04-047, T04-032, T04-033, T04-015, T04-030 | True |
-| G10 | answer | T04-096, T04-097, T04-050, T04-051, T04-072, T04-071 | True |
-| G11 | no_grounding | T04-089, T04-090, T04-036, T04-037, T04-096, T04-001 | N/A |
-| G12 | out_of_scope | T04-061, T04-062, T04-046, T04-047, T04-091, T04-020 | N/A |
-| G13 | clarify | T04-052, T04-053, T04-023, T04-024, T04-054, T04-028 | N/A |
-| G14 | clarify | T04-040, T04-041, T04-014, T04-015, T04-054, T04-029 | N/A |
-| G15 | out_of_scope | T04-058, T04-059, T04-050, T04-051, T04-068, T04-077 | N/A |
-| G16 | out_of_scope | T04-006, T04-007, T04-094, T04-095, T04-003, T04-011 | N/A |
-| G17 | out_of_scope | T04-064, T04-065, T04-089, T04-090, T04-067, T04-072 | N/A |
-| G18 | answer | T04-049, T04-050, T04-096, T04-029, T04-015, T04-055 | True |
-| G19 | answer | T04-047, T04-072, T04-048, T04-071, T04-096, T04-049 | True |
-| G20 | answer | T04-046, T04-047, T04-032, T04-033, T04-015, T04-063 | True |
-| G21 | out_of_scope | T04-086, T04-087, T04-089, T04-090, T04-029, T04-054 | N/A |
-| G22 | clarify | T04-052, T04-053, T04-051, T04-057, T04-074, T04-088 | N/A |
-| G23 | answer | T04-049, T04-050, T04-051, T04-006, T04-096, T04-094 | True |
-| G24 | answer | T04-051, T04-052, T04-064, T04-023, T04-054, T04-024 | True |
+| Case | Expected | Context IDs | Có ít nhất một trang hỗ trợ? | Đủ trang thiết kế? |
+|---|---|---|---|---|
+| SG01 | answer | S01-013, S01-014, S01-015, S01-016, S01-019, S01-012 | True | True |
+| SG02 | answer | S01-016, S01-017, S01-014, S01-015, S01-020, S01-028 | True | True |
+| SG03 | answer | S01-015, S01-016, S01-017, S01-028, S01-020, S01-023 | True | True |
+| SG04 | answer | S02-003, S02-004, S02-002, S02-009, S02-027, S02-013 | True | True |
+| SG05 | answer | S01-002, S01-003, S01-004, S01-015, S01-008, S01-007 | True | True |
+| SG06 | answer | S01-002, S01-003, S01-004, S01-005, S01-012, S01-029 | True | True |
+| SG07 | answer | S01-003, S01-004, S01-020, S01-016, S01-015, S01-023 | True | True |
+| SG08 | answer | S01-004, S01-005, S01-026, S01-027, S01-008, S01-021 | True | True |
+| SG09 | answer | S01-003, S01-004, S01-001, S01-010, S01-018, S01-014 | True | True |
+| SG10 | answer | S01-029, S01-013, S01-014, S01-026, S01-006, S01-011 | True | True |
+| SG11 | no_grounding | S01-017, S01-018, S01-022, S01-023, S01-028, S01-004 | N/A | N/A |
+| SG12 | out_of_scope | S01-010, S01-011, S01-021, S01-022, S01-014, S01-028 | N/A | N/A |
+| SG13 | clarify | S01-005, S01-006 | N/A | N/A |
+| SG14 | clarify | S01-015, S01-016, S01-017, S01-014, S01-028, S01-018 | N/A | N/A |
+| SG15 | out_of_scope | S01-014, S01-015, S01-028, S01-029, S01-006, S01-022 | N/A | N/A |
+| SG16 | out_of_scope | S01-010, S01-011, S01-029, S01-015, S01-021, S01-014 | N/A | N/A |
+| SG17 | out_of_scope | S01-026, S01-027, S01-010, S01-011, S01-019, S01-009 | N/A | N/A |
+| SG18 | answer | S01-013, S01-014, S01-028, S01-020, S01-021, S01-029 | True | True |
+| SG19 | answer | S01-011, S01-029, S01-012, S01-021, S01-019, S01-016 | True | True |
+| SG20 | answer | S01-003, S01-004, S01-010, S01-008, S01-018, S01-012 | True | True |
+| SG21 | out_of_scope | S01-007, S01-008, S01-020, S01-021, S01-023, S01-014 | N/A | N/A |
+| SG22 | clarify | S01-016, S01-017, S01-014, S01-015, S01-020, S01-028 | N/A | N/A |
+| SG23 | answer | S01-013, S01-014, S01-015, S01-016, S01-019, S01-012 | True | True |
+| SG24 | answer | S01-014, S01-015, S01-029, S01-021, S01-005, S01-008 | True | True |
 
 Trên 15 case expected answer: 15 case có ít nhất một supporting ID trong context. Đây là phép đo retrieval local, không là grounded answer rate hoặc tỷ lệ CP3.
+
+15/15 case có đủ mọi trang hỗ trợ đã thiết kế. Citation tồn tại không chứng minh claim đúng.

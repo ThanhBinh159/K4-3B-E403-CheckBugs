@@ -14,7 +14,8 @@ def allowed(path):
     rel = path.relative_to(ROOT)
     if '__pycache__' in rel.parts or any(p in {'runs', 'logs', '.git', 'tmp', 'data', 'node_modules'} for p in rel.parts):
         return False
-    return (len(rel.parts) == 1 and rel.name in TOP) or (rel.parts[0] in DIRS and path.suffix in EXTENSIONS)
+    published_review = rel.parts[:2] == ('eval', 'published-runs') and rel.name == 'review.csv'
+    return (len(rel.parts) == 1 and rel.name in TOP) or (rel.parts[0] in DIRS and (path.suffix in EXTENSIONS or published_review))
 
 
 def main():

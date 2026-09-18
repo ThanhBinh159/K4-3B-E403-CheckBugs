@@ -1,5 +1,7 @@
 # Cải thiện backend CP3 — 18/09/2026
 
+**Lịch sử bản transcript G01–G24.** CP3 hiện hành đã làm lại theo slide: xem [slide-primary.md](slide-primary.md) và bộ SG01–SG24. Số đo/ID T04 bên dưới không phải kết quả bản slide.
+
 Phạm vi người dùng yêu cầu: cải thiện kỹ thuật, truy xuất, quyết định action và kiểm tra nội dung; chưa cần kiểm tra UI hoặc quay demo. Không đổi expected_action, required_claims hoặc quality bar để làm đẹp số đo.
 
 ## Nguyên nhân và thay đổi
