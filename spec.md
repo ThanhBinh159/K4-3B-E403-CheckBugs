@@ -1,6 +1,6 @@
 # AI Spec — VLearn Grounded Tutor, nguồn slide/PDF · Track A1
 
-CP3 hiện hành dùng slide Day 1/Day 2 của pack, citation theo trang PDF. Mã nguồn/API có thật; UI đã có nhưng chưa kiểm trực tiếp bằng browser hoặc quay video. Kết quả kỹ thuật và full quality tách riêng tại eval/run_results.md. Chưa có biên nhận nộp checkpoint.
+CP3 hiện hành dùng slide Day 1/Day 2 của pack, citation theo trang PDF. Mã nguồn/API có thật; UI đã thiết kế lại và kiểm browser desktop/mobile cùng một lượt AI thật; chưa quay video. Kết quả kỹ thuật và full quality tách riêng tại eval/run_results.md. Chưa có biên nhận nộp checkpoint.
 
 ## §1. User & Job
 
@@ -66,7 +66,7 @@ Slide có thể giản lược hoặc có lỗi; grounding với slide không t�
 
 Happy: chọn slide → hỏi → answer → mở citation/PDF đúng trang. Low-confidence: hỏi cụ thể → chọn trang/bổ sung câu → gửi lại. Failure: báo thiếu nguồn trong phần tìm được; không bịa. Correction: đổi nguồn/trang/câu, lượt mới không dùng context cũ. Lỗi API/schema/citation là lỗi kỹ thuật, giữ input/thử lại. Chưa có bộ nhớ nhiều lượt.
 
-UI hiện có, chưa visual QA/end-to-end browser/video. Không nhận kiểm HTTP là đã kiểm trực tiếp trải nghiệm. Người tiếp tục UI cần giữ 4 action và mở PDF thật, không dùng mock CP2 làm demo AI.
+UI đã kiểm browser desktop/mobile và một lượt AI thật; xem docs/ui-verification.md. Nhóm tiếp tục quay video và thử với người dùng thật; không dùng mock CP2 làm demo AI.
 
 ## §7. Đánh giá và quality bar
 
@@ -82,7 +82,7 @@ eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử 
 
 ## §8. Phân công/kế hoạch
 
-Nhóm điền nhân sự/phòng/đội trưởng và đóng góp thực tế; thông tin nhóm repo là nguồn tham chiếu, không tạo tên hoặc willing users. Người tiếp tục nhận backend/API, làm UI và video; nhóm chấm nội dung rồi export report, cập nhật PDF, nộp đúng form/mã đội trưởng và lưu receipts. Không tự nhận đã nộp hoặc được gia hạn.
+Nhóm điền nhân sự/phòng/đội trưởng và đóng góp thực tế; thông tin nhóm repo là nguồn tham chiếu, không tạo tên hoặc willing users. Người tiếp tục nhận backend/API/UI và quay video; nhóm chấm nội dung rồi export report, cập nhật PDF, nộp đúng form/mã đội trưởng và lưu receipts. Không tự nhận đã nộp hoặc được gia hạn.
 
 R6 nếu làm: 5 người ngoài nhóm, ≥2 đã khai CP1; quan sát hỏi/mở trang/sửa câu, quote thật và quyết định. validation/user_testing_log.md còn là protocol trống. Chưa có user validation, trial hai sản phẩm, phỏng vấn hoặc đo task success/cost pain. Không tự nhận điểm R6.
 
@@ -90,4 +90,4 @@ R6 nếu làm: 5 người ngoài nhóm, ≥2 đã khai CP1; quan sát hỏi/mở
 
 18/09/2026: bản đầu dùng transcript, người dùng yêu cầu sửa đúng citation slide; đã chuyển slide làm nguồn chính, xây lại golden SG24, worksheet/spec/README và tách lịch sử. Giữ quality bar, không chuyển 24/24 transcript thành số của slide. Code review sửa lỗi export lịch sử ghi đè kết quả chính, có regression test thất bại trước sửa.
 
-Chưa hoàn thành: nhóm chấm full quality/độc lập, UI browser QA/video, trial hai sản phẩm/user validation, phản ánh đóng góp cá nhân, form và receipts/freeze CP4. Không mô tả hồ sơ là đã đạt toàn bộ CP3–5.
+Chưa hoàn thành: nhóm chấm full quality/độc lập, video, trial hai sản phẩm/user validation, phản ánh đóng góp cá nhân, form và receipts/freeze CP4. Không mô tả hồ sơ là đã đạt toàn bộ CP3–5.

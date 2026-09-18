@@ -20,4 +20,4 @@ Golden chính SG01–SG24 = 10 thường/10 khó/4 edge, 12 case phát triển t
 
 G01–G24 transcript và SL01–SL10 smoke là lịch sử, không được nhận là số của SG24. Export lịch sử có file riêng để không ghi đè kết quả chính. Chưa có baseline/user feedback hay người thứ hai chấm, không tự nhận đã đạt quality hoặc nộp CP3.
 
-Backend/API/nguồn được kiểm; UI browser QA, video thật và form/receipts do nhóm tiếp tục theo submission/CP3.md. UI hiện có chỉ bổ sung chữ/links để khớp nguồn slide, chưa là thiết kế giao diện hoàn chỉnh.
+Backend/API/nguồn được kiểm; UI đã thiết kế lại đủ 4 bước và kiểm browser desktop/mobile, xem [ui-verification.md](ui-verification.md). Video thật, nhóm chấm nội dung và form/receipts vẫn cần tiếp tục theo submission/CP3.md.

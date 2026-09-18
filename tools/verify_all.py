@@ -33,7 +33,7 @@ def main():
         display = ('python ' + ' '.join(command[1:])) if command[0] == sys.executable else ' '.join(command)
         lines.append('| ' + ' | '.join([display, str(result.returncode), summary.replace('|', '/')]) + ' |')
     lines += ['', f'Tổng {total_tests} test kỹ thuật pass. Kết quả model live báo riêng trong run_results.md; report này không chấm chất lượng AI, video hoặc user validation.', '',
-              'PDF đã render và xem đủ 6 trang; UI chưa được kiểm tra hình ảnh trong browser vì không có browser connected trong phiên. Không tuyên bố đã kiểm tra giao diện trực tiếp.', '']
+              'Báo cáo này chỉ xác minh offline. Kiểm UI/browser và lượt AI thật riêng xem docs/ui-verification.md; lệnh này không xác minh lại browser hoặc PDF.', '']
     (ROOT / 'eval' / 'technical_results.md').write_text('\n'.join(lines), encoding='utf-8')
     print(f'Offline verification OK: {total_tests} tests; JS syntax and golden source IDs valid.')
 

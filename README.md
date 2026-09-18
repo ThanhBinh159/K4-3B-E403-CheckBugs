@@ -8,7 +8,7 @@ Golden SG01–SG24 đã gọi AI thật: 23/24 output hợp lệ và action đú
 
 Cài `python -m pip install -r requirements.txt`, copy `.env.example` thành `.env`, điền API riêng và `VLEARN_SLIDES_DIR` đến slides trong pack đề bài. Chạy `python -X utf8 codebase/server.py`. Hỗ trợ Gemini native và OpenAI-compatible; không cần API để chấm output đã có. Key/PDF nguồn/raw traces không nằm trong repo.
 
-Chưa OCR hình/sơ đồ. Người tiếp tục kiểm UI, font/công thức, quay video AI thật theo [kịch bản](submission/video-scripts.md), chấm nội dung và nộp form. PDF demo 6 trang đã cập nhật số kỹ thuật mới; không thay bằng chứng video hoặc người dùng thật. Transcript cũ và smoke 10 case chỉ là lịch sử, không là số đo bản SG24.
+Chưa OCR hình/sơ đồ. UI đã thiết kế lại đủ 4 bước, kiểm browser desktop/mobile và một lượt AI thật; xem [báo cáo UI](docs/ui-verification.md). Người tiếp tục kiểm font/công thức với các câu hỏi thực tế, quay video AI thật theo [kịch bản](submission/video-scripts.md), chấm nội dung và nộp form. PDF demo 6 trang đã cập nhật số kỹ thuật mới; không thay bằng chứng video hoặc người dùng thật. Transcript cũ và smoke 10 case chỉ là lịch sử, không là số đo bản SG24.
 
 README sự kiện và thông tin nhóm bên dưới được giữ lại; `canvas.md`, `cp2-archify.html`, `cp2-flow.svg` là hồ sơ CP1/CP2 đã có.
 

@@ -6,4 +6,4 @@ Code/API thật có ở codebase/, adapter Gemini/OpenAI-compatible. Golden set 
 
 Không nhận số 24/24 transcript lịch sử là kết quả slide. Action/schema/citation kỹ thuật không thay full quality; cần nhóm chấm grounding/UX/risk. Timeout/API lỗi vẫn là fail trong mẫu số. Source PDF cần pack gốc, không có trong Git; public results/review/metadata không chứa key/raw provider.
 
-Phần còn để nộp: nhóm chấm nội dung và chốt tổng/pass/fail/%, kiểm UI/browser và quay video AI thật ~30 giây khi tiếp tục, mã đội trưởng/link public/form và biên nhận. UI/video hoãn theo yêu cầu trước; backend/API và hồ sơ có thể bàn giao. Chưa có xác nhận đã nộp CP3.
+Phần còn để nộp: nhóm chấm nội dung và chốt tổng/pass/fail/%, quay video AI thật ~30 giây khi tiếp tục, mã đội trưởng/link public/form và biên nhận. UI đã thiết kế lại và kiểm browser desktop/mobile cùng một lượt AI thật, xem docs/ui-verification.md; chưa quay video. Backend/API/UI và hồ sơ có thể bàn giao. Chưa có xác nhận đã nộp CP3.

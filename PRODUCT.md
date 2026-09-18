@@ -21,7 +21,7 @@ pypdf đọc chữ theo trang; BM25 tìm nguồn trong đúng file được ch�
 
 `S01-013` = Day 1, trang vật lý PDF 13; `S02-003` = Day 2, trang PDF 3. Số này có thể khác footer của slide gốc. Bấm citation để xem chữ trích xuất và mở PDF tại `#page=N`. Mã hợp lệ chưa chứng minh claim đúng.
 
-Chưa OCR/vision, không đoán hình/sơ đồ/chữ ảnh. Trang không có chữ không được lập chỉ mục; glyph lỗi có warning, cần đối chiếu bản gốc. Không lấy bài đang mở trên LMS, không trả điểm/deadline/tiến độ cá nhân và chưa có bộ nhớ hội thoại nhiều lượt. UI hiện có để bàn giao, chưa visual QA trên browser hoặc quay video.
+Chưa OCR/vision, không đoán hình/sơ đồ/chữ ảnh. Trang không có chữ không được lập chỉ mục; glyph lỗi có warning, cần đối chiếu bản gốc. Không lấy bài đang mở trên LMS, không trả điểm/deadline/tiến độ cá nhân và chưa có bộ nhớ hội thoại nhiều lượt. UI đã thiết kế đủ 4 bước, kiểm browser desktop/mobile và một lượt AI thật: [báo cáo UI](docs/ui-verification.md). Chưa quay video.
 
 ## Đánh giá CP3
 
