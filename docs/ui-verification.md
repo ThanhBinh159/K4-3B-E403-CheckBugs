@@ -1,6 +1,6 @@
 # UI hỏi bài theo slide
 
-Giao diện mới: nền sáng/xanh, hai cột desktop và một cột mobile. Thanh 4 bước hiển thị chọn slide → đặt câu hỏi → nhận kết quả → đối chiếu nguồn. Danh sách trang có tìm kiếm không dấu, checkbox tối đa 3 trang và preview. Answer, clarify, no_grounding, out_of_scope có trạng thái/bước tiếp riêng; lỗi giữ input và nút thử lại. Citation mở chữ trích xuất và PDF đúng trang vật lý, có cảnh báo font lỗi. Thông tin model/latency/request nằm trong phần mở rộng; key không vào frontend.
+Giao diện mới: nền sáng/xanh, hai cột desktop và một cột mobile. Thanh 4 bước hiển thị chọn slide → đặt câu hỏi → nhận kết quả → đối chiếu nguồn. Danh sách trang có tìm kiếm không dấu, checkbox tối đa 3 trang và preview. Answer, clarify, no_grounding, out_of_scope có trạng thái/bước tiếp riêng; lỗi giữ input và nút thử lại. Khung citation chỉ hiện tiêu đề quan trọng của trang và nút mở slide gốc đúng trang vật lý; không hiện đoạn trích xuất dài hoặc cảnh báo OCR. Thông tin model/latency/request nằm trong phần mở rộng; key không vào frontend.
 
 ## Kiểm tra ngày 18/09/2026
 

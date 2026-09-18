@@ -52,12 +52,9 @@ async function openSegment(sourceId,id,advance=true) {
   try {
     const value=await api('/api/segment?source_id='+encodeURIComponent(sourceId)+'&id='+encodeURIComponent(id));
     if(version!==viewVersion)return;
-    $('sourceTitle').textContent='Trang '+value.page_number+' · '+id;
-    $('sourceHint').textContent=value.heading+' · Số trang tính theo PDF, có thể khác số in ở chân slide.';
-    $('sourceText').textContent=value.text; $('sourceWarning').hidden=!value.extraction_warning;
-    $('sourceWarning').textContent='Có ký tự trích xuất lỗi. Mở PDF gốc để đối chiếu; tutor chưa đọc hình hoặc sơ đồ bằng OCR.';
+    $('sourceTitle').textContent=value.heading;
     $('sourcePdf').replaceChildren();
-    if(value.pdf_url){const a=document.createElement('a');a.href=value.pdf_url;a.target='_blank';a.rel='noopener';a.textContent='Mở PDF gốc · trang '+value.page_number+' ↗';$('sourcePdf').append(a);}
+    if(value.pdf_url){const a=document.createElement('a');a.href=value.pdf_url;a.target='_blank';a.rel='noopener';a.textContent='Mở slide gốc · trang '+value.page_number+' ↗';$('sourcePdf').append(a);}
     $('sourceView').hidden=false;if(advance)progress(4);$('sourceView').scrollIntoView({behavior:'smooth',block:'nearest'});
   } catch(e){error(e.message);}
 }
