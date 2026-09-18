@@ -91,9 +91,9 @@ Non-goals: OCR/vision, tự lấy bài LMS, điểm/deadline/tiến độ cá nh
 | Nguyên tắc                                  | Quyết định trong sản phẩm                                                          | Cách kiểm chứng                                 | Trạng thái                              |
 | ------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------- |
 | HAX G1 — make clear what the system can do  | Hiển thị source đang chọn, giới hạn hai bộ slide và action rõ ràng                 | UI smoke: source picker, action state, link PDF | Đã kiểm browser; chưa user test         |
-| HAX G2 — make clear how well it can do it   | Báo thiếu căn cứ, không fake OCR/vision, hiển thị model/latency trong phần mở rộng | SG11/SG12/SG02 và kiểm lỗi API                  | Có case; quality review pending         |
+| HAX G2 — make clear how well it can do it   | Báo thiếu căn cứ, không fake OCR/vision, hiển thị model/latency trong phần mở rộng | SG11/SG12/SG02 và kiểm lỗi API                  | Đã check nội dung SG; SG02 fail timeout |
 | HAX G9 — support efficient correction       | Giữ input khi lỗi, cho đổi source/trang/câu hỏi và gửi lượt mới                    | UI test retry, đổi source, selected segments    | Đã kiểm browser                         |
-| HAX G10 — make clear why it did what it did | `reason`, clarifying question và trạng thái no-grounding phân biệt nhau            | Kiểm schema/action và review câu trả lời        | Kỹ thuật pass; nội dung pending         |
+| HAX G10 — make clear why it did what it did | `reason`, clarifying question và trạng thái no-grounding phân biệt nhau            | Kiểm schema/action và review câu trả lời        | 23/24 pass toàn bộ; SG02 fail timeout   |
 | HAX G11 — support efficient verification    | Citation mở đúng trang PDF vật lý, không dùng retrieval score làm confidence       | Validator citation + mở PDF                     | Kỹ thuật pass; chưa user test           |
 | PAIR — user control / graceful failure      | Người học chọn tối đa 3 trang, có thể hỏi lại; out-of-scope có bước tiếp           | SG13–SG17/SG21 và kiểm UI                       | Có thiết kế, validation thực tế pending |
 
@@ -152,7 +152,7 @@ Golden set chính: [eval/golden_set.json](eval/golden_set.json) SG01–SG24
 - Câu hỏi/claims thiết kế trước chạy theo chữ và trang PDF, không sao chép nguyên reply cũ, không đoán ánh xạ video và không đưa supporting IDs như oracle cho retrieval.
 - Cách chấm: [eval/README.md](eval/README.md) và [eval/review_worksheet.md](eval/review_worksheet.md).
 
-Case pass khi action/schema/citation và mọi chiều grounding/UX/risk áp dụng đều pass. Grounding cần mọi claim có căn cứ và đủ required claims, không forbidden claims. UX đúng trọng tâm/≤180 từ/clarify 1 câu/refusal có bước tiếp. Risk không bịa cá nhân/logistics hoặc giả nguồn. API/JSON/timeout là fail, giữ trong mẫu số. Còn nhóm review trống thì full pass rate pending, không báo 0% hoặc lấy action accuracy thay quality.
+Case pass khi action/schema/citation và mọi chiều grounding/UX/risk áp dụng đều pass. Grounding cần mọi claim có căn cứ và đủ required claims, không forbidden claims. UX đúng trọng tâm/≤180 từ/clarify 1 câu/refusal có bước tiếp. Risk không bịa cá nhân/logistics hoặc giả nguồn. API/JSON/timeout là fail, giữ trong mẫu số. Lượt 20260918T080807Z đã được nhóm xác nhận chấm nội dung trong các báo cáo Markdown; không lấy riêng action accuracy thay full quality.
 
 ### Công thức quality bar đã khóa tại CP4
 
@@ -166,11 +166,11 @@ Với $N$ là tổng số case chạy, $P$ là số case pass **tất cả** chi
 
 | Lượt               | Bộ / provider                       |                                  Kết quả kỹ thuật |                              Full quality | Ghi chú                                                                       |
 | ------------------ | ----------------------------------- | ------------------------------------------------: | ----------------------------------------: | ----------------------------------------------------------------------------- |
-| 20260918T080807Z   | SG01–SG24 / Gemini native qua proxy | 23/24 schema+citation; 23/24 action đúng (95,83%) | Pending: 0 xác nhận, 1 fail, 23 chưa chấm | SG02 timeout; 15/15 answer có đủ trang hỗ trợ; số này không thay groundedness |
+| 20260918T080807Z   | SG01–SG24 / Gemini native `gemini-3.6-flash-high` | 23/24 output validated; 23/24 action đúng (95,83%) | 23/24 pass toàn bộ (95,83%); 1 fail | Đã check nội dung 23/24; SG02 timeout; 21/21 citation hiển thị hợp lệ |
 | Smoke trước CP4    | 10 case slide                       |                                    Smoke kỹ thuật |              Không dùng làm kết quả chính | Chỉ hồi quy, không thay SG24                                                  |
 | Transcript archive | Bộ cũ                               |                                           Lịch sử |       Không áp dụng cho slide quality bar | Không trộn với SG01–SG24                                                      |
 
-Kết quả chi tiết: [eval/run_results.md](eval/run_results.md), [eval/live_summary.md](eval/live_summary.md). 21 citation đã hiển thị đều được validator chấp nhận (100% kỹ thuật trên các citation hiện có), nhưng mã hợp lệ chưa chứng minh claim đúng. eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử nghiệm trước, không thay lượt SG24. Xuất lịch sử không ghi đè kết quả chính. Prompt hiện hành slide-primary-v5. Raw traces local; public review data không chứa key/PDF nguồn/raw provider.
+Kết quả chi tiết: [eval/run_results.md](eval/run_results.md), [eval/live_summary.md](eval/live_summary.md). 21/21 citation hiển thị được validator chấp nhận và nhóm đã đối chiếu nội dung 23 output hợp lệ; SG02 timeout tính fail. eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử nghiệm trước, không thay lượt SG24. Xuất lịch sử không ghi đè kết quả chính. Prompt hiện hành slide-primary-v5. Raw traces local; public review data không chứa key/PDF nguồn/raw provider.
 
 **Ngoài phạm vi (③):** deadline, bài tập cá nhân, tiến độ, metadata và kiến thức model không có trong slide đều đi vào `out_of_scope` hoặc refusal an toàn, kèm bước tiếp tới TA/thông báo chính thức. 
 
@@ -181,7 +181,7 @@ Kết quả chi tiết: [eval/run_results.md](eval/run_results.md), [eval/live_s
 | Thành viên | Phần việc | Đã làm / còn thiếu |
 |---|---|---|
 | Nguyễn Thanh Bình — 2A202602777, trưởng nhóm | Làm CP1: tìm vấn đề người học gặp khi hỏi bài và tổng hợp số liệu. Hỗ trợ Kiên làm CP2. Đọc lại toàn bộ hồ sơ trước khi nộp để xem các phần có khớp nhau không. | Đã có [canvas.md](canvas.md) và [evidence/mining.md](evidence/mining.md). Chưa phỏng vấn người học và chưa đo thời gian/chi phí thực tế. |
-| Phạm Văn Kiên — 2A202602590 | Làm CP2 và CP3. Vẽ và dựng luồng chọn slide, hỏi bài, nhận câu trả lời hoặc hỏi lại. Làm phần tìm trang PDF, gửi câu hỏi, trả lời có nguồn và cho mở đúng trang. | Đã có [codebase/cp2-mock.html](codebase/cp2-mock.html), [codebase/cp2-flow.md](codebase/cp2-flow.md) và mã nguồn trong [codebase](codebase/). CP2 vẫn là bản mô phỏng; CP3 còn lỗi timeout ở SG02 và 23 câu chưa được chấm nội dung đầy đủ. |
+| Phạm Văn Kiên — 2A202602590 | Làm CP2 và CP3. Vẽ và dựng luồng chọn slide, hỏi bài, nhận câu trả lời hoặc hỏi lại. Làm phần tìm trang PDF, gửi câu hỏi, trả lời có nguồn và cho mở đúng trang. | Đã có [codebase/cp2-mock.html](codebase/cp2-mock.html), [codebase/cp2-flow.md](codebase/cp2-flow.md) và mã nguồn trong [codebase](codebase/). CP2 vẫn là bản mô phỏng; CP3 đã check nội dung 23/24, còn SG02 fail do timeout. |
 | Ngô Minh Thu — 2A202602679 | Làm CP4. Hoàn thiện tài liệu `spec.md`, ghi rõ tiêu chuẩn để được xem là đạt, những việc đã làm và những việc còn thiếu. Chuẩn bị hồ sơ để nộp CP4. | [spec.md](spec.md) đã có đủ §1–§9 và quality bar. Chưa xác nhận việc nộp chính thức và biên nhận. |
 
 ### Willing users và kế hoạch validation

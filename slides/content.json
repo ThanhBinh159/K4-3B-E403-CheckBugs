@@ -93,24 +93,24 @@
       [
         "Case pass mọi chiều",
         "≥80% (ít nhất 20/24)",
-        "Chưa chốt: cần chấm nội dung"
+        "23/24 (95,83%) · đạt"
       ],
       [
         "Action đúng expected",
         "Kỹ thuật, không là case pass",
-        "23/24 (95.83%)"
+        "23/24 (95,83%)"
       ],
       [
         "Citation hiển thị hợp lệ",
         "100% thuộc context",
-        "21 mã, 100.0% kỹ thuật"
+        "21/21 (100%)"
       ]
     ],
-    "note": "Nguồn: eval/run_results.md. API lỗi giữ trong mẫu số. Chưa có biên nhận khóa CP4; action/mã đúng chưa chứng minh claim đúng."
+    "note": "Nguồn: eval/run_results.md. SG02 timeout tính fail và giữ trong mẫu số. Nhóm đã check nội dung 23 output; đạt quality bar ≥80%."
   },
   {
     "title": "Giới hạn và kiểm chứng thực tế",
-    "body": "Nguồn chính đã đổi sang PDF slide. 23/24 output qua schema. Retrieval offline lấy đủ supporting pages ở 15/15 câu kỳ vọng answer.",
+    "body": "Nguồn chính là PDF slide. 23/24 case pass toàn bộ; SG02 timeout. Retrieval offline lấy đủ supporting pages ở 15/15 câu kỳ vọng answer.",
     "table": [
       [
         "Đã kiểm tra / chuẩn bị",
@@ -118,11 +118,11 @@
       ],
       [
         "PDF mở đúng trang, chặn mã giả",
-        "Chấm grounding / UX / risk"
+        "Chấm độc lập ≥5 output; baseline"
       ],
       [
-        "Trace có prompt/context/action",
-        "Chấm độc lập ≥5 output; baseline"
+        "Đã check grounding / UX / risk",
+        "Video CP3/CP5"
       ],
       [
         "Protocol R6: mở nguồn, sửa câu hỏi",
@@ -133,25 +133,25 @@
   },
   {
     "title": "Hoàn tất demo và hướng mở rộng",
-    "body": "Ưu tiên: nhóm chấm nội dung → cập nhật tỷ lệ đầy đủ → quay video CP3/CP5 → điền nhân sự và nộp đúng hạn. Giữ nguyên quality bar.",
+    "body": "Ưu tiên: quay video CP3/CP5 → cập nhật PDF hồ sơ → nộp đúng hạn → thử với người dùng thật. Giữ nguyên quality bar.",
     "table": [
       [
-        "Vai trò (nhóm điền tên sau)",
-        "Đóng góp cần ghi theo thực tế"
+        "Thành viên",
+        "Đóng góp"
       ],
       [
-        "Product / evidence",
-        "Mining, impact, Canvas, spec"
+        "Nguyễn Thanh Bình",
+        "Evidence, Canvas, rà soát hồ sơ"
       ],
       [
-        "Engineering / AI",
-        "Retrieval, adapter, UI và trace"
+        "Phạm Văn Kiên",
+        "CP2/CP3, retrieval, API, UI và trace"
       ],
       [
-        "Eval / demo",
-        "Chấm case, user test, PDF và video"
+        "Ngô Minh Thu",
+        "Spec CP4, quality bar và hồ sơ nộp"
       ]
     ],
-    "note": "Tiếp theo: kiểm UI và font/công thức, quay demo, chấm nội dung. Chưa tuyên bố tốt hơn tutor cũ khi chưa có baseline."
+    "note": "Tiếp theo: kiểm UI/font, quay demo, user validation. Chưa tuyên bố tốt hơn tutor cũ khi chưa có baseline."
   }
 ]

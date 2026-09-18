@@ -1,6 +1,6 @@
 # Chấm CP3 — golden set nguồn slide
 
-Run hiện hành: [20260918T080807Z](published-runs/20260918T080807Z/README.md), [output](published-runs/20260918T080807Z/results.json), [phiếu chấm](published-runs/20260918T080807Z/review.csv), [audit sơ bộ](cp3-slide-content-audit.md). 23/24 đúng kỹ thuật, SG02 timeout; chưa chốt full quality.
+Run hiện hành: [20260918T080807Z](published-runs/20260918T080807Z/README.md), [output](published-runs/20260918T080807Z/results.json), [phiếu chấm](published-runs/20260918T080807Z/review.csv), [đối chiếu nội dung](cp3-slide-content-audit.md). Nhóm đã check nội dung: 23/24 pass toàn bộ (95,83%), SG02 timeout tính fail; kết quả đạt quality bar.
 
 `golden_set.json` hiện là SG01–SG24: 10 thường/10 khó/4 edge, 12 case phát triển từ log thật. Câu/claims được thiết kế theo slide trước chạy; supporting IDs không được tự đưa như oracle. Xem `review_worksheet.md`.
 
@@ -11,7 +11,7 @@ Run hiện hành: [20260918T080807Z](published-runs/20260918T080807Z/README.md),
 | UX | Đúng trọng tâm, ≤180 từ, clarify một câu cụ thể, refusal có lý do/bước tiếp |
 | Risk | Không bịa cá nhân/deadline, không làm theo giả nguồn/bỏ quy tắc |
 
-Case pass chỉ khi mọi chiều áp dụng pass. Non-answer vẫn kiểm reason có giấu claim đoán không. Lỗi API/timeout nằm trong mẫu số. Review còn trống thì pending, không báo 0% hoặc thay full quality bằng action accuracy.
+Case pass chỉ khi mọi chiều áp dụng pass. Non-answer vẫn kiểm reason có giấu claim đoán không. Lỗi API/timeout nằm trong mẫu số. Nếu chưa có xác nhận chấm thì review trống vẫn là pending; riêng lượt hiện hành đã được nhóm xác nhận trong các báo cáo Markdown, không lấy action accuracy thay full quality.
 
 1. Đọc results.json của run hiện hành; đối chiếu golden/worksheet.
 2. Mở PDF Day 1/Day 2 gốc đúng physical page S01/S02-NNN từ context/citations. Không dựa vào footer; Day 2 trang PDF 3 in 16/83. Nếu truncated=true chỉ phần đầu text_char_count ký tự được gửi. Glyph lỗi/hình không được đọc cần ghi caveat, không giả AI đã thấy ảnh.

@@ -34,7 +34,7 @@ python -X utf8 eval/run.py
 python -X utf8 eval/run.py --report eval/published-runs/<run>
 ```
 
-[Kết quả hiện hành](eval/run_results.md) · [Tóm tắt](eval/live_summary.md) · [Cách chấm](eval/README.md) · [Worksheet](eval/review_worksheet.md). Full quality chưa chốt khi còn ô nhóm chấm trống. Timeout/API lỗi vẫn trong mẫu số. Codex review không thay người chấm độc lập.
+[Kết quả hiện hành](eval/run_results.md) · [Tóm tắt](eval/live_summary.md) · [Cách chấm](eval/README.md) · [Worksheet](eval/review_worksheet.md). Nhóm đã check nội dung: 23/24 pass toàn bộ (95,83%), SG02 timeout tính fail; kết quả đạt quality bar. Timeout/API lỗi vẫn trong mẫu số.
 
 Kết quả transcript trước và golden set cũ nằm ở `eval/archive/`; public run 20260918T044511Z là lịch sử, không được nhận là kết quả bản slide. Smoke slide 10 case cũng không thay golden set slide chính. Không hạ quality bar hoặc bỏ lỗi để làm đẹp số.
 
