@@ -171,11 +171,11 @@ eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử 
 
 ## §8. Phân công và validation
 
-| Thành viên | Công việc cụ thể | Sản phẩm bàn giao và tình trạng |
+| Thành viên | Phần việc | Đã làm / còn thiếu |
 |---|---|---|
-| Nguyễn Thanh Bình — 2A202602777, trưởng nhóm | Ở CP1, xác định người học đang gặp vấn đề gì khi hỏi bài và tổng hợp số liệu chứng minh vấn đề. Ở CP4, viết lại tài liệu AI Spec, chốt tiêu chí sản phẩm được xem là đạt và kiểm tra hồ sơ trước khi nộp. | [canvas.md](canvas.md), [evidence/mining.md](evidence/mining.md) và [spec.md](spec.md) đã có. Chưa có phỏng vấn người học, chưa đo thời gian/chi phí thực tế và chưa xác minh biên nhận nộp. |
-| Phạm Văn Kiên — 2A202602590 | Ở CP2, xây luồng xử lý từ lúc chọn slide, đặt câu hỏi, nhận câu trả lời hoặc bị hỏi lại, đến lúc đổi câu hỏi. Ở CP3, xây phần xử lý thật để tìm trang liên quan trong PDF, gửi thông tin đó cho mô hình, kiểm tra câu trả lời và gắn nguồn mở được. | [codebase/cp2-mock.html](codebase/cp2-mock.html), [codebase/cp2-flow.md](codebase/cp2-flow.md) và mã nguồn trong [codebase](codebase/) đã có. CP2 vẫn là mock; lượt chạy CP3 có một lỗi timeout ở SG02 và chưa chấm xong nội dung 23 câu còn lại. |
-| Ngô Minh Thu — 2A202602679 | Ở CP3, kiểm tra bằng trình duyệt xem các thao tác chính có hoạt động không: chọn trang slide, nhập và gửi câu hỏi, xem câu trả lời, mở citation tới đúng trang PDF, sửa câu hỏi và bấm thử lại khi có lỗi. Chuẩn bị giao diện cho phần trình diễn và ghi lại lỗi có thể làm người học bị khó hiểu hoặc không biết phải làm gì tiếp. | Kết quả kiểm tra trên máy tính và điện thoại được ghi ở [docs/ui-verification.md](docs/ui-verification.md). Đây là kiểm tra giao diện bằng script và dữ liệu mô phỏng, không phải thử với người học thật. Chưa quay video demo dự phòng và chưa user testing. |
+| Nguyễn Thanh Bình — 2A202602777, trưởng nhóm | Làm CP1: tìm vấn đề người học gặp khi hỏi bài và tổng hợp số liệu. Hỗ trợ Kiên làm CP2. Đọc lại toàn bộ hồ sơ trước khi nộp để xem các phần có khớp nhau không. | Đã có [canvas.md](canvas.md) và [evidence/mining.md](evidence/mining.md). Chưa phỏng vấn người học và chưa đo thời gian/chi phí thực tế. |
+| Phạm Văn Kiên — 2A202602590 | Làm CP2 và CP3. Vẽ và dựng luồng chọn slide, hỏi bài, nhận câu trả lời hoặc hỏi lại. Làm phần tìm trang PDF, gửi câu hỏi, trả lời có nguồn và cho mở đúng trang. | Đã có [codebase/cp2-mock.html](codebase/cp2-mock.html), [codebase/cp2-flow.md](codebase/cp2-flow.md) và mã nguồn trong [codebase](codebase/). CP2 vẫn là bản mô phỏng; CP3 còn lỗi timeout ở SG02 và 23 câu chưa được chấm nội dung đầy đủ. |
+| Ngô Minh Thu — 2A202602679 | Làm CP4. Hoàn thiện tài liệu `spec.md`, ghi rõ tiêu chuẩn để được xem là đạt, những việc đã làm và những việc còn thiếu. Chuẩn bị hồ sơ để nộp CP4. | [spec.md](spec.md) đã có đủ §1–§9 và quality bar. Chưa xác nhận việc nộp chính thức và biên nhận. |
 
 ### Willing users và kế hoạch validation
 
