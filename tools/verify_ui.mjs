@@ -36,7 +36,7 @@ try {
     await wait("document.querySelector('#output').dataset.state==='loading'");assert.equal(await evaluate("document.querySelector('#question').disabled"),true);
     await wait(`document.querySelector('#output').dataset.state==='${action}'&&!document.querySelector('#ask').disabled`);
     assert.equal(await evaluate("document.querySelector('#question').value"),'Token là gì?');assert.equal(await evaluate("document.querySelector('#selectionCount').textContent"),'1 / 3');
-    if(action==='answer'){await evaluate("document.querySelector('#citations button').click()");await wait("!document.querySelector('#sourceView').hidden");assert.equal(await evaluate("document.querySelector('#step4').getAttribute('aria-current')"),'step');await screenshot('desktop-answer-fixture');}
+    if(action==='answer'){await evaluate("document.querySelector('#citations button').click()");await wait("!document.querySelector('#sourceView').hidden");assert.match(await evaluate("document.querySelector('#sourceTitle').textContent"),/Token/);await screenshot('desktop-answer-fixture');}
     if(action==='out_of_scope')assert.equal(await evaluate("document.querySelectorAll('[data-reason]').length"),0);
   }
   await evaluate("window.mockAction='answer';document.querySelector('#actions button').click()");await wait("document.querySelector('#output').dataset.state==='answer'");
