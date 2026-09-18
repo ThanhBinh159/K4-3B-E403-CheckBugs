@@ -1,5 +1,7 @@
 # Golden set và cách chấm
 
+**Dữ liệu lượt đã chạy để người khác chấm:** [run 20260918T044511Z](published-runs/20260918T044511Z/README.md), gồm 24 response thật, review.csv trống và trace metadata. Không cần API để đọc/chấm; cần transcript gốc để đối chiếu. Export bằng `python -X utf8 eval/run.py --report eval/published-runs/20260918T044511Z`. Raw provider và source pack không public.
+
 24 case: 10 normal, 10 hard, 4 edge. Hard bao phủ ≥2 case cho từng lớp 1 nguồn / 2 mơ hồ / 3 thẩm quyền / 4 nghiệp vụ. 12 case có mã lượt thật; ghi origin=paraphrase vì bỏ prefix/đổi câu hỏi hoặc nguồn; không mô tả đây là baseline production. Expected và đoạn hỗ trợ đã định nghĩa trước khi chạy model; đoạn hỗ trợ không tự động được thêm vào retrieval trừ selected_segment_ids.
 
 ## Rubric khóa trước phép đo
