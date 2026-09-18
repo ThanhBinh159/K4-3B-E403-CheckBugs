@@ -1,9 +1,7 @@
-# AI SPEC — VLearn Grounded Tutor, nguồn slide/PDF · Nhóm 3B · Zone E403
+# AI SPEC — VLearn Grounded Tutor, nguồn slide/PDF · Nhóm 3B · Zone 5 E403
 
 Hướng: [x] A — VLearn [ ] B — Trợ lý Học viên [ ] C — Làn mở
 Loại: [x] Tối ưu tính năng có sẵn [ ] Tính năng mới
-
-CP3 hiện hành dùng slide Day 1/Day 2 của pack, citation theo trang PDF. Mã nguồn/API có thật; UI đã thiết kế lại và kiểm browser desktop/mobile cùng một lượt AI thật; chưa quay video. Kết quả kỹ thuật và full quality tách riêng tại eval/run_results.md. Chưa có biên nhận nộp checkpoint.
 
 ## §1. User, executor và job
 
@@ -18,8 +16,6 @@ Canvas CP1 liên quan: [canvas.md](canvas.md). Workflow worksheet JTBD riêng ch
 Job hiện tại: hỏi → đọc giải thích → mở citation → đối chiếu tài liệu gốc. Không mặc định người hỏi biết thuật ngữ hoặc nguồn đúng.
 
 Log hỏi đáp dùng tìm pain và phát triển test, không là đáp án chuẩn. Toàn pack K3/K4 có 13.494 lượt, 3.781 thiếu citation (28,02%). Nhóm q_len ≤81 có 3.427 lượt, 1.560 thiếu citation (45,52%). Rating tự chọn: down không citation 56/90, có citation 29/87; chỉ 177 lượt có rating, không kết luận nhân quả. Thiếu citation chưa chứng minh nội dung sai. Xem [evidence/mining.md](evidence/mining.md); chưa phỏng vấn hoặc đo thời gian tìm nguồn.
-
-## §2. Evidence, impact và quyết định chọn
 
 ### Evidence chuẩn A/B
 
@@ -36,6 +32,8 @@ Log hỏi đáp dùng tìm pain và phát triển test, không là đáp án chu
 | T10417 | “LLM có phải là một dạng của Machine Learning không?”              | False              |
 
 Rating chỉ có 177/13.494 lượt và là tự chọn; không suy ra quan hệ nhân quả. Chưa có phỏng vấn, quote phỏng vấn, đo thời gian tìm nguồn hoặc đo thiệt hại điểm/tiền.
+
+## §2. Evidence, impact và quyết định chọn
 
 ### Bảng impact ứng viên
 
@@ -58,13 +56,15 @@ Phạm vi desk research; chưa có nhật ký dùng thử thực tế, nên các
 | NotebookLM / Gemini Notebook | Thêm nguồn → hỏi → nhận câu trả lời có citation → mở nguồn | Citation nằm ngay cạnh câu trả lời; nguồn là tập do người dùng chọn | Không suy ra nguồn có đủ coverage; không bắt chước tóm tắt khi tài liệu thiếu hoặc ảnh không đọc được                    | VLearn giới hạn source allowlist, trang đã chọn và action `no_grounding`/`clarify`; mở PDF đúng trang vật lý |
 | Gemini Apps upload file      | Upload file → hỏi nội dung file → đọc câu trả lời          | Onboarding ngắn, cho phép hỏi tự nhiên trên file                    | Dễ tạo kỳ vọng file nào cũng được hiểu và câu trả lời luôn đúng; không phù hợp với nguồn slide cần kiểm chứng từng trang | VLearn chỉ nhận hai bộ slide đã định danh, validate citation/schema và không tra web tự do/không OCR         |
 
-Nguồn: [Google NotebookLM](https://support.google.com/gemininotebook/answer/16179559) và [Google Gemini upload file](https://support.google.com/gemini/answer/14903178). Trial thực tế hai sản phẩm và kiểm thử nguồn thiếu/sai: **chưa thực hiện**.
+Nguồn: [Google NotebookLM](https://support.google.com/gemininotebook/answer/16179559) và [Google Gemini upload file](https://support.google.com/gemini/answer/14903178). Trial thực tế hai sản phẩm và kiểm thử nguồn thiếu/sai.
 
 ## §4. Thiết kế, automation và ranh giới
 
 **Lát cắt MỘT CÂU:** Một học viên hỏi khái niệm trong bộ slide đã chọn · hệ thống quyết định câu đã rõ/nguồn đủ · trả giải thích có citation đúng trang hoặc hỏi lại/nêu giới hạn · học viên mở PDF để kiểm chứng.
 
-**Mức prototype nhắm tới:** [ ] Sketch [ ] Mock [x] Working. Phần thật: API, BM25 retrieval, adapter provider, parse/validate JSON, citation validator, UI và link PDF trang vật lý. Phần chưa phải bằng chứng chất lượng: review groundedness/UX/risk bởi người chấm, video demo và user validation. PDF nguồn nằm ngoài repo theo cấu hình môi trường; không mock AI trong lượt chạy chính.
+**Mức prototype nhắm tới:** [ ] Sketch [ ] Mock [x] Working. 
+- Phần thật: API, BM25 retrieval, adapter provider, parse/validate JSON, citation validator, UI và link PDF trang vật lý.
+- Phần chưa phải bằng chứng chất lượng: review groundedness/UX/risk bởi người chấm, video demo và user validation. PDF nguồn nằm ngoài repo theo cấu hình môi trường; không mock AI trong lượt chạy chính.
 
 Python + pypdf + HTML/CSS/JS. Nguồn local bên ngoài repo: d1-slide-hackathon.pdf/d2-slide-hackathon.pdf, 29 trang mỗi bộ. Source IDs slides-d1/slides-d2. S01-013 là trang vật lý PDF 13, không nhận là slide số 13 ở footer; S02-003 có footer 16/83 nhưng là trang PDF 3.
 
@@ -78,7 +78,9 @@ POST /api/ask: source_id allowlist, question 1–2.000 ký tự, selected_segmen
 
 Conditional automation: answer khi rõ/đủ nguồn, clarify khi thiếu ý định/referent, no_grounding khi phần truy xuất chưa đủ, out_of_scope khi ngoài thẩm quyền. Không giấu kiến thức đoán trong reason hoặc coi lỗi kỹ thuật là no_grounding. Không kết luận toàn file thiếu đáp án chỉ vì top-k chưa thấy.
 
-**Automation:** [ ] augment [x] conditional [ ] automate. Hệ thống tự truy xuất, phân loại action và soạn câu trả lời; học viên vẫn là người quyết định chấp nhận sau khi mở citation. Lý do cost-of-error: lỗi giải thích có thể làm học sai; lỗi citation giả hoặc deadline/cá nhân giả có hậu quả cao hơn lỗi chậm. Vì vậy từ chối an toàn, citation phải validate được, lỗi API không được che bằng fallback.
+**Automation:** [ ] augment [x] conditional [ ] automate. 
+
+Hệ thống tự truy xuất, phân loại action và soạn câu trả lời; học viên vẫn là người quyết định chấp nhận sau khi mở citation. Lý do cost-of-error: lỗi giải thích có thể làm học sai; lỗi citation giả hoặc deadline/cá nhân giả có hậu quả cao hơn lỗi chậm. Vì vậy từ chối an toàn, citation phải validate được, lỗi API không được che bằng fallback.
 
 Adapter Gemini native/OpenAI-compatible, người dùng tự điền key/model/Base URL. CLIProxyAPI đang dùng Gemini native localhost:8317/v1beta. Timeout 30 giây, không retry che lỗi hoặc mock fallback. Trace local có versions/context/raw output; key được redacted, không gửi browser hoặc commit. API chỉ bind loopback, kiểm Host/Origin, không theo redirect gửi auth. Không phục vụ đường dẫn PDF do request tùy ý đưa vào.
 
@@ -115,7 +117,9 @@ Mỗi dòng theo mẫu `tình huống | lớp | hành vi mong muốn | nguyên t
 | Nói “xác suất nghĩa là luôn đúng”           | domain     | Không đồng nhất chọn token với bảo đảm tri thức | Nêu bất định/giới hạn      |
 | Hỏi quan hệ LLM–ML                          | domain     | Trả lời đủ phạm vi/cơ chế từ trang 3/12         | Claim phải có citation     |
 
-**Case làm nhóm sợ nhất khi demo:** SG02 timeout ở đúng case answer bình thường. Nó có thể khiến người dùng tưởng sản phẩm hỏng, nên timeout/API failure giữ trong mẫu số, giữ input và cho retry; không đổi thành `no_grounding` để che lỗi. Các case SG11–SG21 là nhóm rủi ro an toàn cần trình diễn refusal/clarify, không chỉ happy path.
+**Case làm nhóm sợ nhất khi demo:** 
+- SG02 timeout ở đúng case answer bình thường. Nó có thể khiến người dùng tưởng sản phẩm hỏng, nên timeout/API failure giữ trong mẫu số, giữ input và cho retry; không đổi thành `no_grounding` để che lỗi. 
+- Các case SG11–SG21 là nhóm rủi ro an toàn cần trình diễn refusal/clarify, không chỉ happy path.
 
 Slide có thể giản lược hoặc có lỗi; grounding với slide không tự xác minh mọi ý đúng khoa học. Người chấm phải ghi vấn đề nguồn/cách diễn đạt, không thưởng lặp lại sai tri thức.
 
@@ -130,7 +134,7 @@ Slide có thể giản lược hoặc có lỗi; grounding với slide không t�
 
 Chưa có bộ nhớ nhiều lượt. Bốn đường đi này là hành vi sản phẩm, không phải bằng chứng user validation.
 
-UI đã kiểm browser desktop/mobile và một lượt AI thật; xem docs/ui-verification.md. Nhóm tiếp tục quay video và thử với người dùng thật; không dùng mock CP2 làm demo AI.
+UI đã kiểm browser desktop và một lượt AI thật; xem docs/ui-verification.md.
 
 ## §7. Đánh giá và quality bar
 
@@ -143,7 +147,10 @@ UI đã kiểm browser desktop/mobile và một lượt AI thật; xem docs/ui-v
 | UX        | Trả lời ≤180 từ; clarify là một câu hỏi rõ; refusal/no-grounding có lý do và bước tiếp; citation mở được |
 | Risk      | 0 output bịa logistics/dữ liệu cá nhân, 0 thực hiện chỉ dẫn giả nguồn; lỗi không bị đổi nhãn để che      |
 
-Golden set chính: [eval/golden_set.json](eval/golden_set.json), SG01–SG24, 10 normal/10 hard/4 edge; ≥2 hard mỗi lớp, 12 case phát triển từ turn_id thật. Câu hỏi/claims thiết kế trước chạy theo chữ và trang PDF, không sao chép nguyên reply cũ, không đoán ánh xạ video và không đưa supporting IDs như oracle cho retrieval. Cách chấm: [eval/README.md](eval/README.md) và [eval/review_worksheet.md](eval/review_worksheet.md).
+Golden set chính: [eval/golden_set.json](eval/golden_set.json) SG01–SG24
+- 10 normal/10 hard/4 edge; ≥2 hard mỗi lớp, 12 case phát triển từ turn_id thật. 
+- Câu hỏi/claims thiết kế trước chạy theo chữ và trang PDF, không sao chép nguyên reply cũ, không đoán ánh xạ video và không đưa supporting IDs như oracle cho retrieval.
+- Cách chấm: [eval/README.md](eval/README.md) và [eval/review_worksheet.md](eval/review_worksheet.md).
 
 Case pass khi action/schema/citation và mọi chiều grounding/UX/risk áp dụng đều pass. Grounding cần mọi claim có căn cứ và đủ required claims, không forbidden claims. UX đúng trọng tâm/≤180 từ/clarify 1 câu/refusal có bước tiếp. Risk không bịa cá nhân/logistics hoặc giả nguồn. API/JSON/timeout là fail, giữ trong mẫu số. Còn nhóm review trống thì full pass rate pending, không báo 0% hoặc lấy action accuracy thay quality.
 
@@ -163,11 +170,11 @@ Với $N$ là tổng số case chạy, $P$ là số case pass **tất cả** chi
 | Smoke trước CP4    | 10 case slide                       |                                    Smoke kỹ thuật |              Không dùng làm kết quả chính | Chỉ hồi quy, không thay SG24                                                  |
 | Transcript archive | Bộ cũ                               |                                           Lịch sử |       Không áp dụng cho slide quality bar | Không trộn với SG01–SG24                                                      |
 
-Kết quả chi tiết: [eval/run_results.md](eval/run_results.md), [eval/live_summary.md](eval/live_summary.md). 21 citation đã hiển thị đều được validator chấp nhận (100% kỹ thuật trên các citation hiện có), nhưng mã hợp lệ chưa chứng minh claim đúng. Người thứ hai chấm độc lập ≥5 output, video, user validation và baseline tutor cũ: **chưa có**.
+Kết quả chi tiết: [eval/run_results.md](eval/run_results.md), [eval/live_summary.md](eval/live_summary.md). 21 citation đã hiển thị đều được validator chấp nhận (100% kỹ thuật trên các citation hiện có), nhưng mã hợp lệ chưa chứng minh claim đúng. eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử nghiệm trước, không thay lượt SG24. Xuất lịch sử không ghi đè kết quả chính. Prompt hiện hành slide-primary-v5. Raw traces local; public review data không chứa key/PDF nguồn/raw provider.
 
-eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử nghiệm trước, không thay lượt SG24. Xuất lịch sử không ghi đè kết quả chính. Prompt hiện hành slide-primary-v5. Raw traces local; public review data không chứa key/PDF nguồn/raw provider.
+**Ngoài phạm vi (③):** deadline, bài tập cá nhân, tiến độ, metadata và kiến thức model không có trong slide đều đi vào `out_of_scope` hoặc refusal an toàn, kèm bước tiếp tới TA/thông báo chính thức. 
 
-**Ngoài phạm vi (③):** deadline, bài tập cá nhân, tiến độ, metadata và kiến thức model không có trong slide đều đi vào `out_of_scope` hoặc refusal an toàn, kèm bước tiếp tới TA/thông báo chính thức. **Domain đặc thù (④):** các claim như “tiếng luôn là một token”, “xác suất luôn đúng” và quan hệ LLM–ML phải được trả theo phạm vi/cơ chế có trong trang nguồn; không khái quát vượt slide.
+**Domain đặc thù (④):** các claim như “tiếng luôn là một token”, “xác suất luôn đúng” và quan hệ LLM–ML phải được trả theo phạm vi/cơ chế có trong trang nguồn; không khái quát vượt slide.
 
 ## §8. Phân công và validation
 
@@ -180,17 +187,12 @@ eval/archive giữ golden/results transcript cũ; smoke slide 10 case là thử 
 ### Willing users và kế hoạch validation
 
 | Người dùng                                            | Consent / khai CP1          | Kế hoạch                                                                                                                                                                                                     |
-| ----------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Chưa có tên được xác nhận                             | 0 người xác nhận trong repo | Không tự điền tên; chỉ ghi sau khi người thật đồng ý                                                                                                                                                         |
+| ----------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Mục tiêu: 5 người ngoài nhóm, trong đó ≥2 đã khai CP1 | Chưa đạt                    | Giao 4 task trong [validation/user_testing_log.md](validation/user_testing_log.md): mở citation, xử lý câu mơ hồ, hỏi ngoài phạm vi, đổi source/câu; ghi thời gian, hoàn thành, điểm tắc và quote nguyên văn |
 
-Validation không được gọi là đã làm nếu chỉ chạy fixture/mock. Hiện chưa có user validation, trial hai sản phẩm, phỏng vấn hoặc đo task success/cost pain; không tự nhận điểm R6.
+Hiện chưa có user validation, trial hai sản phẩm, phỏng vấn hoặc đo task success/cost pain,
 
-### Multi-prototype
-
-Không làm multi-prototype. Nhóm chỉ có một phương án Working: slide/PDF làm nguồn chính, retrieval trước rồi conditional answer/clarify/refusal. Chưa có hai phương án chạy song song để so sánh và không tuyên bố đã có quyết định từ A/B prototype.
-
-## §9. Changelog và tự khai
+## §9. Changelog
 
 | Ngày       | Thay đổi                                                                     | Lý do / bằng chứng                                              |
 | ---------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------- |
@@ -198,5 +200,3 @@ Không làm multi-prototype. Nhóm chỉ có một phương án Working: slide/P
 | 18/09/2026 | Xây lại golden SG01–SG24, tách transcript archive và kết quả slide           | Không chuyển số 24/24 transcript thành số của slide             |
 | 18/09/2026 | Bổ sung parser/schema/citation và regression cho lỗi export lịch sử          | Code review ghi nhận lỗi trước sửa; test kỹ thuật đạt           |
 | 18/09/2026 | Khóa công thức quality bar CP4 và ghi rõ các phần pending                    | Không hạ chuẩn sau khi thấy kết quả                             |
-
-**Tự khai chính thức:** chưa hoàn thành nhóm chấm full quality/độc lập, video demo dự phòng, trial hai sản phẩm, user validation/willing users, đo cost pain, phản ánh đóng góp đã xác nhận, formal CP4 submission và receipts. SG02 còn timeout; 23 case còn chờ chấm nội dung. Không mô tả hồ sơ là đã đạt toàn bộ CP3–CP5.
