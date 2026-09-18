@@ -1,5 +1,15 @@
 # Mini Hackathon AI — Batch 04 · Lớp 3B
 
+## Bàn giao CP3 — branch `pkien1`
+
+Backend VLearn Grounded Tutor và hồ sơ CP3–5: [hướng dẫn chạy](PRODUCT.md), [CP3](submission/CP3.md), [kết quả AI thật](eval/run_results.md), [workflow CP2 → CP3](codebase/cp2-flow.md).
+
+Backend đã chạy AI thật: 24/24 output hợp lệ và action đúng expected, 36 test offline đạt. Full pass rate còn chờ nhóm chấm nội dung. Người tiếp tục làm UI, kiểm luồng trên browser và quay video AI thật; giữ API/citation và các nhánh trong workflow. Xem [kịch bản video](submission/video-scripts.md).
+
+API key, pack dữ liệu và raw traces không nằm trong repo. Copy `.env.example` thành `.env`, tự cấu hình proxy và trỏ `VLEARN_DATA_DIR` đến transcript trong pack đề bài, rồi chạy `python -X utf8 codebase/server.py`. Không commit `.env` hoặc dữ liệu nguồn. PDF hiện là snapshot run trước, cần cập nhật số cuối trước CP5.
+
+README sự kiện và thông tin nhóm bên dưới được giữ lại; `canvas.md`, `cp2-archify.html`, `cp2-flow.svg` là hồ sơ CP1/CP2 đã có.
+
 **SPEC → Prototype → Demo.** Đây không phải cuộc thi code — đây là cuộc thi **tư duy sản phẩm AI**.
 
 ## 👥 Thành viên nhóm & Phân công vai trò

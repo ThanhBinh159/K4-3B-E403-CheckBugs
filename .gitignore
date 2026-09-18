@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+logs/
+eval/runs/
+tmp/
+output/
+data/
+*.mp4
+*.webm
