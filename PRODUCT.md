@@ -2,6 +2,8 @@
 
 Prototype độc lập cho Track A1: học viên hỏi một khái niệm, AI trả lời dựa trên transcript đã chọn và citation mở được, hoặc hỏi lại/nêu giới hạn.
 
+**Bản thử mới — nguồn slide/PDF:** xem [hướng dẫn dùng slide](docs/slide-trial.md). Cài `python -m pip install -r requirements.txt`; `.env.example` chọn chế độ slides. Citation S01/S02 mở đúng trang PDF gốc. Kết quả riêng ở eval/slide_run_results.md; số 24/24 dưới đây thuộc lượt transcript trước, không chuyển sang nhận chất lượng bản slide.
+
 **Trạng thái:** backend CP3 cải thiện đã chạy Gemini native thật qua CLIProxyAPI. Run 20260918T044511Z: 24/24 output hợp lệ, 24/24 action đúng expected, 35 citation hợp lệ kỹ thuật; 36 test offline đạt. Grounding/UX/risk cần nhóm chấm, chưa chốt full pass rate. Đối chiếu sơ bộ Codex: eval/cp3-content-audit.md; thay đổi: docs/cp3-backend-improvements.md. Video/user validation chưa có; chưa nhận đã đạt/nộp CP3-CP5. PDF là snapshot lượt trước, cần cập nhật trước nộp CP5.
 
 ## Nhân sự - người dùng sẽ điền sau

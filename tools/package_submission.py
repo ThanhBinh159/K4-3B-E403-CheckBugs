@@ -6,7 +6,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIRS = {'codebase', 'eval', 'evidence', 'validation', 'reflection', 'submission', 'slides', 'tools', 'docs'}
-TOP = {'README.md', 'spec.md', '.gitignore', '.env.example', 'demo-slides.pdf'}
+TOP = {'README.md', 'spec.md', '.gitignore', '.env.example', 'demo-slides.pdf', 'requirements.txt'}
 EXTENSIONS = {'.md', '.json', '.py', '.js', '.css', '.html', '.svg', '.mmd', '.pdf'}
 
 

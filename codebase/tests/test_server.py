@@ -48,6 +48,30 @@ class ServerTests(unittest.TestCase):
         self.server.shutdown()
         self.server.server_close()
         self.thread.join()
+
+    def test_slide_citation_opens_original_pdf_page_and_file(self):
+        root = Path(__file__).resolve().parents[3] / 'K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/slides'
+        self.tutor.store = SourceStore(root, kind='slides')
+        with urlopen(self.url + '/api/segment?source_id=slides-d1&id=S01-013') as response:
+            value = json.load(response)
+        self.assertEqual(value['page_number'], 13)
+        self.assertEqual(value['pdf_url'], '/api/source-file?source_id=slides-d1#page=13')
+        with urlopen(self.url + '/api/source-file?source_id=slides-d1') as response:
+            self.assertEqual(response.headers.get_content_type(), 'application/pdf')
+            self.assertEqual(response.read(), (root / 'd1-slide-hackathon.pdf').read_bytes())
+        with self.assertRaises(HTTPError) as error:
+            urlopen(self.url + '/api/source-file?source_id=../../.env')
+        self.assertEqual(error.exception.code, 400)
+
+    def test_slide_answer_uses_page_citations_through_shared_tutor(self):
+        root = Path(__file__).resolve().parents[3] / 'K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/slides'
+        self.tutor.store = SourceStore(root, kind='slides')
+        self.client.output = json.dumps(dict(action='answer', answer='Token là mảnh văn bản [S01-013].',
+                                            citations=['S01-013'], clarifying_question='', reason=''))
+        body = json.dumps(dict(source_id='slides-d1', question='Token là gì?', selected_segment_ids=['S01-013'])).encode()
+        with urlopen(Request(self.url + '/api/ask', body, {'Content-Type': 'application/json'})) as response:
+            value = json.load(response)
+        self.assertEqual(value['citations'], ['S01-013'])
         self.tmp.cleanup()
 
     def post(self, data):

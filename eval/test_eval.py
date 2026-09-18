@@ -1,8 +1,27 @@
 import unittest
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+from run import export_report
 from run import summarize, technical_metrics
 
 
 class EvalTests(unittest.TestCase):
+    def test_slide_export_does_not_overwrite_existing_transcript_results(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); (root / 'eval').mkdir()
+            old = root / 'eval/run_results.md'; old.write_text('original transcript report')
+            run_dir = root / 'trial'; run_dir.mkdir()
+            (run_dir / 'results.json').write_text(json.dumps([dict(case_id='SL01', model='test', provider='test',
+                source_id='slides-d1', expected='answer', actual='answer', status='validated', action_match=True,
+                response={'citations':['S01-013']})]))
+            (run_dir / 'review.csv').write_text('case_id,grounding,ux,risk,reviewer,notes\nSL01,,,,,\n')
+            with patch('run.ROOT', root):
+                export_report(run_dir)
+            self.assertEqual(old.read_text(), 'original transcript report')
+            self.assertTrue((root / 'eval/slide_run_results.md').is_file())
+
     def test_pending_human_reviews_never_become_quality_passes(self):
         summary = summarize([{'case_id': 'A', 'status': 'validated', 'action_match': True}], {})
         self.assertEqual(summary['pending'], 1)

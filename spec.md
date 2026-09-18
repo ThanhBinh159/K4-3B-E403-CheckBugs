@@ -1,5 +1,7 @@
 # AI Spec - VLearn Grounded Tutor · Track A1 · Lớp 3B
 
+**Bản thử slide/PDF bổ sung:** docs/slide-trial.md mô tả chế độ slides và citation theo trang. Các đánh giá 24 case transcript trong spec này là lịch sử lượt đã chạy; bản slide có smoke set/báo cáo riêng, chưa thay golden set hoặc chứng minh full quality đạt. PDF demo hiện vẫn là snapshot cũ, chưa cập nhật nguồn slide.
+
 Nhóm / phòng / thành viên: người dùng sẽ điền sau theo README. **Trạng thái:** backend CP3 cải thiện đã chạy đủ 24 case AI thật, run 20260918T044511Z; 24/24 action đúng expected và output hợp lệ; 36 test offline đạt. Chưa chốt full pass rate vì cần nhóm chấm. Đối chiếu sơ bộ Codex: eval/cp3-content-audit.md; thay đổi: docs/cp3-backend-improvements.md. Chưa có video/user validation, chưa nộp form CP nào. Xem [checklist nộp](submission/README.md).
 
 ## §1. User & Job

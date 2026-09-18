@@ -7,6 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 SOURCE_FILES = {'transcript-04': 'transcript-04-clean.md', 'transcript-06': 'transcript-06-clean.md'}
+SLIDE_FILES = {'slides-d1': 'd1-slide-hackathon.pdf', 'slides-d2': 'd2-slide-hackathon.pdf'}
 STOP = set('la gi cua va trong mot cac cho co the nhu nao toi ban hay ve duoc voi nay khong nhung khi de bai hoc giai thich'.split())
 RETRIEVAL_VERSION = 'bm25-concept-continuation-v3'
 ALIASES = {'llm': ['large language model', 'mo hinh ngon ngu lon'],
@@ -24,8 +25,15 @@ def parse_model_output(output):
 
 
 class SourceStore:
-    def __init__(self, root):
+    def __init__(self, root, kind='transcript'):
         self.sources = {}
+        self.kind = kind
+        self.files = {}
+        if kind == 'slides':
+            self.load_slides(root)
+            return
+        if kind != 'transcript':
+            raise ValueError('VLEARN_SOURCE_KIND phải là transcript hoặc slides.')
         for source_id, filename in SOURCE_FILES.items():
             path = Path(root) / filename
             if not path.is_file():
@@ -43,6 +51,41 @@ class SourceStore:
             if not segments or len({s['id'] for s in segments}) != len(segments):
                 raise ValueError(f'Nguồn {filename} thiếu mã đoạn hoặc có mã trùng.')
             self.sources[source_id] = dict(id=source_id, name=filename, segments=segments)
+
+    def load_slides(self, root):
+        try:
+            from pypdf import PdfReader
+        except ImportError:
+            raise ValueError('Cần cài pypdf: python -m pip install -r requirements.txt.') from None
+        for source_id, filename in SLIDE_FILES.items():
+            path = Path(root) / filename
+            if not path.is_file():
+                raise ValueError(f'Không tải được {filename}. Kiểm tra VLEARN_SLIDES_DIR.')
+            try:
+                reader = PdfReader(path)
+                segments, blank = [], []
+                for number, page in enumerate(reader.pages, 1):
+                    text = (page.extract_text() or '').strip()
+                    if not text:
+                        blank.append(number)
+                        continue
+                    glyph_warning = bool(re.search(r'[\ue000-\uf8ff]', text))
+                    text = re.sub(r'[\ue000-\uf8ff]', '\ufffd', text)
+                    heading = next((line.strip() for line in text.splitlines() if line.strip()), '')[:160]
+                    segments.append(dict(id=f'S{int(source_id[-1]):02d}-{number:03d}', text=text,
+                                         heading=heading, page_number=number, extraction_warning=glyph_warning))
+            except Exception:
+                raise ValueError(f'Không đọc được PDF {filename}; kiểm tra file hoặc mật khẩu.') from None
+            if not segments:
+                raise ValueError(f'{filename} không có chữ trích xuất được; bản này chưa hỗ trợ OCR.')
+            self.sources[source_id] = dict(id=source_id, name=filename, kind='slides', segments=segments,
+                                           page_count=len(reader.pages), unindexed_pages=blank)
+            self.files[source_id] = path
+
+    def source_file(self, source_id):
+        if source_id not in self.files:
+            raise ValueError('Nguồn PDF không hợp lệ.')
+        return self.files[source_id]
 
     def segment(self, source_id, segment_id):
         if source_id not in self.sources:
@@ -166,7 +209,7 @@ def validate_response(data, context_ids):
     if data['action'] == 'answer':
         if not data['answer'].strip() or not citations or len(data['answer'].split()) > 180 or data['clarifying_question'].strip():
             raise ValueError('Answer cần nội dung tối đa 180 từ, citation và không có câu hỏi làm rõ.')
-        inline_ids = set(re.findall(r'\bT\d{2}-\d{3}\b', data['answer']))
+        inline_ids = set(re.findall(r'\b[TS]\d{2}-\d{3}\b', data['answer']))
         if not inline_ids.issubset(set(citations)):
             raise ValueError('Citation trong câu trả lời không khớp danh sách citation đã xác minh.')
     else:

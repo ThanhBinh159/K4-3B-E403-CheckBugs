@@ -21,8 +21,16 @@ def load_env():
             line = line.strip()
             if line and not line.startswith('#') and '=' in line:
                 key, value = line.split('=', 1)
-                if key.strip() in {'AI_PROVIDER', 'AI_MODEL', 'AI_API_KEY', 'GEMINI_API_KEY', 'OPENAI_API_KEY', 'AI_BASE_URL', 'VLEARN_DATA_DIR', 'PORT'}:
+                if key.strip() in {'AI_PROVIDER', 'AI_MODEL', 'AI_API_KEY', 'GEMINI_API_KEY', 'OPENAI_API_KEY', 'AI_BASE_URL', 'VLEARN_DATA_DIR', 'VLEARN_SOURCE_KIND', 'VLEARN_SLIDES_DIR', 'PORT'}:
                     os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+def configured_store():
+    kind = os.getenv('VLEARN_SOURCE_KIND', 'transcript')
+    variable = 'VLEARN_SLIDES_DIR' if kind == 'slides' else 'VLEARN_DATA_DIR'
+    suffix = 'slides' if kind == 'slides' else 'transcript'
+    path = Path(os.getenv(variable, '../K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/' + suffix))
+    return SourceStore(path if path.is_absolute() else ROOT / path, kind=kind)
 
 
 class Tutor:
@@ -113,14 +121,29 @@ def make_handler(tutor, source_error=''):
             query = parse_qs(url.query)
             try:
                 if url.path == '/api/sources':
-                    self.send_json(200, [dict(id=s['id'], name=s['name'], segment_count=len(s['segments'])) for s in tutor.store.sources.values()])
+                    self.send_json(200, [dict(id=s['id'], name=s['name'], kind=s.get('kind', 'transcript'),
+                                             segment_count=len(s['segments']), page_count=s.get('page_count'),
+                                             unindexed_pages=s.get('unindexed_pages', [])) for s in tutor.store.sources.values()])
                 elif url.path == '/api/segments':
                     source = query.get('source_id', [''])[0]
                     if source not in tutor.store.sources:
                         raise ValueError('Nguồn không hợp lệ.')
                     self.send_json(200, [dict(id=s['id'], heading=s['heading'], preview=s['text'][:140]) for s in tutor.store.sources[source]['segments']])
                 elif url.path == '/api/segment':
-                    self.send_json(200, tutor.store.segment(query.get('source_id', [''])[0], query.get('id', [''])[0]))
+                    source = query.get('source_id', [''])[0]
+                    segment = tutor.store.segment(source, query.get('id', [''])[0])
+                    if 'page_number' in segment:
+                        segment = dict(segment, pdf_url='/api/source-file?source_id=' + source + '#page=' + str(segment['page_number']))
+                    self.send_json(200, segment)
+                elif url.path == '/api/source-file':
+                    path = tutor.store.source_file(query.get('source_id', [''])[0])
+                    body = path.read_bytes()
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/pdf')
+                    self.send_header('Content-Disposition', 'inline; filename="' + path.name + '"')
+                    self.send_header('Content-Length', str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
                 else:
                     self.send_json(404, {'error': 'Không có endpoint này.'})
             except ValueError as error:
@@ -161,11 +184,7 @@ def main():
     load_env()
     tutor, error = None, ''
     try:
-        data_dir = os.getenv('VLEARN_DATA_DIR', '../K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/transcript')
-        data_path = Path(data_dir)
-        if not data_path.is_absolute():
-            data_path = ROOT / data_path
-        tutor = Tutor(SourceStore(data_path), ModelClient(), ROOT / 'logs')
+        tutor = Tutor(configured_store(), ModelClient(), ROOT / 'logs')
     except (ValueError, ModelError) as e:
         error = str(e)
     port = int(os.getenv('PORT', '8765'))

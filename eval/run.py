@@ -8,9 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'codebase'))
-from core import SourceStore
+from core import SourceStore, validate_request
 from provider import ModelClient, ModelError
-from server import Tutor, load_env
+from server import Tutor, load_env, configured_store
 
 
 def summarize(results, reviews):
@@ -63,26 +63,31 @@ def export_report(run_dir):
                  review.get('grounding', ''), review.get('ux', ''), review.get('risk', ''), row.get('request_id', '') or row.get('error', '')]
         lines.append('| ' + ' | '.join(str(c).replace('|', '/').replace('\n', ' ') for c in cells) + ' |')
     lines += ['', '## Phân tích của người chấm', '', 'Ghi nguyên nhân retrieval/action/claim/UX/API, người chấm, bất đồng và quyết định vào review.csv local; bổ sung trích ngắn đã rà trước khi nộp.', '']
-    (ROOT / 'eval' / 'run_results.md').write_text('\n'.join(lines), encoding='utf-8')
+    slides = any(r.get('source_id', r.get('response', {}).get('source_id', '')).startswith('slides-') for r in results)
+    if slides:
+        lines.insert(2, 'Bản thử nguồn slide: không thay kết quả golden set transcript 24 case. Các ô human review trống vẫn pending; không dùng smoke set để nhận full quality đạt.')
+    report_name = 'slide_run_results.md' if slides else 'run_results.md'
+    (ROOT / 'eval' / report_name).write_text('\n'.join(lines), encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False))
 
 
-def run_live():
+def run_live(cases_path=None):
     load_env()
     client = ModelClient()
     client.check_config()  # No run or misleading 24 failures if no key/model.
     # Validate URL before first model call too.
     client.build_request('Preflight', [])
-    path = Path(__import__('os').getenv('VLEARN_DATA_DIR', '../K4-3B-Day05-06-AI-Product-Hackathon/data/vlearn-pack/transcript'))
-    store = SourceStore(path if path.is_absolute() else ROOT / path)
-    cases = json.loads((ROOT / 'eval' / 'golden_set.json').read_text(encoding='utf-8'))
+    store = configured_store()
+    cases = json.loads((cases_path or ROOT / 'eval' / 'golden_set.json').read_text(encoding='utf-8'))
+    for case in cases:
+        validate_request(case, store)  # Stop before creating a run for the wrong source mode.
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     run_dir = ROOT / 'eval' / 'runs' / stamp
     run_dir.mkdir(parents=True, exist_ok=False)
     tutor = Tutor(store, client, ROOT / 'logs')
     results = []
     for case in cases:
-        row = dict(case_id=case['case_id'], model=client.model, provider=client.provider,
+        row = dict(case_id=case['case_id'], model=client.model, provider=client.provider, source_id=case['source_id'],
                    expected=case['expected_action'], status='error', action_match=False)
         before = set(tutor.log_dir.glob('*.json'))
         try:
@@ -108,9 +113,10 @@ def run_live():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--cases', type=Path, help='Bộ câu hỏi phù hợp chế độ nguồn, ví dụ eval/slide_smoke_set.json')
     args = parser.parse_args()
     try:
-        export_report(args.report) if args.report else run_live()
+        export_report(args.report) if args.report else run_live(args.cases)
     except (ModelError, ValueError, OSError) as e:
         print('Không chạy: ' + str(e), file=sys.stderr)
         sys.exit(1)

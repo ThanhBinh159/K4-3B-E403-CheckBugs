@@ -2,6 +2,8 @@
 
 ## Bàn giao CP3 — branch `pkien1`
 
+**Bản thử slide/PDF:** [cấu hình và giới hạn](docs/slide-trial.md). Cài `python -m pip install -r requirements.txt`, chọn `VLEARN_SOURCE_KIND=slides`. Citation mở PDF gốc đúng trang. Lượt smoke slide 9/10 đúng kỹ thuật, có 1 timeout; full quality chưa chốt. Kết quả 24/24 dưới đây thuộc lượt transcript trước, không phải kết quả slide.
+
 Backend VLearn Grounded Tutor và hồ sơ CP3–5: [hướng dẫn chạy](PRODUCT.md), [CP3](submission/CP3.md), [kết quả AI thật](eval/run_results.md), [workflow CP2 → CP3](codebase/cp2-flow.md).
 
 Backend đã chạy AI thật: 24/24 output hợp lệ và action đúng expected, 36 test offline đạt. Full pass rate còn chờ nhóm chấm nội dung. Người tiếp tục làm UI, kiểm luồng trên browser và quay video AI thật; giữ API/citation và các nhánh trong workflow. Xem [kịch bản video](submission/video-scripts.md).

@@ -25,6 +25,14 @@ async function openSegment(sourceId, id) {
     const value = await api('/api/segment?source_id=' + encodeURIComponent(sourceId) + '&id=' + encodeURIComponent(id));
     $('sourceTitle').textContent = id + ' · ' + value.heading;
     $('sourceText').textContent = value.text; $('sourceView').hidden = false;
+    $('sourcePdf').replaceChildren();
+    if (value.pdf_url) {
+      const link = document.createElement('a'); link.href = value.pdf_url;
+      link.target = '_blank'; link.rel = 'noopener';
+      link.textContent = 'Mở PDF gốc · trang ' + value.page_number;
+      $('sourcePdf').append(link);
+    }
+    if (value.extraction_warning) $('sourcePdf').append(document.createTextNode(' · Có ký tự trích xuất lỗi; đối chiếu PDF gốc.'));
   } catch (e) { $('meta').textContent = e.message; }
 }
 $('source').onchange = async () => {
@@ -71,7 +79,7 @@ $('askForm').onsubmit = async event => {
     const health = await api('/api/health');
     if (!health.source_ready) throw new Error(health.error || 'Chưa có nguồn bài học.');
     const sources = await api('/api/sources');
-    sources.forEach(s => $('source').add(new Option(s.name + ' · ' + s.segment_count + ' đoạn', s.id)));
+    sources.forEach(s => $('source').add(new Option(s.name + ' · ' + s.segment_count + (s.kind === 'slides' ? ' trang có chữ' : ' đoạn'), s.id)));
     $('health').textContent = health.model_configured ? 'Nguồn đã tải. AI đã cấu hình; khả năng kết nối sẽ được xác minh khi gửi câu hỏi.' : 'Nguồn đã tải. Cần điền provider, model và API key trong .env rồi khởi động lại server để hỏi AI thật.';
     $('health').classList.toggle('error', !health.model_configured);
   } catch(e) { $('health').textContent = e.message; $('health').classList.add('error'); }
