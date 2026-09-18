@@ -1,0 +1,27 @@
+flowchart TD
+    A[Học viên mở bài học] --> B[Chọn tài liệu hoặc slide; có thể chọn đoạn]
+    B --> C[Nhập câu hỏi và bấm Hỏi]
+    C --> D{Đã chọn nguồn và nhập câu hỏi?}
+    D -- Chưa --> E[Nhắc bổ sung; giữ nội dung đã nhập]
+    E --> B
+    D -- Rồi --> F{Ngoài phạm vi bài học hoặc thẩm quyền?}
+    F -- Có --> G[Nêu giới hạn; hướng sang TA hoặc thông tin chính thức]
+    F -- Không --> H{AI: câu hỏi và ngữ cảnh đã đủ rõ?}
+    H -- Chưa --> I[Hỏi một câu làm rõ hoặc yêu cầu chọn đoạn]
+    I --> J[Học viên bổ sung câu hỏi hoặc chọn đoạn]
+    J --> C
+    H -- Rồi --> K[Truy xuất đoạn liên quan trong nguồn đã chọn]
+    K --> L{AI: nguồn có hỗ trợ câu trả lời?}
+    L -- Không --> M[Nêu chưa đủ căn cứ; đề nghị chọn đoạn hoặc đổi nguồn]
+    L -- Có --> N[Tạo giải thích ngắn và citation]
+    N --> O{Citation tồn tại trong context đã dùng?}
+    O -- Không --> P[Báo không xác minh được nguồn; giữ input để thử lại]
+    O -- Có --> Q[Hiện câu trả lời và nút mở citation]
+    Q --> R[Học viên mở đúng đoạn hoặc trang nguồn để đối chiếu]
+    R --> S{Cần sửa hoặc hỏi tiếp?}
+    S -- Không --> T[Kết thúc lượt hỏi]
+    S -- Có --> U[Sửa câu hỏi, đoạn hoặc nguồn]
+    G --> U
+    M --> U
+    P --> U
+    U --> C

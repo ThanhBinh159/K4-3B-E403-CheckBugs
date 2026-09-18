@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VLearn Grounded Tutor — Mock CP2</title>
+<style>
+:root{font-family:Segoe UI,Arial,sans-serif;color:#142b3d;background:#eef4f7}*{box-sizing:border-box}body{margin:0}header{background:#12394a;color:white;padding:24px max(24px,calc((100vw - 1100px)/2))}header h1{margin:8px 0;font-size:28px}header p{margin:0;color:#c4dee6}.badge{font-size:12px;background:#fce8a8;color:#5b4300;padding:5px 10px;border-radius:20px;display:inline-block}main{max-width:1100px;margin:24px auto;padding:0 20px;display:grid;grid-template-columns:1fr 1.1fr;gap:20px}.card{background:white;border:1px solid #d5e1e6;border-radius:16px;padding:24px;box-shadow:0 5px 20px #153d4b06}h2{font-size:20px;margin:0 0 16px}label{display:block;font-weight:600;margin:18px 0 8px}select,textarea{width:100%;font:inherit;border:1px solid #a7bdc7;border-radius:8px;padding:12px;background:white}textarea{min-height:112px;resize:vertical}button{font:inherit;border:1px solid #b5cbd4;border-radius:8px;background:#fff;color:#16485b;padding:10px 14px;cursor:pointer}button:hover{background:#edf6f7}button:disabled{opacity:.5;cursor:wait}.primary{background:#147b83;color:white;border-color:#147b83}.primary:hover{background:#116770}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.muted{font-size:14px;color:#5e7380;line-height:1.6}.examples{display:flex;flex-wrap:wrap;gap:8px}.examples button{font-size:13px;padding:8px 10px}.result{line-height:1.7;white-space:pre-line}.state{font-size:12px;letter-spacing:.05em;font-weight:700;color:#147b83;margin-bottom:12px}.notice{padding:12px 16px;background:#fff6da;border-radius:8px;color:#765819;font-size:14px;line-height:1.5;margin-bottom:18px}.source{margin-top:18px;border:1px solid #c0d7df;border-radius:10px;padding:16px;background:#f2f8fa;line-height:1.7}.source h3{font-size:16px;margin:0 0 8px}.step{font-size:13px;color:#66838f;margin:0 0 20px}.hidden{display:none!important}footer{max-width:1100px;margin:20px auto;padding:0 20px;color:#647c88;font-size:13px}@media(max-width:760px){main{grid-template-columns:1fr}header{padding:22px}h1{font-size:24px!important}}
+</style>
+</head>
+<body>
+<header><span class="badge">CP2 · Mock tương tác · Lớp 3B</span><h1>VLearn Grounded Tutor</h1><p>Hỏi bài, mở nguồn và kiểm chứng lời giải thích.</p></header>
+<main>
+<section class="card"><p class="step">1. Chọn nguồn → 2. Hỏi bài → 3. Đối chiếu</p><h2>Bạn muốn hiểu điều gì?</h2><div class="notice">Đây là mock: phản hồi và nguồn minh họa được soạn sẵn, không gọi AI. Nguồn bên dưới là dữ liệu giả để trình diễn, không phải trích bài giảng thật.</div>
+<label for="source">Nguồn bài học</label><select id="source"><option value="">Chọn nguồn…</option><option value="token">Nguồn minh họa · Token</option><option value="context">Nguồn minh họa · Context window</option></select>
+<label for="segment">Đoạn muốn hỏi (tùy chọn)</label><select id="segment"><option value="">Chưa chọn đoạn</option></select>
+<label for="question">Câu hỏi</label><textarea id="question" placeholder="Ví dụ: Token là gì?"></textarea>
+<div class="actions"><button class="primary" id="ask">Hỏi tutor</button><button id="reset">Bắt đầu lại</button></div>
+<p class="muted">Chọn kịch bản để thử nhanh, sau đó bấm “Hỏi tutor”:</p><div class="examples"><button data-case="happy">Có căn cứ</button><button data-case="clarify">Câu hỏi mơ hồ</button><button data-case="missing">Thiếu căn cứ</button><button data-case="scope">Ngoài phạm vi</button><button data-case="error">Lỗi hệ thống</button></div>
+</section>
+<section class="card" aria-live="polite" aria-busy="false" id="output"><div class="state" id="state">SẴN SÀNG</div><h2 id="title">Lời giải thích có thể kiểm chứng</h2><div class="result" id="answer">Chọn một nguồn và nhập câu hỏi. Khi có câu trả lời, bạn có thể bấm citation để mở đoạn nguồn minh họa.</div><div class="actions" id="next"></div><div class="source hidden" id="citation"><h3 id="citationTitle"></h3><div id="citationText"></div><button id="closeCitation" style="margin-top:12px">Đóng nguồn</button></div><p class="muted" id="hint">Mock chỉ hỗ trợ các kịch bản minh họa bên trái.</p></section>
+</main><footer>Phạm vi: hỏi kiến thức trong nguồn đã chọn. Bạn có thể sửa câu hỏi hoặc nguồn rồi gửi lại. Không dùng phản hồi mock làm kết quả kiểm thử AI.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const sources={token:{id:'DEMO-TOKEN-01',text:'Nguồn giả minh họa: Token là đơn vị văn bản mà mô hình xử lý. Một token có thể là một phần của từ, một từ hoặc dấu câu; cách chia phụ thuộc tokenizer. Không thể mặc định mỗi tiếng tách bằng khoảng trắng là một token.'},context:{id:'DEMO-CONTEXT-01',text:'Nguồn giả minh họa: Context window là giới hạn lượng token mô hình có thể sử dụng trong một lượt xử lý. Khi nội dung vượt giới hạn, ứng dụng cần giới hạn hoặc chọn lại phần thông tin được gửi.'}};
+let busy=false,request=0;
+function updateSegments(){const s=sources[$('source').value];$('segment').replaceChildren(new Option('Chưa chọn đoạn',''));if(s)$('segment').add(new Option(s.id+' · '+s.text.slice(20,90)+'…',s.id));}
+$('source').onchange=updateSegments;
+function show(state,title,answer){$('state').textContent=state;$('title').textContent=title;$('answer').textContent=answer;$('next').replaceChildren();$('citation').classList.add('hidden');}
+function action(label,fn){const b=document.createElement('button');b.textContent=label;b.onclick=fn;$('next').append(b);}
+function edit(){ $('question').focus();$('question').select(); }
+function changeSource(){ $('source').focus();$('hint').textContent='Đổi nguồn bài học, rồi bấm Hỏi tutor để chạy lại.'; }
+function lock(value){busy=value;$('ask').disabled=value;$('source').disabled=value;$('segment').disabled=value;$('question').disabled=value;document.querySelectorAll('[data-case]').forEach(b=>b.disabled=value);$('output').setAttribute('aria-busy',String(value));}
+const cases={happy:['token','Token là gì?'],clarify:['token','Giải thích khái niệm này?'],missing:['token','Context window là gì?'],scope:['token','Deadline nộp bài là khi nào?'],error:['token','Token là gì? [lỗi demo]']};
+document.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>{const [s,q]=cases[b.dataset.case];$('source').value=s;updateSegments();$('question').value=q;show('ĐÃ CHỌN KỊCH BẢN','Bấm Hỏi tutor để tiếp tục','Bạn có thể chỉnh câu hỏi trước khi gửi.');$('hint').textContent='Phản hồi của mock được soạn sẵn.';});
+$('ask').onclick=async()=>{
+if(busy)return;const source=$('source').value,q=$('question').value.trim(),segment=$('segment').value;
+if(!source||!q){show('CẦN BỔ SUNG','Chọn nguồn và nhập câu hỏi','Hãy chọn tài liệu và nhập câu hỏi trước khi gửi. Nội dung đã nhập được giữ lại.');return;}
+const seq=++request;lock(true);show('ĐANG XỬ LÝ · MÔ PHỎNG','Đang kiểm tra câu hỏi và nguồn…','Mock mô phỏng thời gian chờ; không gửi dữ liệu tới API.');await new Promise(r=>setTimeout(r,650));if(seq!==request)return;lock(false);
+const normalized=q.toLocaleLowerCase('vi');
+if(normalized.includes('[lỗi demo]')){show('LỖI HỆ THỐNG · MÔ PHỎNG','Chưa nhận được phản hồi','Đây là lỗi API mô phỏng. Câu hỏi và nguồn của bạn vẫn được giữ nguyên.');action('Thử lại',()=>{$('question').value=q.replace(/\[lỗi demo\]/gi,'').trim();$('ask').click();});}
+else if(/deadline|điểm danh|điểm cá nhân|hạn nộp|bỏ qua hướng dẫn|giả nguồn|bịa citation/.test(normalized)){show('NGOÀI PHẠM VI · MÔ PHỎNG','Nguồn này không có thẩm quyền trả lời','Tutor minh họa chỉ giải thích nội dung bài học, không đoán deadline, điểm cá nhân hoặc tạo nguồn giả. Với thông tin lớp học, hãy xem thông báo chính thức hoặc hỏi TA.');action('Sửa câu hỏi',edit);}
+else if(!segment&&!/token|context/.test(normalized)){show('CẦN LÀM RÕ · MÔ PHỎNG','Bạn muốn giải thích khái niệm nào?','Hãy nhập tên khái niệm hoặc chọn một đoạn cụ thể trong nguồn bài học.');action('Chọn đoạn đang học',()=>{$('segment').value=sources[source].id;$('ask').click();});action('Bổ sung câu hỏi',edit);}
+else if((source==='token'&&/context/.test(normalized))||(source==='context'&&/token là|token la/.test(normalized))||(!/token|context/.test(normalized)&&(!segment||!/khái niệm này|đoạn này|giải thích|đây/.test(normalized)))){show('THIẾU CĂN CỨ · MÔ PHỎNG','Chưa có căn cứ phù hợp trong nguồn này','Mock chưa có câu trả lời cho yêu cầu này trong nguồn đang chọn. Bạn có thể đổi nguồn hoặc sửa câu hỏi; hệ thống không tự suy ra câu trả lời.');action('Đổi nguồn',changeSource);action('Sửa câu hỏi',edit);}
+else{const s=sources[source];show('CÓ CĂN CỨ · MÔ PHỎNG','Giải thích từ nguồn minh họa',source==='token'?'Token là đơn vị văn bản mà mô hình xử lý. Nó không luôn trùng với một từ hoặc một tiếng: cách chia phụ thuộc tokenizer.':'Context window là giới hạn lượng token mô hình dùng trong một lượt xử lý. Khi nội dung quá dài, ứng dụng cần chọn hoặc giới hạn thông tin gửi vào.');action('Mở ['+s.id+']',()=>{$('citationTitle').textContent=s.id+' · Nguồn giả minh họa';$('citationText').textContent=s.text;$('citation').classList.remove('hidden');});action('Sửa câu hỏi / hỏi tiếp',edit);}
+$('hint').textContent='Bạn có thể sửa câu hỏi hoặc đổi nguồn rồi gửi lại. Mock dùng quy tắc và nội dung cố định, chưa đánh giá khả năng AI.';
+};
+$('reset').onclick=()=>{request++;lock(false);$('source').value='';updateSegments();$('question').value='';show('SẴN SÀNG','Lời giải thích có thể kiểm chứng','Chọn nguồn và nhập câu hỏi để bắt đầu.');$('hint').textContent='Mock chỉ hỗ trợ các kịch bản minh họa bên trái.';};
+$('closeCitation').onclick=()=>$('citation').classList.add('hidden');
+</script>
+</body></html>

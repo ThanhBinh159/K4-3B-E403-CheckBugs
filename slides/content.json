@@ -1,0 +1,157 @@
+[
+  {
+    "title": "Hỏi bài có căn cứ",
+    "subtitle": "VLearn Grounded Tutor · Track A1 · Lớp 3B",
+    "body": "Học viên cần hiểu khái niệm và mở tài liệu gốc để đối chiếu lời giải thích.",
+    "table": [
+      [
+        "Nhóm lượt hỏi",
+        "Thiếu citation",
+        "Tỷ lệ"
+      ],
+      [
+        "Câu ngắn (q_len ≤81)",
+        "1.560 / 3.427",
+        "45,52%"
+      ],
+      [
+        "Toàn pack",
+        "3.781 / 13.494",
+        "28,02%"
+      ]
+    ],
+    "note": "Nguồn: evidence/mining.md, đếm lại CSV. Toàn pack K3/K4; thiếu citation chưa đồng nghĩa trả lời sai. Chưa đo công tìm nguồn."
+  },
+  {
+    "title": "Lát cắt và kiến trúc",
+    "body": "Một học viên hỏi khái niệm trong bài đã chọn · tutor quyết định đủ rõ và đủ căn cứ · trả giải thích có citation hoặc hỏi lại/nêu giới hạn · học viên mở nguồn đối chiếu.",
+    "table": [
+      [
+        "Bước",
+        "Vai trò"
+      ],
+      [
+        "1. Chọn slide Day 1 / Day 2",
+        "2 PDF · 58 trang · số trang vật lý"
+      ],
+      [
+        "2. Tìm trang liên quan",
+        "BM25 · tối đa 6 trang / 12.000 ký tự"
+      ],
+      [
+        "3. Gọi API AI thật",
+        "AI chọn action và sinh JSON"
+      ],
+      [
+        "4. Kiểm tra mã → mở PDF",
+        "Mã S01/S02 mở đúng trang nguồn"
+      ]
+    ],
+    "note": "Gemini native qua CLIProxyAPI; hỗ trợ OpenAI-compatible. Chỉ dùng chữ trích xuất PDF, chưa OCR hình/sơ đồ."
+  },
+  {
+    "title": "Bốn lớp chỗ khó",
+    "table": [
+      [
+        "Lớp",
+        "Tình huống",
+        "Hành vi"
+      ],
+      [
+        "1. Nguồn sự thật",
+        "Claim không có trong context",
+        "Nêu thiếu căn cứ, đổi/chọn nguồn"
+      ],
+      [
+        "2. Mơ hồ",
+        "“Khái niệm này?” không có đoạn",
+        "Một câu hỏi làm rõ"
+      ],
+      [
+        "3. Thẩm quyền",
+        "Điểm, deadline, lệnh giả nguồn",
+        "Nêu giới hạn, không đoán"
+      ],
+      [
+        "4. Domain",
+        "Tiếng = token; xác suất = đúng",
+        "Giải thích đúng phân biệt"
+      ]
+    ],
+    "body": "Người học luôn sửa được câu hỏi hoặc nguồn. API/JSON lỗi giữ input và cho thử lại.",
+    "note": "Citation hợp lệ là kiểm tra kỹ thuật; grounding cần xem claim có được phần nguồn hỗ trợ."
+  },
+  {
+    "title": "Kiểm thử và ngưỡng chất lượng",
+    "body": "24 case slide đã gọi AI thật · gemini-3.6-flash-high. Golden set: 10 thường + 10 khó + 4 hiếm; 12 case có provenance từ chat thật.",
+    "table": [
+      [
+        "Tiêu chí",
+        "Quality bar / cách hiểu",
+        "Kết quả hiện tại"
+      ],
+      [
+        "Case pass mọi chiều",
+        "≥80% (ít nhất 20/24)",
+        "Chưa chốt: cần chấm nội dung"
+      ],
+      [
+        "Action đúng expected",
+        "Kỹ thuật, không là case pass",
+        "23/24 (95.83%)"
+      ],
+      [
+        "Citation hiển thị hợp lệ",
+        "100% thuộc context",
+        "21 mã, 100.0% kỹ thuật"
+      ]
+    ],
+    "note": "Nguồn: eval/run_results.md. API lỗi giữ trong mẫu số. Chưa có biên nhận khóa CP4; action/mã đúng chưa chứng minh claim đúng."
+  },
+  {
+    "title": "Giới hạn và kiểm chứng thực tế",
+    "body": "Nguồn chính đã đổi sang PDF slide. 23/24 output qua schema. Retrieval offline lấy đủ supporting pages ở 15/15 câu kỳ vọng answer.",
+    "table": [
+      [
+        "Đã kiểm tra / chuẩn bị",
+        "Phần còn thiếu"
+      ],
+      [
+        "PDF mở đúng trang, chặn mã giả",
+        "Chấm grounding / UX / risk"
+      ],
+      [
+        "Trace có prompt/context/action",
+        "Chấm độc lập ≥5 output; baseline"
+      ],
+      [
+        "Protocol R6: mở nguồn, sửa câu hỏi",
+        "5 người ngoài nhóm, ≥2 đã khai CP1"
+      ]
+    ],
+    "note": "Chưa OCR; chữ lỗi font được đánh dấu. Chưa có user feedback/video thật. Transcript cũ chỉ là lịch sử."
+  },
+  {
+    "title": "Hoàn tất demo và hướng mở rộng",
+    "body": "Ưu tiên: nhóm chấm nội dung → cập nhật tỷ lệ đầy đủ → quay video CP3/CP5 → điền nhân sự và nộp đúng hạn. Giữ nguyên quality bar.",
+    "table": [
+      [
+        "Vai trò (nhóm điền tên sau)",
+        "Đóng góp cần ghi theo thực tế"
+      ],
+      [
+        "Product / evidence",
+        "Mining, impact, Canvas, spec"
+      ],
+      [
+        "Engineering / AI",
+        "Retrieval, adapter, UI và trace"
+      ],
+      [
+        "Eval / demo",
+        "Chấm case, user test, PDF và video"
+      ]
+    ],
+    "note": "Tiếp theo: kiểm UI và font/công thức, quay demo, chấm nội dung. Chưa tuyên bố tốt hơn tutor cũ khi chưa có baseline."
+  }
+]

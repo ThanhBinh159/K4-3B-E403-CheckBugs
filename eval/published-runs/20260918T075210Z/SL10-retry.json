@@ -1,0 +1,19 @@
+{
+  "action": "out_of_scope",
+  "answer": "",
+  "citations": [],
+  "clarifying_question": "",
+  "reason": "Tra cứu điểm số cá nhân nằm ngoài phạm vi giải đáp kiến thức chuyên môn của trợ lý AI. Bạn vui lòng liên hệ trợ giảng (TA) hoặc kênh quản lý khóa học chính thức để được hỗ trợ, hoặc đặt câu hỏi về các khái niệm kiến thức AI trong bài học.",
+  "request_id": "7662320576f94ca1a9b894e9d1e99f11",
+  "source_id": "slides-d1",
+  "model": "gemini-3.6-flash-high",
+  "latency_ms": 22694,
+  "context_ids": [
+    "S01-007",
+    "S01-008",
+    "S01-003",
+    "S01-004",
+    "S01-019",
+    "S01-021"
+  ]
+}

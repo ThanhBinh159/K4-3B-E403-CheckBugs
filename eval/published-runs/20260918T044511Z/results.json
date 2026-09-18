@@ -1,0 +1,748 @@
+[
+  {
+    "case_id": "G01",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Trong các mô hình ngôn ngữ lớn (LLM), token là một đơn vị tính [T04-049]. Token không phải là một từ hay một chữ cái nguyên vẹn, mà là kết quả sau khi văn bản được chẻ nhỏ ra để máy tính tiếp nhận và xử lý (được xem là ngôn ngữ của máy) [T04-049]. Số lượng token khác nhau tùy ngôn ngữ; ví dụ tiếng Việt tốn nhiều token hơn tiếng Anh vì có dấu [T04-049], [T04-096]. Theo cách quy đổi nhẩm nhanh, khoảng 4 ký tự tiếng Anh tương đương với 1 token [T04-050].",
+      "citations": [
+        "T04-049",
+        "T04-050",
+        "T04-096"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "a53f4db557344cd2bfc844341e0b6171",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 12434,
+      "context_ids": [
+        "T04-049",
+        "T04-050",
+        "T04-051",
+        "T04-006",
+        "T04-096",
+        "T04-094"
+      ]
+    },
+    "request_id": "a53f4db557344cd2bfc844341e0b6171"
+  },
+  {
+    "case_id": "G02",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Context window (cửa sổ ngữ cảnh) là giới hạn lượng thông tin hoặc ngữ cảnh mà một mô hình AI có thể tiếp nhận và xử lý trong một lần [T04-051]. Trong thời điểm đó, mô hình chỉ có thể nhìn và thao tác trong phạm vi lượng thông tin này [T04-051]. Nếu lượng thông tin vượt quá giới hạn của cửa sổ ngữ cảnh, mô hình không thể xử lý hết cùng lúc mà phải cắt nhỏ ra hoặc kích hoạt cơ chế tự động tóm tắt [T04-051], [T04-057].",
+      "citations": [
+        "T04-051",
+        "T04-057"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "1ccb37f66e0843278bdacb488d634afb",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 8586,
+      "context_ids": [
+        "T04-051",
+        "T04-052",
+        "T04-053",
+        "T04-057",
+        "T04-074",
+        "T04-088"
+      ]
+    },
+    "request_id": "1ccb37f66e0843278bdacb488d634afb"
+  },
+  {
+    "case_id": "G03",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Cơ chế Attention liên kết các từ bằng cách nhìn toàn cảnh cả câu thay vì xử lý từng từ riêng lẻ hay chỉ quan sát các từ kề cận [T04-040, T04-054, T04-055]. Mô hình tự động nhận diện các từ quan trọng và thực hiện chấm điểm độ liên quan giữa một từ với tất cả các từ liên quan khác trong câu [T04-054, T04-096]. Từ các điểm số này, nó sinh ra một ma trận trọng số thể hiện mối liên kết và mức độ quan trọng giữa các cặp từ với nhau theo từng ngữ cảnh [T04-054].",
+      "citations": [
+        "T04-040",
+        "T04-054",
+        "T04-055",
+        "T04-096"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "cc6c9b6a157a4bb19df50d80f39ed3c4",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 9345,
+      "context_ids": [
+        "T04-040",
+        "T04-041",
+        "T04-054",
+        "T04-055",
+        "T04-056",
+        "T04-096"
+      ]
+    },
+    "request_id": "cc6c9b6a157a4bb19df50d80f39ed3c4"
+  },
+  {
+    "case_id": "G04",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Điểm khác biệt giữa hai khái niệm được chỉ ra trong bài giảng là:\n\n- Self-attention: Bản chất là từng token sẽ nhìn các token khác trong ngữ cảnh đang đặt ra [T06-086].\n- Multi-head attention: Khác ở chỗ là cơ chế này có nhiều góc nhìn song song [T06-086].",
+      "citations": [
+        "T06-086"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "34164386f1c541faa1ace3938a722c42",
+      "source_id": "transcript-06",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 10104,
+      "context_ids": [
+        "T06-086",
+        "T06-087",
+        "T06-160",
+        "T06-162",
+        "T06-130",
+        "T06-161"
+      ]
+    },
+    "request_id": "34164386f1c541faa1ace3938a722c42"
+  },
+  {
+    "case_id": "G05",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "AI (Trí tuệ nhân tạo) là khái niệm rộng nhất bao phủ toàn bộ, hướng tới mục tiêu tái tạo và mô phỏng trí thông minh của con người [T04-015]. Trong khi đó, Machine Learning (Học máy) là một tập con nằm bên trong của AI [T04-015]. Thay vì phải thiết lập các quy tắc kết luận bằng tay (như lệnh if-else), Machine Learning tập trung vào giải pháp cung cấp dữ liệu để máy có thể tự học hỏi từ những dữ liệu đó [T04-015].",
+      "citations": [
+        "T04-015"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "11b2155212f64a95b8b2601907373786",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 11119,
+      "context_ids": [
+        "T04-016",
+        "T04-017",
+        "T04-032",
+        "T04-033",
+        "T04-015",
+        "T04-031"
+      ]
+    },
+    "request_id": "11b2155212f64a95b8b2601907373786"
+  },
+  {
+    "case_id": "G06",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "LLM (mô hình ngôn ngữ lớn) là nền tảng đóng vai trò như bộ não của các ứng dụng AI như ChatGPT, Claude hay Gemini [T04-046]. Bản chất của LLM hoạt động trên kiến trúc Transformer, thực hiện dự đoán và sinh các từ hoặc token tiếp theo dựa trên xác suất từ dữ liệu đã học [T04-047, T04-091]. Khả năng nổi bật của LLM là sinh ra các dữ liệu mới như văn bản, tài liệu, hình ảnh, video và âm nhạc [T04-046].",
+      "citations": [
+        "T04-046",
+        "T04-047",
+        "T04-091"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "b806d4e8b17b49719f1b3512da6b5bad",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 9809,
+      "context_ids": [
+        "T04-046",
+        "T04-047",
+        "T04-090",
+        "T04-091",
+        "T04-087",
+        "T04-003"
+      ]
+    },
+    "request_id": "b806d4e8b17b49719f1b3512da6b5bad"
+  },
+  {
+    "case_id": "G07",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Deep Learning là một tập con thuộc Machine Learning [T04-015]. Sự khác biệt chính giữa hai khái niệm này bao gồm:\n\n- **Machine Learning**: Người dùng phải tự định nghĩa, viết và mô tả các đặc trưng của dữ liệu để mô hình dựa vào đó phân loại hoặc dự đoán [T04-032].\n- **Deep Learning**: Sử dụng mạng neuron thần kinh nhiều tầng [T04-015]. Người dùng đưa dữ liệu vào và mô hình sẽ tự động nhận diện, trích xuất các đặc trưng cũng như tự học quy luật từ dữ liệu đó [T04-015], [T04-032].",
+      "citations": [
+        "T04-015",
+        "T04-032"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "4fdaf7e3ece648b2854944e3580f6c0f",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 12140,
+      "context_ids": [
+        "T04-032",
+        "T04-033",
+        "T04-015",
+        "T04-030",
+        "T04-031",
+        "T04-026"
+      ]
+    },
+    "request_id": "4fdaf7e3ece648b2854944e3580f6c0f"
+  },
+  {
+    "case_id": "G08",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Theo bài học, sự khác biệt giữa mô hình phân loại và Generative AI nằm ở kết quả đầu ra từ dữ liệu đầu vào [T06-051]:\n\n- Mô hình phân loại (discriminative AI): Khi nhập dữ liệu đầu vào, chức năng chính của mô hình là trả về một nhãn xác định (ví dụ: xác định spam hay không spam, chó hay mèo, giao dịch giả mạo hay không) [T06-051].\n- Generative AI: Khi nhận prompt (đầu vào), mô hình trả về nội dung (content) mới như âm nhạc, hình ảnh, mã code, file audio, ứng dụng hay game [T06-051].",
+      "citations": [
+        "T06-051"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "819a8bb213564a999d236ebcb7ccf87c",
+      "source_id": "transcript-06",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 8364,
+      "context_ids": [
+        "T06-051",
+        "T06-052",
+        "T06-079",
+        "T06-148",
+        "T06-040",
+        "T06-044"
+      ]
+    },
+    "request_id": "819a8bb213564a999d236ebcb7ccf87c"
+  },
+  {
+    "case_id": "G09",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Đúng. Theo bức tranh tổng quan về AI, Generative AI (AI tạo sinh) là một tập con bên trong của Deep Learning, và Deep Learning lại là tập con thuộc Machine Learning [T04-015]. Trong khi đó, các mô hình ngôn ngữ lớn (LLM) chính là nền tảng đằng sau các công nghệ AI tạo sinh như ChatGPT hay Claude [T04-015, T04-046]. Vì vậy, LLM thuộc tầng AI tạo sinh và là một dạng nằm trong Machine Learning [T04-015, T04-046].",
+      "citations": [
+        "T04-015",
+        "T04-046"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "15d467a4590f4548b235f993004fd622",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 3682,
+      "context_ids": [
+        "T04-046",
+        "T04-047",
+        "T04-032",
+        "T04-033",
+        "T04-015",
+        "T04-030"
+      ]
+    },
+    "request_id": "15d467a4590f4548b235f993004fd622"
+  },
+  {
+    "case_id": "G10",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Temperature ảnh hưởng đến việc chọn token như sau:\n- Khi Temperature = 0: Mô hình luôn ưu tiên chọn token có xác suất cao nhất, khiến kết quả đầu ra gần như giống nhau (deterministic) giữa các lần chạy [T04-096, T04-072].\n- Khi tăng Temperature: Mô hình sẽ chọn ngẫu nhiên rộng hơn trong phạm vi đã khoanh vùng. Temperature càng lớn thì phân vùng lựa chọn càng rộng, làm tăng độ sáng tạo của đầu ra [T04-072].",
+      "citations": [
+        "T04-096",
+        "T04-072"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "ea9175a208b14ba084c09b2ee80c1e20",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 8927,
+      "context_ids": [
+        "T04-096",
+        "T04-097",
+        "T04-050",
+        "T04-051",
+        "T04-072",
+        "T04-071"
+      ]
+    },
+    "request_id": "ea9175a208b14ba084c09b2ee80c1e20"
+  },
+  {
+    "case_id": "G11",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "no_grounding",
+    "status": "validated",
+    "action_match": true,
+    "actual": "no_grounding",
+    "response": {
+      "action": "no_grounding",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Thông tin về số lượng tham số của mô hình XYZ-999 không có trong các đoạn tư liệu được cung cấp. Bạn có thể chọn đoạn tư liệu phù hợp hoặc thay đổi nguồn thông tin.",
+      "request_id": "f267758d6be444209e9bb6433dc74b69",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 3924,
+      "context_ids": [
+        "T04-089",
+        "T04-090",
+        "T04-036",
+        "T04-037",
+        "T04-096",
+        "T04-001"
+      ]
+    },
+    "request_id": "f267758d6be444209e9bb6433dc74b69"
+  },
+  {
+    "case_id": "G12",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu tóm tắt toàn bộ video/bài giảng chưa được xác minh nằm ngoài phạm vi hỗ trợ của hệ thống. Bạn vui lòng liên hệ trợ giảng (TA)/nguồn chính thức hoặc đặt câu hỏi cụ thể về một khái niệm kiến thức có trong bài.",
+      "request_id": "db091660513e4ebf95fe7de0b119490c",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 8223,
+      "context_ids": [
+        "T04-061",
+        "T04-062",
+        "T04-046",
+        "T04-047",
+        "T04-091",
+        "T04-020"
+      ]
+    },
+    "request_id": "db091660513e4ebf95fe7de0b119490c"
+  },
+  {
+    "case_id": "G13",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn giải thích khái niệm nào trong các khái niệm được đề cập như context rot, attention, symbolic AI hay hệ chuyên gia (expert system)?",
+      "reason": "Câu hỏi không chỉ định rõ khái niệm cần giải thích và không có đoạn văn bản nào được người dùng chọn trước, trong khi ngữ cảnh truy xuất chứa nhiều khái niệm khác nhau.",
+      "request_id": "999598685a4f4967b5bf37b32ea0df62",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 10406,
+      "context_ids": [
+        "T04-052",
+        "T04-053",
+        "T04-023",
+        "T04-024",
+        "T04-054",
+        "T04-028"
+      ]
+    },
+    "request_id": "999598685a4f4967b5bf37b32ea0df62"
+  },
+  {
+    "case_id": "G14",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn tìm hiểu mối liên hệ giữa khái niệm nào (ví dụ: Transformer, Attention hay ChatGPT) với phần nội dung cụ thể nào trước đó?",
+      "reason": "Câu hỏi sử dụng các từ chỉ định không rõ ngữ cảnh (\"cái đó\", \"phần trước\") và không có đoạn tài liệu nào được chọn sẵn để xác định đối tượng cần so sánh.",
+      "request_id": "6deeb8fe8ee14c30bc81fc976e18f5f9",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 11201,
+      "context_ids": [
+        "T04-040",
+        "T04-041",
+        "T04-014",
+        "T04-015",
+        "T04-054",
+        "T04-029"
+      ]
+    },
+    "request_id": "6deeb8fe8ee14c30bc81fc976e18f5f9"
+  },
+  {
+    "case_id": "G15",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Câu hỏi về bài tập cần hoàn thành và hạn nộp (deadline) thuộc phạm vi danh mục/hạn chót cá nhân và quản lý khóa học. Bạn vui lòng liên hệ Trợ giảng (TA) hoặc kiểm tra thông báo chính thức của khóa học, hoặc hỏi một khái niệm kiến thức cụ thể trong bài.",
+      "request_id": "cde38324aed548efab0765978c93ac2a",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 9638,
+      "context_ids": [
+        "T04-058",
+        "T04-059",
+        "T04-050",
+        "T04-051",
+        "T04-068",
+        "T04-077"
+      ]
+    },
+    "request_id": "cde38324aed548efab0765978c93ac2a"
+  },
+  {
+    "case_id": "G16",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu tư vấn dựa trên tiến độ học tập cá nhân nằm ngoài phạm vi hỗ trợ của hệ thống. Bạn vui lòng liên hệ trợ giảng (TA) hoặc kênh hỗ trợ chính thức của khóa học để nhận hướng dẫn, hoặc đặt câu hỏi làm rõ một khái niệm kiến thức cụ thể.",
+      "request_id": "59f5c20bb74f4d46a25285fccc9870af",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 14787,
+      "context_ids": [
+        "T04-006",
+        "T04-007",
+        "T04-094",
+        "T04-095",
+        "T04-003",
+        "T04-011"
+      ]
+    },
+    "request_id": "59f5c20bb74f4d46a25285fccc9870af"
+  },
+  {
+    "case_id": "G17",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Yêu cầu xác định tên hoặc thông số của mô hình (metadata model) nằm ngoài phạm vi hỗ trợ của hệ thống. Vui lòng liên hệ trợ giảng (TA)/nguồn chính thức hoặc đặt câu hỏi về một khái niệm nội dung trong bài học.",
+      "request_id": "d8b5e906c2b849beb012ef1e8c8ab4e2",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 3439,
+      "context_ids": [
+        "T04-064",
+        "T04-065",
+        "T04-089",
+        "T04-090",
+        "T04-067",
+        "T04-072"
+      ]
+    },
+    "request_id": "d8b5e906c2b849beb012ef1e8c8ab4e2"
+  },
+  {
+    "case_id": "G18",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Không đúng. Token không phải là từ hay chữ cái mà là một đơn vị tính riêng của mô hình ngôn ngữ [T04-049]. Khi xử lý văn bản, mô hình sẽ chẻ nhỏ các từ ra thành các token chứ không giữ nguyên vẹn từ đó [T04-049]. Do tiếng Việt có thêm dấu và thanh sắc, khi token hóa thường tốn nhiều token hơn [T04-049], [T04-096]. Vì vậy, một tiếng trong tiếng Việt không luôn luôn bằng một token.",
+      "citations": [
+        "T04-049",
+        "T04-096"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "edefccee4c064fc0ae1bdf38731975ec",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 11241,
+      "context_ids": [
+        "T04-049",
+        "T04-050",
+        "T04-096",
+        "T04-029",
+        "T04-015",
+        "T04-055"
+      ]
+    },
+    "request_id": "edefccee4c064fc0ae1bdf38731975ec"
+  },
+  {
+    "case_id": "G19",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Không. Token có xác suất cao nhất không đồng nghĩa với việc nội dung luôn đúng [T04-048]. Bản chất của mô hình ngôn ngữ lớn chỉ là dự đoán token hoặc từ tiếp theo dựa trên xác suất [T04-047]. Khi temperature bằng 0, mô hình luôn lấy xác suất cao nhất [T04-072], giúp kết quả đầu ra gần như giống nhau giữa các lần chạy [T04-096]. Tuy nhiên, mô hình không thực sự biết tri thức [T04-047] mà chỉ cố nối các từ cho có nghĩa và thuận mắt, nên văn bản tạo ra vẫn có thể sai thông tin hoặc gặp hiện tượng ảo giác (hallucination) [T04-048].",
+      "citations": [
+        "T04-047",
+        "T04-048",
+        "T04-072",
+        "T04-096"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "bc85c757ea7e43de860b1e0956a5bef0",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 19006,
+      "context_ids": [
+        "T04-047",
+        "T04-072",
+        "T04-048",
+        "T04-071",
+        "T04-096",
+        "T04-049"
+      ]
+    },
+    "request_id": "bc85c757ea7e43de860b1e0956a5bef0"
+  },
+  {
+    "case_id": "G20",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Machine Learning (ML) và LLM có sự khác biệt về cấp độ phân loại và cơ chế hoạt động:\n\n- **Vị trí trong hệ thống**: ML là tập hợp con của AI, giúp máy tính tự học từ dữ liệu [T04-015]. Trong khi đó, LLM (mô hình ngôn ngữ lớn) thuộc tầng AI tạo sinh (Generative AI) — một tập con nằm sâu bên trong Deep Learning và ML [T04-015], đóng vai trò làm bộ não nền tảng cho các ứng dụng như ChatGPT, Claude [T04-046].\n- **Cơ chế và khả năng**: ML truyền thống đòi hỏi con người phải tự viết ra các đặc trưng mô tả và gán nhãn dữ liệu để máy phân loại hoặc dự đoán [T04-032]. Trái lại, LLM hoạt động bằng cách dự đoán các từ/token tiếp theo theo xác suất dựa trên dữ liệu đã học và có khả năng sinh dữ liệu mới như văn bản, hình ảnh, video [T04-046, T04-047].",
+      "citations": [
+        "T04-015",
+        "T04-032",
+        "T04-046",
+        "T04-047"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "05f72986c61840b092f02a158f665cec",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 11449,
+      "context_ids": [
+        "T04-046",
+        "T04-047",
+        "T04-032",
+        "T04-033",
+        "T04-015",
+        "T04-063"
+      ]
+    },
+    "request_id": "05f72986c61840b092f02a158f665cec"
+  },
+  {
+    "case_id": "G21",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "out_of_scope",
+    "status": "validated",
+    "action_match": true,
+    "actual": "out_of_scope",
+    "response": {
+      "action": "out_of_scope",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "",
+      "reason": "Thông tin về deadline cá nhân thuộc phạm vi hành chính/cá nhân, không nằm trong nội dung chuyên môn của bài học. Vui lòng liên hệ TA hoặc kênh hỗ trợ chính thức của khóa học để được kiểm tra deadline, hoặc đặt câu hỏi liên quan đến nội dung kiến thức trong bài.",
+      "request_id": "1a68057ef7d34c289ef685ef49cccd69",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 13607,
+      "context_ids": [
+        "T04-086",
+        "T04-087",
+        "T04-089",
+        "T04-090",
+        "T04-029",
+        "T04-054"
+      ]
+    },
+    "request_id": "1a68057ef7d34c289ef685ef49cccd69"
+  },
+  {
+    "case_id": "G22",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "clarify",
+    "status": "validated",
+    "action_match": true,
+    "actual": "clarify",
+    "response": {
+      "action": "clarify",
+      "answer": "",
+      "citations": [],
+      "clarifying_question": "Bạn muốn tìm hiểu về khái niệm context (cửa sổ ngữ cảnh), hiện tượng context rot, hay cách quản lý context khi làm việc với mô hình AI?",
+      "reason": "Câu hỏi chỉ gồm thuật ngữ 'context ?' chưa nêu rõ ý định cụ thể, trong khi các đoạn nguồn đề cập đến nhiều chủ đề khác nhau như khái niệm context/context window, hiện tượng context rot và kinh nghiệm quản lý context.",
+      "request_id": "3540606023544b84a410ad6f5521f531",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 16543,
+      "context_ids": [
+        "T04-052",
+        "T04-053",
+        "T04-051",
+        "T04-057",
+        "T04-074",
+        "T04-088"
+      ]
+    },
+    "request_id": "3540606023544b84a410ad6f5521f531"
+  },
+  {
+    "case_id": "G23",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Trong các mô hình ngôn ngữ lớn, token là một đơn vị tính và được coi là \"ngôn ngữ của máy\" [T04-049]. Nó không phải là một từ hay chữ cái nguyên vẹn, mà là kết quả khi mô hình chẻ nhỏ văn bản [T04-049].\n\nSố lượng token có sự khác biệt giữa các ngôn ngữ, như tiếng Việt tốn nhiều token hơn tiếng Anh do có dấu [T04-049, T04-096]. Thông thường có thể ước tính khoảng 4 ký tự tiếng Anh bằng 1 token [T04-050]. Khi sử dụng API hoặc phát triển ứng dụng AI, số lượng token này được dùng để tính chi phí [T04-050].",
+      "citations": [
+        "T04-049",
+        "T04-050",
+        "T04-096"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "10a891368ec44cfa87dba93ba47c2338",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 16657,
+      "context_ids": [
+        "T04-049",
+        "T04-050",
+        "T04-051",
+        "T04-006",
+        "T04-096",
+        "T04-094"
+      ]
+    },
+    "request_id": "10a891368ec44cfa87dba93ba47c2338"
+  },
+  {
+    "case_id": "G24",
+    "model": "gemini-3.6-flash-high",
+    "provider": "gemini",
+    "expected": "answer",
+    "status": "validated",
+    "action_match": true,
+    "actual": "answer",
+    "response": {
+      "action": "answer",
+      "answer": "Context (ngữ cảnh) là toàn bộ thông tin mà một mô hình có thể tiếp nhận và xử lý trong một lần, tương tự như diện tích một bàn làm việc [T04-051]. Cửa sổ ngữ cảnh (context window) càng lớn thì mô hình càng có thể đọc và xử lý nhiều thông tin hơn cùng lúc mà không phải cắt nhỏ dữ liệu [T04-051].",
+      "citations": [
+        "T04-051"
+      ],
+      "clarifying_question": "",
+      "reason": "",
+      "request_id": "52e8ad11564b4fa2a42a7451fb3cdbba",
+      "source_id": "transcript-04",
+      "model": "gemini-3.6-flash-high",
+      "latency_ms": 14775,
+      "context_ids": [
+        "T04-051",
+        "T04-052",
+        "T04-064",
+        "T04-023",
+        "T04-054",
+        "T04-024"
+      ]
+    },
+    "request_id": "52e8ad11564b4fa2a42a7451fb3cdbba"
+  }
+]
